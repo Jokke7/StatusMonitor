@@ -12,4 +12,6 @@ namespace ValidStatusMonitor.Security
         public List<string> GroupIds { get; set; }
 
     }
+
+
 }
