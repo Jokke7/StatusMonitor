@@ -1,1 +1,42 @@
+/*@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/bootstrap-grid';*/
+
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --rusty-orange: #ed7314;
+  --raisin-black: #291f1e;
+  --queen-blue: #477998;
+  --moss-green: #c4d6b0;
+  --olive-drab: #3d3522;
+}
+
+body {
+  margin: 10px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 40px 100px 40px;
+}
+
+.header {
+  grid-column: span 12;
+  background-color: var(--raisin-black)
+}
+
+.menu {
+  grid-column: span 2;
+  background-color: var(--rusty-orange)
+}
+
+.content {
+  grid-column: span 10;
+  background: var(--moss-green)
+}
+
+.footer {
+  grid-column: span 12;
+  background: var(--olive-drab)
+}

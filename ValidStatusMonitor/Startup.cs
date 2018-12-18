@@ -1,10 +1,20 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Newtonsoft.Json.Serialization;
+using System;
+using System.Diagnostics;
+using ValidStatusMonitor.Security;
 
 namespace ValidStatusMonitor
 {
@@ -20,7 +30,76 @@ namespace ValidStatusMonitor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // Require HTTPS
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
+            
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(AdalTokenAcquisitionExceptionFilter));
+                options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            })
+            .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                auth.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(options =>
+            {
+                options.Cookie.Name = Configuration["CookieAuthentication:Name"];
+            })
+            .AddOpenIdConnect(options =>
+            {
+                Configuration.GetSection("Authentication").Bind(options);
+
+                options.Events = new OpenIdConnectEvents
+                {
+                    OnAuthorizationCodeReceived = async context =>
+                    {
+                        HttpRequest request = context.HttpContext.Request;
+                        string currentUri = UriHelper.BuildAbsolute(request.Scheme, request.Host, request.PathBase, request.Path);
+                        ClientCredential credential = new ClientCredential(context.Options.ClientId, context.Options.ClientSecret);
+
+                        IDistributedCache distributedCache = context.HttpContext.RequestServices.GetRequiredService<IDistributedCache>();
+
+                        string userId = context.Principal.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+
+                        AdalDistributedTokenCache cache = new AdalDistributedTokenCache(distributedCache, userId);
+
+                        AuthenticationContext authContext = new AuthenticationContext(context.Options.Authority, cache);
+
+                        try
+                        {
+                            // Debug info
+                            Trace.WriteLine("View: Auth code received, acquiring tokens:");
+                            Trace.WriteLine("Items in cache:" + cache.Count);
+                            Trace.WriteLine("Authority:" + context.Options.Authority);
+                            Trace.WriteLine("User ID:" + userId);
+
+                            // Get access and refresh tokens for Graph
+                            AuthenticationResult result = await authContext.AcquireTokenByAuthorizationCodeAsync(
+                                context.ProtocolMessage.Code, new Uri(currentUri), credential, context.Options.Resource);
+
+                            Trace.WriteLine("Access token for API: " + result.AccessToken);
+
+                            context.HandleCodeRedemption(result.AccessToken, result.IdToken);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Trace.WriteLine("View: Access token acquisition exception: " + ex.Message);
+                        }
+                    }
+                };
+            });
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -45,6 +124,7 @@ namespace ValidStatusMonitor
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -1,0 +1,78 @@
+<h1>All Installations - Status</h1>
+
+<p>Statuses from the server(updated automatically every 15th minute)</p>
+
+<p *ngIf="!statusList"><em>Loading...</em></p>
+
+<!--<p>
+  <a [routerLink]="['/update-statuses']">Hard Update</a>
+</p>-->
+
+<div class="col-lg-6">
+
+  <table id="statusList" class="table table-dark table-hover table-striped" *ngIf="statusList">
+    <thead style="color: var(--rusty-orange)">
+      <tr>
+        <th scope="col">RN</th>
+        <th scope="col">Plant</th>
+        <th scope="col">Last updated</th>
+        <th scope="col">CustomerID</th>
+        <th scope="col">Description</th>
+        <th scope="col">Environment</th>
+        <th scope="col">App name</th>
+        <th scope="col">Info</th>
+        <th scope="col">Licence expires</th>
+        <th scope="col">App health</th>
+        <th scope="col">SSL Certificate</th>
+        <th scope="col">SSL expires</th>
+        <th scope="col">SSL status</th>
+        <th scope="col">Files, amount</th>
+        <th scope="col">Files, total size</th>
+        <th scope="col">Service level</th>
+        <th scope="col">Storage health</th>
+        <th scope="col">Database</th>
+        <th scope="col">Server</th>
+        <th scope="col">Version</th>
+        <th scope="col">Template</th>
+        <th scope="col">Size(MB)</th>
+        <th scope="col">Service level</th>
+        <th scope="col">Service health</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let status of statusList">
+        <th scope="row">New row</th>
+        <td>{{ status.plantName }}</td>
+        <td>{{ status.lastUpdate }}</td>
+        <td>{{ status.customerId }}</td>
+        <td>{{ status.description }}</td>
+        <td>{{ status.environment }}</td>
+
+        <td>{{ status.applicationName }}</td>
+        <td>{{ status.applicationInfo }}</td>
+        <td>{{ status.applicationVersion }}</td>
+        <td>{{ status.licenceExpiryDate }}</td>
+        <td>{{ status.applicationSH }}</td>
+
+        <td>{{ status.sslName }}</td>
+        <td>{{ status.sslExpiryDate }}</td>
+        <td>{{ status.sslStatus }}</td>
+
+        <td>{{ status.storageBlobNFiles }}</td>
+        <td>{{ status.storageBlobSizeMb }}</td>
+        <td>{{ status.storageSL }}</td>
+        <td>{{ status.storageSH }}</td>
+
+        <td>{{ status.databaseName }}</td>
+        <td>{{ status.databaseServer }}</td>
+        <td>{{ status.databaseVersion }}</td>
+        <td>{{ status.databaseTemplate }}</td>
+        <td>{{ status.databaseSizeMb }}</td>
+        <td>{{ status.databaseSL }}</td>
+        <td>{{ status.databaseSH }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div class="col-lg-6">Halla</div>
