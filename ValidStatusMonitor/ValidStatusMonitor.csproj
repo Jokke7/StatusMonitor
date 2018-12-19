@@ -12,6 +12,8 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <StartupObject>ValidStatusMonitor.Program</StartupObject>
     <UserSecretsId>df2ece7d-7fff-416e-bc64-e2c6ca9f08ed</UserSecretsId>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
