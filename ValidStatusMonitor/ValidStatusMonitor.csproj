@@ -14,6 +14,11 @@
     <UserSecretsId>df2ece7d-7fff-416e-bc64-e2c6ca9f08ed</UserSecretsId>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
