@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Diagnostics;
+using ValidStatusMonitor.Models;
 using ValidStatusMonitor.Security;
 
 namespace ValidStatusMonitor
@@ -25,11 +27,12 @@ namespace ValidStatusMonitor
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             // Require HTTPS
             services.Configure<MvcOptions>(options =>
             {
@@ -100,12 +103,18 @@ namespace ValidStatusMonitor
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton(Configuration);
+
+            services.AddDbContext<ValidStatusMonitorContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("ValidStatusMonitor")));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,17 +123,22 @@ namespace ValidStatusMonitor
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+               .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.json")
+               .Build();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+                app.UseAuthentication();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

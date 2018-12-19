@@ -153,7 +153,7 @@ namespace ValidStatusMonitor.Controllers
 
                 if (userGroups.Count < 1)
                 {
-                    _logger.LogWarning("Found no usergroups.");
+                    _logger.LogWarning("Found no user groups.");
                     return null;
                 }
                 return userGroups.ToArray();

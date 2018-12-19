@@ -1,19 +1,23 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace ValidStatusMonitor.Models
 {
     public partial class ValidStatusMonitorContext : DbContext
     {
-        public ValidStatusMonitorContext()
-        {
-        }
+        public ValidStatusMonitorContext() {}
+
+        public ValidStatusMonitorContext(IConfiguration _config) => Configuration = _config;
 
         public ValidStatusMonitorContext(DbContextOptions<ValidStatusMonitorContext> options)
             : base(options)
         {
         }
+
+        private IConfiguration Configuration;
 
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<InstallationAssets> InstallationAssets { get; set; }
@@ -23,9 +27,15 @@ namespace ValidStatusMonitor.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:valid-prod.database.windows.net,1433;Initial Catalog=ValidStatusMonitor;Persist Security Info=False;User ID=ValidStatusAdmin;Password=Z3KPsGbgrxn9yDDG;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+               .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+               .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
+               .Build();
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("ValidStatusMonitor"));
+                //optionsBuilder.UseSqlServer("Server=tcp:valid-prod.database.windows.net,1433;Initial Catalog=ValidStatusMonitor;Persist Security Info=False;User ID=ValidStatusAdmin;Password=Z3KPsGbgrxn9yDDG;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                base.OnConfiguring(optionsBuilder);
             }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
