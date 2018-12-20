@@ -5,17 +5,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { StatusMonitorService } from './services/statusmonitor.service';
 import { ShowStatusesComponent } from './installationstatuses/showstatuses.component';
+import { CustomerAssetsComponent } from './customerassets/customerassets.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
-    ShowStatusesComponent
+    ShowStatusesComponent,
+    CustomerAssetsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,6 +26,7 @@ import { ShowStatusesComponent } from './installationstatuses/showstatuses.compo
       { path: 'home', component: HomeComponent },
       { path: 'show-statuses', component: ShowStatusesComponent },
       { path: 'update-statuses', component: ShowStatusesComponent },
+      //{ path: 'customer-assets', component: CustomerAssetsComponent },
       { path: '**', redirectTo: 'home' }
     ])
   ],

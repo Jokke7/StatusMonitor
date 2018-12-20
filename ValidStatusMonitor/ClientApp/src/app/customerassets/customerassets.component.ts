@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
 
 @Component({
-  templateUrl: './showstatuses.component.html'
+  templateUrl: './customerassets.component.html'
 })
 
 export class CustomerAssetsComponent {

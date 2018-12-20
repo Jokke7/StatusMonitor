@@ -7,8 +7,6 @@ namespace ValidStatusMonitor.Models
     {
         public ValidStatusMonitorContext() {}
 
-        public ValidStatusMonitorContext(IConfiguration _config) => Configuration = _config;
-
         public ValidStatusMonitorContext(DbContextOptions<ValidStatusMonitorContext> options)
             : base(options)
         {
