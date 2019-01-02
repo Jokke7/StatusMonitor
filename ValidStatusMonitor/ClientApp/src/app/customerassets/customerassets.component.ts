@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';

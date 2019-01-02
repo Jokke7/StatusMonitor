@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
+import { CcrCardComponent } from '../ccr-card/ccr-card.component';
 
 @Component({
   templateUrl: './showstatuses.component.html'

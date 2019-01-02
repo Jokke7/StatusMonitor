@@ -3,24 +3,28 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { StatusMonitorService } from './services/statusmonitor.service';
 import { ShowStatusesComponent } from './installationstatuses/showstatuses.component';
 import { CustomerAssetsComponent } from './customerassets/customerassets.component';
+import { CcrCardComponent } from './ccr-card/ccr-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ShowStatusesComponent,
-    CustomerAssetsComponent
+    CustomerAssetsComponent,
+    CcrCardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    FlexLayoutModule ,
     RouterModule.forRoot([
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },

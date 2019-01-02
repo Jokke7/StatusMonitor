@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ValidStatusMonitor.DataModel;
 
 namespace ValidStatusMonitor.Models
 {
@@ -17,6 +18,7 @@ namespace ValidStatusMonitor.Models
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<InstallationAssets> InstallationAssets { get; set; }
         public virtual DbSet<InstallationStatus> InstallationStatus { get; set; }
+        public virtual DbSet<DscReference> Dscreference { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -8,7 +8,7 @@
   <a [routerLink]="['/update-statuses']">Hard Update</a>
 </p>-->
 
-<div class="col-lg-6">
+<!--<div class="col-lg-6">
 
   <table id="statusList" class="table table-dark table-hover table-striped" *ngIf="statusList">
     <thead style="color: var(--rusty-orange)">
@@ -74,5 +74,15 @@
     </tbody>
   </table>
 
+</div>-->
+
+<div fxLayout="row wrap"
+     fxLayout.lt-sm="column"
+     fxLayoutGap="0px"
+     fxLayoutAlign="flex-start">
+  <ng-container *ngFor="let _ of [1,2,3,4,5,6]">
+    <app-ccr-card fxFlex="0 1 calc(16.66%)"
+                  fxFlex.lt-md="0 1 calc(50%)"
+                  fxFlex.lt-sm="100%"></app-ccr-card>
+  </ng-container>
 </div>
-<div class="col-lg-6">Halla</div>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -133,18 +134,27 @@ namespace ValidStatusMonitor
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
-                app.UseAuthentication();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                // Challenge authentication before SPA is loaded if user is not authenticated
+                if (!context.User.Identity.IsAuthenticated)
+                    await context.ChallengeAsync();
+                else
+                    await next();
             });
 
             app.UseSpa(spa =>

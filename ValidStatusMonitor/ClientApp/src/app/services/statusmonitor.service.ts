@@ -1,11 +1,15 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {map, catchError} from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core'; 
-import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs/Observable'; 
+import { HttpClient } from '@angular/common/http' 
 import { Router } from '@angular/router'; 
-import 'rxjs/add/operator/map'; 
-import 'rxjs/add/operator/catch'; 
-import 'rxjs/add/observable/throw'; 
+ 
+ 
+ 
 import { StatusMonitorData } from '../installationstatuses/showstatuses.component';
+import { CustomerAssetsData } from '../customerassets/customerassets.component';
    
 @Injectable() 
 export class StatusMonitorService { 
@@ -18,17 +22,15 @@ export class StatusMonitorService {
     getAllStatuses() { 
       return this._http.get<StatusMonitorData[]>(this.appUrl + 'api/Installations/Status/All')
     } 
-   
-    getCustomers() { 
-      return this._http.get(this.appUrl + 'api/Customer/All') 
-            .map((response: Response) => response.json()) 
-            .catch(this.errorHandler);
-    } 
+
+    getCustomers() {
+      return this._http.get<CustomerAssetsData[]>(this.appUrl + 'api/Customer/All')
+  }  
    
     getCustomerById(id: number) { 
-      return this._http.get(this.appUrl + "api/Customer/" + id) 
-            .map((response: Response) => response.json()) 
-            .catch(this.errorHandler) 
+      return this._http.get(this.appUrl + "api/Customer/" + id).pipe( 
+            map((response: Response) => response.json()), 
+            catchError(this.errorHandler),) 
     } 
    
     updateEmployee(customer) { 
@@ -45,6 +47,6 @@ export class StatusMonitorService {
    
     errorHandler(error: Response) { 
         console.log(error); 
-        return Observable.throw(error); 
+        return observableThrowError(error); 
     } 
 }

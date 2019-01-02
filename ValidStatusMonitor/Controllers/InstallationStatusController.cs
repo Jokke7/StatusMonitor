@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ValidStatusMonitor.Models;
 
@@ -8,6 +9,7 @@ using ValidStatusMonitor.Models;
 namespace ValidStatusMonitor.Controllers
 {
     //[Route("api/[controller]")]
+    [Authorize]
     public class InstallationStatusController : Controller
     {
         private ValidStatusDataAccessLayer objValidStatusMonitor = new ValidStatusDataAccessLayer();
