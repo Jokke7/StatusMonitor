@@ -1,0 +1,27 @@
+/*:root {
+  --rusty-orange: #ed7314;
+  --raisin-black: #291f1e;
+  --queen-blue: #477998;
+  --moss-green: #c4d6b0;
+  --olive-drab: #3d3522;
+}*/
+
+:host {
+  display: block;
+  padding: 0px;
+  margin-bottom: 6px;
+  border: 1px solid #477998;
+  border-radius: 1px;
+  background-color: lightblue;
+}
+
+.header {
+  background-color: #477998;
+}
+
+.side {
+  width: 10px;
+  background-color: green;
+}
+
+
