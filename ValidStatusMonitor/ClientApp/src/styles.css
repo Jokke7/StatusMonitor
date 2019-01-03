@@ -18,10 +18,17 @@ body {
 .wrapper {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 10px 100px 40px;
+  grid-template-rows: auto auto;
 }
 
-.header {
+.row-container {
+  margin: 10px;
+  border: 1px solid #477998;
+  border-radius: 1px;
+  padding-bottom: -1px;
+}
+
+/*.header {
   grid-column: span 12;
   background-color: var(--raisin-black)
 }
@@ -32,11 +39,11 @@ body {
 }
 
 .content {
-  grid-column: span 10;
+  grid-column: span 12;
   background-color: var(--moss-green)
 }
 
 .footer {
   grid-column: span 12;
   background: var(--olive-drab)
-}
+}*/

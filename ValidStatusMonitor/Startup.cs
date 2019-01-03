@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -119,7 +120,7 @@ namespace ValidStatusMonitor
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -127,14 +128,21 @@ namespace ValidStatusMonitor
 
                 IConfigurationRoot configuration = new ConfigurationBuilder()
                .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-               .AddJsonFile("appsettings.json")
+               .AddJsonFile("appsettings.Development.json")
                .Build();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+               .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+               .AddJsonFile("appsettings.Production.json")
+               .Build();
             }
+
+            loggerFactory.AddAzureWebAppDiagnostics();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -12,6 +12,7 @@ namespace ValidStatusMonitor
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
@@ -20,5 +21,14 @@ namespace ValidStatusMonitor
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
+        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        //    WebHost.CreateDefaultBuilder(args)
+        //    .ConfigureLogging((hostingContext, logging) =>
+        //    {
+        //        logging.AddAzureWebAppDiagnostics(logging);
+        //    })
+        //    .UseStartup<Startup>();
+
     }
 }

@@ -9,19 +9,29 @@
 :host {
   display: block;
   padding: 0px;
-  margin-bottom: 6px;
-  border: 1px solid #477998;
-  border-radius: 1px;
-  background-color: lightblue;
+  background-color: #95c8fa;
 }
 
-.header {
+.content {
   background-color: #477998;
+  font-family: 'Segoe UI';
+  text-align: left;
 }
 
-.side {
-  width: 10px;
-  background-color: green;
+.field {
+  width: 60px;
+  float:left;
+  padding: 10px;
+  background-color: #6eb8f8;
+  grid-area: left;
+}
+
+.warning {
+  border-left: 10px solid yellow;
+}
+
+.alert1{
+  border-left: 10px solid red;
 }
 
 
