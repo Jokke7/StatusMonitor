@@ -11,6 +11,7 @@ import { StatusMonitorService } from './services/statusmonitor.service';
 import { ShowStatusesComponent } from './installationstatuses/showstatuses.component';
 import { CustomerAssetsComponent } from './customerassets/customerassets.component';
 import { CcrCardComponent } from './ccr-card/ccr-card.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CcrCardComponent } from './ccr-card/ccr-card.component';
     HomeComponent,
     ShowStatusesComponent,
     CustomerAssetsComponent,
-    CcrCardComponent
+    CcrCardComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

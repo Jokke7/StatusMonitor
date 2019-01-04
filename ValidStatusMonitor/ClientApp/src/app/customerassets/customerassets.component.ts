@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
 
 @Component({
+  selector: 'customer-assets',
   templateUrl: './customerassets.component.html'
 })
 

@@ -122,6 +122,8 @@ namespace ValidStatusMonitor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddAzureWebAppDiagnostics();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -142,7 +144,7 @@ namespace ValidStatusMonitor
                .Build();
             }
 
-            loggerFactory.AddAzureWebAppDiagnostics();
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -158,11 +160,20 @@ namespace ValidStatusMonitor
 
             app.Use(async (context, next) =>
             {
+                ILogger _logger = loggerFactory.CreateLogger("Logger");
+                _logger.LogTrace("context trace identifier: ", context.TraceIdentifier);
+                _logger.LogTrace("context to-string", context.User.Identity.ToString());
                 // Challenge authentication before SPA is loaded if user is not authenticated
-                if (!context.User.Identity.IsAuthenticated)
+                if (!context.User.Identity.IsAuthenticated) { 
+                   _logger.LogTrace("ChallangeAsync() called");
                     await context.ChallengeAsync();
+                }
                 else
+                {
+                    _logger.LogTrace("next() called");
                     await next();
+                }
+                    
             });
 
             app.UseSpa(spa =>

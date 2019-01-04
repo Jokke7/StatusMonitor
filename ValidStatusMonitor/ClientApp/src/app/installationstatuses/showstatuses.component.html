@@ -1,6 +1,17 @@
-<h1>All Installations - Status</h1>
+<div id="header-container">
+  <div fxLayout="row wrap"
+       fxLayout.lt-sm="column"
+       fxLayoutGap="0px"
+       fxLayoutAlign="flex-start">
+    
+      <app-header fxFlex="calc(50%)">
 
-<p>Statuses from the server(updated automatically every 15th minute)</p>
+                    <!--fxFlex.lt-lg="0 1 calc(33.33%)"
+                    fxFlex.lt-md="0 1 calc(50%)"-->
+                    fxFlex.lt-sm="100%">
+        </app-header>
+  </div>
+</div>
 
 <p *ngIf="!statusList"><em>Loading...</em></p>
 

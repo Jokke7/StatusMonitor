@@ -16,15 +16,25 @@
   background-color: #477998;
   font-family: 'Segoe UI';
   text-align: left;
+  width: 75%;
 }
 
 .field {
   width: 60px;
-  float:left;
+  max-width:25%;
+  float: left;
   padding: 10px;
   background-color: #6eb8f8;
   grid-area: left;
 }
+
+.field > img {
+    display: flex;
+    align-items: center;
+    max-width: 35px;
+    margin: 10px;
+  }
+
 
 .warning {
   border-left: 10px solid yellow;

@@ -1,18 +1,12 @@
-/*@import '~bootstrap/scss/bootstrap-reboot';
-@import '~bootstrap/scss/bootstrap-grid';*/
 
-/* You can add global styles to this file, and also import other style files */
-
-/*:root {
-  --rusty-orange: #ed7314;
-  --raisin-black: #291f1e;
-  --queen-blue: #477998;
-  --moss-green: #c4d6b0;
-  --olive-drab: #3d3522;
-}*/
 
 body {
-  margin: 10px;
+  width: 100%; /*fallback*/
+  width: 100vw;
+  font-family: 'Segoe UI';
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
 }
 
 .wrapper {
@@ -25,15 +19,19 @@ body {
   margin: 10px;
   border: 1px solid #477998;
   border-radius: 1px;
-  padding-bottom: -1px;
+}
+
+header-container {
+  width: 100%; /*fallback*/
+  width: 100vw;
 }
 
 /*.header {
   grid-column: span 12;
   background-color: var(--raisin-black)
-}
+}*/
 
-.menu {
+/*.menu {
   grid-column: span 2;
   background-color: var(--rusty-orange)
 }
