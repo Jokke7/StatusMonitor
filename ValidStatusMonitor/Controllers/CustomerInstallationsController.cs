@@ -48,7 +48,7 @@ namespace ValidStatusMonitor.Controllers
         }
 
         [HttpGet]
-        [Route("api/Installations")]
+        [Route("api/Installations/All")]
         public IEnumerable<InstallationAssets> AllInstallations()
         {
             return objValidStatusMonitor.GetAllAssets();

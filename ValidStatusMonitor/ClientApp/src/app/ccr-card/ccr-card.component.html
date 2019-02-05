@@ -1,22 +1,81 @@
-
-  <div gdAreas="field content"
+<div class="row" fxFlexFill="TRUE">
+  <div *ngIf="fieldText !='Application'" gdAreas="field content"
        gdGap="4px"
        gdRows="auto"
-       gdCols=" 25% 75%">
+       gdCols=" 33% 66%">
 
-
-
-
-    <div gdArea="field" class="field alert1">
-      <img src="../../assets/icons/database.svg" alt="fieldIcon" />
+    <div gdArea="field" [ngClass]="setFieldStyle()" class="field">
+      <img [src]="fieldIconUri" alt="fieldIcon" />
+      <div class="fieldDesc">{{ccr.ccrType}}</div>
     </div>
-    <div gdArea="content">
-      <ul>
-        <li>status 1</li>
-        <li>status 2</li>
-        <li>status 3</li>
-        <li>status 4</li>
+    <div class="content-container" fxFlex="100">
+      <div *ngIf="ccr.ccrType=='Customer'" gdArea="content" class="content">
+      <ul class="square">
+        <li>Plant name: {{ ccr.PlantName }} </li>
+        <li>Description: {{ ccr.Description }}</li>
+        <li>{{ ccr.LastUpdate | date: shortTime }}</li>
+        <li>{{ ccr.Environment }}</li>
+      </ul>
+      <br />
+    </div>
+
+    <div *ngIf="ccr.ccrType=='Application'" gdArea="content" class="content">
+      <ul class="square">
+        <li>{{ ccr.ApplicationName }}</li>
+        <li>{{ ccr.ApplicationInfo | slice:0:contentViewLimit}}</li>
+        <li>{{ ccr.ApplicationVersion }}</li>
+        <li>{{ ccr.LicenceExpiryDate }}</li>
+        <li>{{ ccr.ApplicationServiceLevel }}</li>
+        <li>{{ ccr.ApplicationServiceHealth }}</li>
       </ul>
     </div>
+
+    <div *ngIf="ccr.ccrType=='Certificates'" gdArea="content" class="content">
+      <ul class="square">
+        <li>Name: {{ ccr.SslFriendlyName }}</li>
+        <li>Expires: {{ ccr.SslExpiryDate | date: shortTime }}</li>
+        <li>Bindings: {{ ccr.SslStatus | slice:0:contentViewLimit }}</li>
+      </ul>
+      <br />
+      <br />
+      <br />
+    </div>
+
+    <div *ngIf="ccr.ccrType=='Storage'" gdArea="content" class="content">
+      <ul class="square">
+        <li>{{ ccr.StorageBlobNFiles }}</li>
+        <li>{{ ccr.StorageBlobSizeMb }}</li>
+        <li>{{ ccr.StorageServiceLevel }}</li>
+      </ul>
+      <br />
+      <br />
+      <br />
+    </div>
+
+    <div *ngIf="ccr.ccrType=='Database'" gdArea="content" class="content">
+      <ul class="square">
+        <li>Name: {{ ccr.DatabaseName }}</li>
+        <li>Server: {{ ccr.DatabaseServer | slice:0:contentViewLimit }}</li>
+        <li>Version: {{ ccr.DatabaseVersion }}</li>
+        <li>Template: {{ ccr.DatabaseTemplate }}</li>
+        <li>Size(MB): {{ ccr.DatabaseSize }}</li>
+        <li>Service Level : {{ ccr.DatabaseServiceLevel }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="ccr.ccrType=='Other assets'" gdArea="content" class="content">
+      <ul class="square">
+        <li>PDFTron: enabled</li>
+        <li>3Dviewer: enabled</li>
+      </ul>
+      
+    </div>
+
+    </div>
+    
+
   </div>
 
+
+
+</div>

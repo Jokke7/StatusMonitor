@@ -8,40 +8,106 @@
 
 :host {
   display: block;
-  padding: 0px;
-  background-color: #95c8fa;
+  padding: 0;
+  padding-bottom: 0;
+  margin-bottom: 10px;
+  border-top: 1px double black;
+  border-bottom: 1px double black;
+}
+
+/*:host(.collapse){
+  display: none;
+}*/
+
+:host(.warning) {
+  /*outline: 6px solid #dfd706;*/
+  /*border-bottom: 6px solid #dfd706;*/
+}
+
+:host(.immediate) {
+  /*border-top: 6px solid orange;*/
+  /*border-bottom: 6px solid orange;*/
+}
+
+:host(.alert1) {
+  /*border-top: 6px solid red;*/
+  /*border-bottom: 6px solid red;*/
+}
+
+.content-container {
+  position:relative;
+  float: left;
+  text-align:left;
+  width: 100%;
+
 }
 
 .content {
-  background-color: #477998;
   font-family: 'Segoe UI';
-  text-align: left;
-  width: 75%;
+  font-size: small;
+  font-weight: 500;
+  margin: 0 auto;
+  position: relative;
 }
 
 .field {
-  width: 60px;
-  max-width:25%;
+  width: 75px !important;
   float: left;
-  padding: 10px;
+  position: relative;
   background-color: #6eb8f8;
+  border-left: 10px solid green;
+  border-right: 1px double black;
+  color: white;
+  font-size: x-small;
+  font-weight: 500;
+  text-align: center;
   grid-area: left;
+  min-height: 170px;
+}
+
+@media screen and (max-width: 1000px) {
+  .content {
+    font-size: large;
+  }
+  .fieldDesc{
+    font-size:large;
+  }
+
+  .field {
+    width: 120px !important;
+    min-width: 120px !important;
+    min-height: 250px;
+  }
 }
 
 .field > img {
-    display: flex;
-    align-items: center;
-    max-width: 35px;
-    margin: 10px;
-  }
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 50%;
+  height: 30px;
+  margin: 10px;
+  padding-left: 4px;
+}
 
 
 .warning {
-  border-left: 10px solid yellow;
+  border-left: 10px solid #dfd706;
+  list-style-image: url('../../assets/gfx/li-el-warn.png');
 }
 
-.alert1{
+.immediate {
+  border-left: 10px solid orange;
+  list-style-image: url('../../assets/gfx/li-el-imd.png');
+}
+
+.alert1 {
   border-left: 10px solid red;
+  list-style-image: url('../../assets/gfx/li-el-alrt.png');
 }
 
+.content > ul {
+  list-style-image: url('../../assets/gfx/li-el-info.png');
+  padding-left: 20px;
+}
 

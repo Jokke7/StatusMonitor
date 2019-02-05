@@ -43,7 +43,7 @@ namespace ValidStatusMonitor.Migrations
 
                     b.Property<int?>("DscMaxStorageBlobSizeMb");
 
-                    b.Property<string>("DscMaxStorageServiceLevel");
+                    b.Property<string>("DscMinStorageServiceLevel");
 
                     b.Property<DateTime?>("DscSslExpiryDate");
 
@@ -133,6 +133,8 @@ namespace ValidStatusMonitor.Migrations
 
                     b.Property<bool>("EnabledPdftron")
                         .HasColumnName("ENABLED_PDFTRON");
+
+                    b.Property<string>("EndpointTestUri");
 
                     b.Property<string>("InstCode")
                         .HasColumnName("INST_CODE")

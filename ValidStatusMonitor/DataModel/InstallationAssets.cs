@@ -15,6 +15,7 @@ namespace ValidStatusMonitor.Models
         public string ApplicationResourceGroup { get; set; }
         public string ApplicationLicenceId { get; set; }
         public string CustomDomainName { get; set; }
+        public string EndpointTestUri { get; set; }
         public string SslThumbprint { get; set; }
         public string StorageAccountKey { get; set; }
         public bool EnabledPdftron { get; set; }

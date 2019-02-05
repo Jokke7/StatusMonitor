@@ -1,5 +1,5 @@
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
+import {throwError as observableThrowError,  Observable} from 'rxjs';
 
 import {map, catchError} from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core'; 
@@ -13,25 +13,40 @@ import { CustomerAssetsData } from '../customerassets/customerassets.component';
    
 @Injectable() 
 export class StatusMonitorService { 
-    appUrl: string = ""; 
+  private appUrl: string = "";
+  //private statusList: StatusMonitorData[];
    
     constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
-        this.appUrl = baseUrl; 
-    } 
+      this.appUrl = baseUrl;
+    }
+
+  //getStatusList(): StatusMonitorData[] {
+  //  return this.statusList;
+  //}
    
-    getAllStatuses() { 
-      return this._http.get<StatusMonitorData[]>(this.appUrl + 'api/Installations/Status/All')
-    } 
+    getAllStatuses() : Observable<StatusMonitorData[]>{
+      try {
+        return this._http.get<StatusMonitorData[]>(this.appUrl + 'api/Installations/Status/All');
+      }
+      catch (e) {
+        console.log(e.message);
+        return Observable.throw(e.message);
+      } 
+    }
 
     getCustomers() {
-      return this._http.get<CustomerAssetsData[]>(this.appUrl + 'api/Customer/All')
-  }  
+      return this._http.get<CustomerAssetsData[]>(this.appUrl + 'api/Customer/All');
+    }  
    
     getCustomerById(id: number) { 
       return this._http.get(this.appUrl + "api/Customer/" + id).pipe( 
             map((response: Response) => response.json()), 
             catchError(this.errorHandler),) 
-    } 
+    }
+
+    getInstallationAssetByCustId(id: number) {
+
+    }
    
     updateEmployee(customer) { 
       return this._http.put(this.appUrl + 'api/Customer/Edit', customer);

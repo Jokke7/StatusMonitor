@@ -21,14 +21,15 @@ import { HeaderComponent } from './header/header.component';
     CustomerAssetsComponent,
     CcrCardComponent,
     HeaderComponent
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    FlexLayoutModule ,
+    FlexLayoutModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'show-statuses', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'show-statuses', component: ShowStatusesComponent },
       { path: 'update-statuses', component: ShowStatusesComponent },

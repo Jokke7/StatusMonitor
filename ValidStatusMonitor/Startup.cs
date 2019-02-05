@@ -27,6 +27,7 @@ namespace ValidStatusMonitor
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; set; }
@@ -116,7 +117,14 @@ namespace ValidStatusMonitor
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            
+            //services.ConfigureExternalCookie(options => {
+            //    // Other options
+            //    options.Cookie.SameSite = SameSiteMode.None;
+            //}); services.ConfigureApplicationCookie(options => {
+            //    // Other options
+            //    options.Cookie.SameSite = SameSiteMode.None;
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -143,8 +151,6 @@ namespace ValidStatusMonitor
                .AddJsonFile("appsettings.Production.json")
                .Build();
             }
-
-            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
