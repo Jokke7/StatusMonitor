@@ -3,71 +3,86 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ccr_card_model_1 = require("./ccr-card-model");
 var StorageProps = /** @class */ (function () {
     function StorageProps() {
-        this.ccrType = ccr_card_model_1.CcrType.Storage;
+        this._ccrType = ccr_card_model_1.CcrType.Storage;
     }
     Object.defineProperty(StorageProps.prototype, "CcrType", {
         get: function () {
-            return this.ccrType;
+            return this._ccrType;
         },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(StorageProps.prototype, "Message", {
-        get: function () {
-            return this.message;
-        },
-        set: function (msg) {
-            this.message = msg;
+        set: function (ct) {
+            this._ccrType = ct;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(StorageProps.prototype, "SeverityLevel", {
         get: function () {
-            return this.severityLevel;
+            return this._severityLevel;
         },
         set: function (sl) {
-            this.severityLevel = sl;
+            this._severityLevel = sl;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(StorageProps.prototype, "Message", {
+        get: function () {
+            return this._message;
+        },
+        set: function (msg) {
+            this._message = msg;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(StorageProps.prototype, "StorageBlobNFiles", {
         get: function () {
-            return this.storageBlobNFiles;
+            return this._storageBlobNFiles;
         },
         set: function (sbnf) {
-            this.storageBlobNFiles = sbnf;
+            this._storageBlobNFiles = sbnf;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(StorageProps.prototype, "StorageBlobSizeMb", {
         get: function () {
-            return this.storageBlobSizeMb;
+            return this._storageBlobSizeMb;
         },
         set: function (sbsm) {
-            this.storageBlobSizeMb = sbsm;
+            this._storageBlobSizeMb = sbsm;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(StorageProps.prototype, "StorageServiceLevel", {
         get: function () {
-            return this.storageServiceLevel;
+            return this._storageServiceLevel;
         },
         set: function (ssl) {
-            this.storageServiceLevel = ssl;
+            this._storageServiceLevel = ssl;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(StorageProps.prototype, "StorageServiceHealth", {
         get: function () {
-            return this.storageServiceHealth;
+            return this._storageServiceHealth;
         },
         set: function (ssh) {
-            this.storageServiceHealth = ssh;
+            this._storageServiceHealth = ssh;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(StorageProps.prototype, "Properties", {
+        get: function () {
+            var allProps = new Array();
+            allProps.push(this._storageBlobNFiles);
+            allProps.push(this._storageBlobSizeMb);
+            allProps.push(this._storageServiceLevel);
+            allProps.push(this._storageServiceHealth);
+            return allProps;
         },
         enumerable: true,
         configurable: true

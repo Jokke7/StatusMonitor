@@ -2,62 +2,74 @@ import { CcrCardModel, CcrType, SeverityLevel } from "./ccr-card-model";
 
 export class StorageProps implements CcrCardModel {
 
-  ccrType: CcrType;
-  message: string;
-  severityLevel: SeverityLevel;
+  private _ccrType: CcrType;
+  private _message: string;
+  private _severityLevel: SeverityLevel;
+  private _properties: Array<any>;
 
-  private storageBlobNFiles: number;
-  private storageBlobSizeMb: number;
-  private storageServiceLevel: string 
-  private storageServiceHealth: string;
+  private _storageBlobNFiles: number;
+  private _storageBlobSizeMb: number;
+  private _storageServiceLevel: string 
+  private _storageServiceHealth: string;
 
   constructor() {
-    this.ccrType = CcrType.Storage;
-
+    this._ccrType = CcrType.Storage;
   }
 
   public get CcrType(): CcrType {
-    return this.ccrType;
+    return this._ccrType;
   }
 
-  public get Message() {
-    return this.message;
-  }
-
-  public set Message(msg) {
-    this.message = msg;
+  public set CcrType(ct: CcrType) {
+    this._ccrType = ct;
   }
 
   public get SeverityLevel(): SeverityLevel {
-    return this.severityLevel;
+    return this._severityLevel;
   }
 
   public set SeverityLevel(sl: SeverityLevel) {
-    this.severityLevel = sl;
+    this._severityLevel = sl;
+  }
+
+  public get Message(): string {
+    return this._message;
+  }
+
+  public set Message(msg: string) {
+    this._message = msg;
   }
 
   public set StorageBlobNFiles(sbnf: number) {
-    this.storageBlobNFiles = sbnf;
+    this._storageBlobNFiles = sbnf;
   }
   public get StorageBlobNFiles(): number {
-    return this.storageBlobNFiles;
+    return this._storageBlobNFiles;
   }
   public set StorageBlobSizeMb(sbsm: number) {
-    this.storageBlobSizeMb = sbsm;
+    this._storageBlobSizeMb = sbsm;
   }
   public get StorageBlobSizeMb(): number {
-    return this.storageBlobSizeMb;
+    return this._storageBlobSizeMb;
   }
   public set StorageServiceLevel(ssl: string) {
-    this.storageServiceLevel = ssl;
+    this._storageServiceLevel = ssl;
   }
   public get StorageServiceLevel(): string {
-    return this.storageServiceLevel;
+    return this._storageServiceLevel;
   }
   public set StorageServiceHealth(ssh: string) {
-    this.storageServiceHealth = ssh;
+    this._storageServiceHealth = ssh;
   }
   public get StorageServiceHealth(): string {
-    return this.storageServiceHealth;
+    return this._storageServiceHealth;
+  }
+  public get Properties(): Array<any> {
+    var allProps: Array<any> = new Array<any>();
+    allProps.push(this._storageBlobNFiles);
+    allProps.push(this._storageBlobSizeMb);
+    allProps.push(this._storageServiceLevel);
+    allProps.push(this._storageServiceHealth);
+    return allProps;
   }
 }

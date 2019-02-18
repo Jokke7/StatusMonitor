@@ -1,65 +1,37 @@
 <div id="header-container">
   <div fxLayout="row wrap"
        fxLayout.lt-sm="column wrap"
-       fxLayoutGap="100px"
        fxLayoutAlign="flex-start">
 
     <app-header fxFlex="calc(50%)">
 
-      <!--fxFlex.lt-lg="0 1 calc(33.33%)"
-      fxFlex.lt-md="0 1 calc(50%)"-->
+      fxFlex.lt-lg="0 1 calc(33.33%)"
+      fxFlex.lt-md="0 1 calc(50%)"
       fxFlex.lt-sm="100%">
     </app-header>
   </div>
 </div>
+ <div class="card-container">
+   <div fxLayout="row wrap"
+        fxLayout.lt-sm="column"
+        fxLayoutGap="0px"
+        fxLayoutAlign="space-evenly center">
 
-<!--<p *ngIf="!statusList"><em>Loading...</em></p>-->
-<!--<p>
-  <a [routerLink]="['/update-statuses']">Hard Update</a>
-</p>-->
+     <ng-container class="row" *ngFor="let card of statusCards">
+      <div *ngIf="card.CcrType =='Customer'" class="row-header" style="width: 100%; height: 30px; background-color: #fcf3d9; padding-top:4px; border-top:1px solid #f09f02; text-align:center;">
+        {{card.PlantName}}
+        <span class="row-headerleft" style="float:right; padding-right:15px; font-family:Arial; font-size:small">Last updated: {{card.LastUpdate | date: 'EEE, hh:mm:ss'}}</span>
+      </div>
 
-<!--<div *ngFor="let status of statuses">
-  Installation and customer<hr />
-  <br />{{ "linje: " + status.PlantName }}
-  <br />{{ "linje: " + status.LastUpdate }}
-  <br />{{ "linje: " + status.CustomerId }}
-  <br />{{ "linje: " + status.Description }}
-  <br />{{ "linje: " + status.Environment }}
-  <br /> Application<hr />   
-  <br />{{ "linje: " + status.ApplicationName }}
-  <br />{{ "linje: " + status.ApplicationInfo }}
-  <br />{{ "linje: " + status.ApplicationVersion }}
-  <br />{{ "linje: " + status.LicenceExpiryDate }}
-  <br />{{ "linje: " + status.ApplicationServiceHealth }}
-  <br /> SSL<hr />           
-  <br />{{ "linje: " + status.SslFriendlyName }}
-  <br />{{ "linje: " + status.SslExpiryDate }}
-  <br />{{ "linje: " + status.SslStatus }}
-  <br /> Storage <hr />      
-  <br />{{ "linje: " + status.StorageBlobNFiles }}
-  <br />{{ "linje: " + status.StorageBlobSizeMb }}
-  <br />{{ "linje: " + status.StorageServiceLevel }}
-  <br />{{ "linje: " + status.StorageServiceHealth }}
-  <br /> Database<hr />      
-  <br />{{ "linje: " + status.DatabaseName }}
-  <br />{{ "linje: " + status.DatabaseServer }}
-  <br />{{ "linje: " + status.DatabaseVersion }}
-  <br />{{ "linje: " + status.DatabaseTemplate }}
-  <br />{{ "linje: " + status.DatabaseSizeMb }}
-  <br />{{ "linje: " + status.DatabaseServiceLevel }}-->
-
-<div class="row-container">
-  <div fxLayout="row wrap"
-       fxLayout.lt-sm="column"
-       fxLayoutGap="0px"
-       fxLayoutAlign="flex-start">
-    <ng-container class="row" *ngFor="let card of statusCards">
       <app-ccr-card [ccr]="card"
                     fxFlex="0 1 calc(16.66%)"
                     fxFlex.lt-lg="0 1 calc(33.33%)"
                     fxFlex.lt-md="0 1 calc(50%)"
-                    fxFlex.lt-sm="100%"></app-ccr-card>
-    </ng-container>
-  </div>
-</div>
+                    fxFlex.lt-sm="100%">
+      </app-ccr-card>
 
+  </ng-container>
+    
+
+</div>
+ </div>

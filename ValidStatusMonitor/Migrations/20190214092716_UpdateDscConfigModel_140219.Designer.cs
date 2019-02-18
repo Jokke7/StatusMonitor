@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ValidStatusMonitor.Models;
 
 namespace ValidStatusMonitor.Migrations
 {
     [DbContext(typeof(ValidStatusMonitorContext))]
-    partial class ValidStatusMonitorContextModelSnapshot : ModelSnapshot
+    [Migration("20190214092716_UpdateDscConfigModel_140219")]
+    partial class UpdateDscConfigModel_140219
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,8 +234,6 @@ namespace ValidStatusMonitor.Migrations
                     b.Property<string>("Environment")
                         .HasColumnName("ENVIRONMENT")
                         .HasMaxLength(80);
-
-                    b.Property<string>("HttpResponseE2eTest");
 
                     b.Property<DateTime>("LastUpdate")
                         .ValueGeneratedOnAdd()

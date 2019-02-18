@@ -78,6 +78,31 @@ namespace ValidStatusMonitor.Models
             }
         }
 
+        //Get the assets of one customer
+        internal IEnumerable<InstallationAssets> GetCustomerAssets(int id)
+        {
+            List<InstallationAssets> listAssets = new List<InstallationAssets>();
+            listAssets = (from AssetList in db.InstallationAssets where AssetList.CustomerId == id select AssetList).ToList();
+
+            return listAssets;
+        }
+
+        internal InstallationAssets GetCustomerInstallationAsset(int id, string installationName)
+        {
+            try
+            {
+                List<InstallationAssets> listAssets = GetCustomerAssets(id).ToList();
+
+                InstallationAssets asset = listAssets.Find(x => x.ApplicationName.Equals(installationName));
+                return asset;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
         //Get the details of a particular customer 
         public Customer GetCustomer(int id)
         {

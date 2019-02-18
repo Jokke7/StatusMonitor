@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var SeverityLevel;
 (function (SeverityLevel) {
-    SeverityLevel[SeverityLevel["Informational"] = 0] = "Informational";
-    SeverityLevel[SeverityLevel["Warning"] = 1] = "Warning";
-    SeverityLevel[SeverityLevel["Immediate"] = 2] = "Immediate";
-    SeverityLevel[SeverityLevel["Alert"] = 3] = "Alert";
+    SeverityLevel["Informational"] = "INFO";
+    SeverityLevel["Warning"] = "WARN";
+    SeverityLevel["Immediate"] = "IMDT";
+    SeverityLevel["Alert"] = "ALERT";
 })(SeverityLevel = exports.SeverityLevel || (exports.SeverityLevel = {}));
 var CcrType;
 (function (CcrType) {

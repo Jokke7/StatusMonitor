@@ -2,57 +2,71 @@ import { CcrCardModel, CcrType, SeverityLevel } from "./ccr-card-model";
 
 export class CertificateProps implements CcrCardModel {
 
-  ccrType: CcrType;
-  message: string;
-  severityLevel: SeverityLevel;
+  private _ccrType: CcrType;
+  private _message: string;
+  private _severityLevel: SeverityLevel;
+  private _properties: Array<any>;
 
-  private sslName: string;
-  private sslExpiryDate: Date;
-  private sslStatus: string;
+
+  private _sslName: string;
+  private _sslExpiryDate: Date;
+  private _sslStatus: string;
 
   constructor() {
-    this.ccrType = CcrType.Certificate;
+    this._ccrType = CcrType.Certificate;
   }
 
   public get CcrType(): CcrType {
-    return this.ccrType;
+    return this._ccrType;
   }
 
-  public get Message() {
-    return this.message;
+  public set CcrType(ct: CcrType) {
+    this._ccrType = ct;
   }
 
-  public set Message(msg) {
-    this.message = msg;
+  public get Message(): string {
+    return this._message;
+  }
+
+  public set Message(msg: string) {
+    this._message = msg;
   }
 
   public get SeverityLevel(): SeverityLevel {
-    return this.severityLevel;
+    return this._severityLevel;
   }
 
   public set SeverityLevel(sl: SeverityLevel) {
-    this.severityLevel = sl;
+    this._severityLevel = sl;
   }
 
   public set SslName(sn: string) {
-    this.sslName = sn;
+    this._sslName = sn;
   }
   public get SslName(): string {
-    return this.sslName;
+    return this._sslName;
   }
 
   public set SslExpiryDate(sed: Date) {
-    this.sslExpiryDate = sed;
+    this._sslExpiryDate = sed;
   }
   public get SslExpiryDate(): Date {
-    return this.sslExpiryDate;
+    return this._sslExpiryDate;
   }
 
   public set SslStatus(ss: string) {
-    this.sslStatus = ss;
+    this._sslStatus = ss;
   }
   public get SslStatus(): string {
-    return this.sslStatus;
+    return this._sslStatus;
+  }
+  public get Properties(): Array<any> {
+    var allProps: Array<any> = new Array<any>();
+    allProps.push(this._sslName);
+    allProps.push(this._sslExpiryDate);
+    allProps.push(this._sslStatus);
+
+    return allProps;
   }
 }
 

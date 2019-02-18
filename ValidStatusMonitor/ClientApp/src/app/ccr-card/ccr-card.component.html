@@ -1,72 +1,70 @@
 <div class="row" fxFlexFill="TRUE">
-  <div *ngIf="fieldText !='Application'" gdAreas="field content"
+  <div gdAreas="field content"
        gdGap="4px"
        gdRows="auto"
        gdCols=" 33% 66%">
 
     <div gdArea="field" [ngClass]="setFieldStyle()" class="field">
       <img [src]="fieldIconUri" alt="fieldIcon" />
-      <div class="fieldDesc">{{ccr.ccrType}}</div>
+      <span class="fieldDesc">{{ccr.CcrType}}</span>
+      <div *ngIf="ccr.SeverityLevel != 'INFO'">
+        <img [src]="ntfIconUri" alt="notification Icon" style="position:relative;top:50px; width: 20px;" pTooltip={{ccr.Message}} tooltipPosition="bottom" [escape]=false/>
+
+      </div>
     </div>
     <div class="content-container" fxFlex="100">
-      <div *ngIf="ccr.ccrType=='Customer'" gdArea="content" class="content">
-      <ul class="square">
-        <li>Plant name: {{ ccr.PlantName }} </li>
-        <li>Description: {{ ccr.Description }}</li>
-        <li>{{ ccr.LastUpdate | date: shortTime }}</li>
-        <li>{{ ccr.Environment }}</li>
-      </ul>
+      <div *ngIf="ccr.CcrType=='Customer'" gdArea="content" class="content">
+        <ul class="square">
+          <li>Plant name: {{ ccr.PlantName }} </li>
+          <li>Description: {{ ccr.Description }}</li>
+          <li>Last update: {{ ccr.LastUpdate | date: 'EEE, hh:mm:ss' }}</li>
+          <li>Licence exp: {{ ccr.LicenceExpiryDate | date: shortTime }}</li>
+          <li>Environment: {{ ccr.Environment }}</li>
+        </ul>
       <br />
     </div>
 
-    <div *ngIf="ccr.ccrType=='Application'" gdArea="content" class="content">
+    <div *ngIf="ccr.CcrType=='Application'" gdArea="content" class="content">
       <ul class="square">
-        <li>{{ ccr.ApplicationName }}</li>
-        <li>{{ ccr.ApplicationInfo | slice:0:contentViewLimit}}</li>
-        <li>{{ ccr.ApplicationVersion }}</li>
-        <li>{{ ccr.LicenceExpiryDate }}</li>
-        <li>{{ ccr.ApplicationServiceLevel }}</li>
-        <li>{{ ccr.ApplicationServiceHealth }}</li>
+        <li>App name: {{ ccr.ApplicationName }}</li>
+        <li>Info: {{ ccr.ApplicationInfo | slice:0:contentViewLimit}}</li>
+        <li>Version: {{ ccr.ApplicationVersion }}</li>
+        <!--<li>Service Level: {{ ccr.ApplicationServiceLevel }}</li>-->
+        <li>Service Health: {{ ccr.ApplicationServiceHealth }}</li>
       </ul>
     </div>
 
-    <div *ngIf="ccr.ccrType=='Certificates'" gdArea="content" class="content">
+    <div *ngIf="ccr.CcrType=='Certificates'" gdArea="content" class="content">
       <ul class="square">
         <li>Name: {{ ccr.SslFriendlyName }}</li>
         <li>Expires: {{ ccr.SslExpiryDate | date: shortTime }}</li>
         <li>Bindings: {{ ccr.SslStatus | slice:0:contentViewLimit }}</li>
       </ul>
-      <br />
-      <br />
-      <br />
     </div>
 
-    <div *ngIf="ccr.ccrType=='Storage'" gdArea="content" class="content">
+    <div *ngIf="ccr.CcrType=='Storage'" gdArea="content" class="content">
       <ul class="square">
-        <li>{{ ccr.StorageBlobNFiles }}</li>
-        <li>{{ ccr.StorageBlobSizeMb }}</li>
-        <li>{{ ccr.StorageServiceLevel }}</li>
+        <li>#Files: {{ ccr.StorageBlobNFiles }}</li>
+        <li>#Size: {{ ccr.StorageBlobSizeMb }}</li>
+        <li>Service Level: {{ ccr.StorageServiceLevel }}</li>
       </ul>
-      <br />
-      <br />
-      <br />
     </div>
 
-    <div *ngIf="ccr.ccrType=='Database'" gdArea="content" class="content">
+    <div *ngIf="ccr.CcrType=='Database'" gdArea="content" class="content">
       <ul class="square">
         <li>Name: {{ ccr.DatabaseName }}</li>
         <li>Server: {{ ccr.DatabaseServer | slice:0:contentViewLimit }}</li>
         <li>Version: {{ ccr.DatabaseVersion }}</li>
         <li>Template: {{ ccr.DatabaseTemplate }}</li>
         <li>Size(MB): {{ ccr.DatabaseSize }}</li>
-        <li>Service Level : {{ ccr.DatabaseServiceLevel }}</li>
+        <li>Service Level: {{ ccr.DatabaseServiceLevel }}</li>
       </ul>
     </div>
 
-    <div *ngIf="ccr.ccrType=='Other assets'" gdArea="content" class="content">
+    <div *ngIf="ccr.CcrType=='Other assets'" gdArea="content" class="content">
       <ul class="square">
-        <li>PDFTron: enabled</li>
-        <li>3Dviewer: enabled</li>
+        <li>PDFTron: {{ ccr.EnabledPdfTron }}</li>
+        <li>3Dviewer: {{ ccr.Enabled3dViewer }}</li>
       </ul>
       
     </div>

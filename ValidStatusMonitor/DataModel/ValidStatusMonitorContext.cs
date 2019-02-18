@@ -13,7 +13,6 @@ namespace ValidStatusMonitor.Models
         {
         }
 
-        private IConfiguration Configuration;
 
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<InstallationAssets> InstallationAssets { get; set; }

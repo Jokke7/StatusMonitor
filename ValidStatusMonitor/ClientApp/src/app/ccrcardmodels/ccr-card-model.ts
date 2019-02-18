@@ -1,16 +1,16 @@
 export interface CcrCardModel {
-  message: string;
-  ccrType: CcrType;
-  severityLevel: SeverityLevel;
+  Message: string;
+  CcrType: CcrType;
+  SeverityLevel: SeverityLevel;
+  Properties: Array<any>;
 }
 
 
 export enum SeverityLevel {
-  Informational,
-  Warning,
-  Immediate,
-  Alert
-
+  Informational = "INFO",
+  Warning = "WARN",
+  Immediate = "IMDT",
+  Alert = "ALERT"
 }
 
 export enum CcrType {

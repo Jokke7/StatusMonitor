@@ -11,8 +11,10 @@
   padding: 0;
   padding-bottom: 0;
   margin-bottom: 10px;
-  border-top: 1px double black;
-  border-bottom: 1px double black;
+  background-color: white;
+  border-top: 1px double #01495f;
+  border-bottom: 1px double #01495f;
+  border-right: 1px double #01495f;
 }
 
 /*:host(.collapse){
@@ -39,12 +41,11 @@
   float: left;
   text-align:left;
   width: 100%;
-
 }
 
 .content {
   font-family: 'Segoe UI';
-  font-size: small;
+  font-size: x-small;
   font-weight: 500;
   margin: 0 auto;
   position: relative;
@@ -52,9 +53,6 @@
 
 .field {
   width: 75px !important;
-  float: left;
-  position: relative;
-  background-color: #6eb8f8;
   border-left: 10px solid green;
   border-right: 1px double black;
   color: white;
@@ -63,22 +61,32 @@
   text-align: center;
   grid-area: left;
   min-height: 170px;
+  background-color:slategrey;
 }
 
-@media screen and (max-width: 1000px) {
-  .content {
-    font-size: large;
+  .field > img {
+     fill: black;
   }
-  .fieldDesc{
-    font-size:large;
+
+
+@media screen and (max-width: 1280px) {
+  .content {
+    font-size: medium;
+  }
+
+  .fieldDesc {
+    font-size: medium;
   }
 
   .field {
     width: 120px !important;
     min-width: 120px !important;
     min-height: 250px;
+    max-height: 250px;
+    width: 250px;
   }
 }
+
 
 .field > img {
   display: flex;
@@ -89,7 +97,6 @@
   margin: 10px;
   padding-left: 4px;
 }
-
 
 .warning {
   border-left: 10px solid #dfd706;
@@ -107,7 +114,7 @@
 }
 
 .content > ul {
-  list-style-image: url('../../assets/gfx/li-el-info.png');
+  list-style-image: url('../../assets/gfx/li-el-imd.png');
   padding-left: 20px;
 }
 

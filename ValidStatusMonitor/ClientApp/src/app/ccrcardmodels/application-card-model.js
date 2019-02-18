@@ -3,95 +3,107 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ccr_card_model_1 = require("./ccr-card-model");
 var ApplicationProps = /** @class */ (function () {
     function ApplicationProps() {
-        this.ccrType = ccr_card_model_1.CcrType.AppService;
+        this._ccrType = ccr_card_model_1.CcrType.AppService;
     }
     Object.defineProperty(ApplicationProps.prototype, "CcrType", {
         get: function () {
-            return this.ccrType;
+            return this._ccrType;
+        },
+        set: function (ct) {
+            this._ccrType = ct;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "Message", {
         get: function () {
-            return this.message;
+            return this._message;
         },
         set: function (msg) {
-            this.message = msg;
+            this._message = msg;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "SeverityLevel", {
         get: function () {
-            return this.severityLevel;
+            return this._severityLevel;
         },
         set: function (sl) {
-            this.severityLevel = sl;
+            this._severityLevel = sl;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "ApplicationName", {
         get: function () {
-            return this.applicationName;
+            return this._applicationName;
         },
         set: function (an) {
-            this.applicationName = an;
+            this._properties.push(an);
+            this._applicationName = an;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "ApplicationInfo", {
         get: function () {
-            return this.applicationInfo;
+            return this._applicationInfo;
         },
         set: function (ai) {
-            this.applicationInfo = ai;
+            this._properties.push(ai);
+            this._applicationInfo = ai;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "ApplicationVersion", {
         get: function () {
-            return this.applicationVersion;
+            return this._applicationVersion;
         },
         set: function (av) {
-            this.applicationVersion = av;
+            this._properties.push(av);
+            this._properties.push(av);
+            this._applicationVersion = av;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "LicenceExpiryDate", {
         get: function () {
-            return this.licenceExpiryDate;
+            return this._licenceExpiryDate;
         },
         set: function (led) {
-            this.licenceExpiryDate = led;
+            this._properties.push(led);
+            this._licenceExpiryDate = led;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "ApplicationServiceHealth", {
         get: function () {
-            return this.applicationServiceHealth;
+            return this._applicationServiceHealth;
         },
         set: function (ash) {
-            this.applicationServiceHealth = ash;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApplicationProps.prototype, "DatabaseServiceLevel", {
-        get: function () {
-            return this.applicationServiceLevel;
+            this._properties.push(ash);
+            this._applicationServiceHealth = ash;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(ApplicationProps.prototype, "ApplicationServiceLevel", {
+        get: function () {
+            return this._applicationServiceLevel;
+        },
         set: function (asl) {
-            this.applicationServiceLevel = asl;
+            this._applicationServiceLevel = asl;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApplicationProps.prototype, "Properties", {
+        get: function () {
+            return this._properties;
         },
         enumerable: true,
         configurable: true

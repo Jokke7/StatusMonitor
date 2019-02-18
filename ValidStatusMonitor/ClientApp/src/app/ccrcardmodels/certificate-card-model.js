@@ -3,61 +3,75 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ccr_card_model_1 = require("./ccr-card-model");
 var CertificateProps = /** @class */ (function () {
     function CertificateProps() {
-        this.ccrType = ccr_card_model_1.CcrType.Certificate;
+        this._ccrType = ccr_card_model_1.CcrType.Certificate;
     }
     Object.defineProperty(CertificateProps.prototype, "CcrType", {
         get: function () {
-            return this.ccrType;
+            return this._ccrType;
+        },
+        set: function (ct) {
+            this._ccrType = ct;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CertificateProps.prototype, "Message", {
         get: function () {
-            return this.message;
+            return this._message;
         },
         set: function (msg) {
-            this.message = msg;
+            this._message = msg;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CertificateProps.prototype, "SeverityLevel", {
         get: function () {
-            return this.severityLevel;
+            return this._severityLevel;
         },
         set: function (sl) {
-            this.severityLevel = sl;
+            this._severityLevel = sl;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CertificateProps.prototype, "SslName", {
         get: function () {
-            return this.sslName;
+            return this._sslName;
         },
         set: function (sn) {
-            this.sslName = sn;
+            this._sslName = sn;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CertificateProps.prototype, "SslExpiryDate", {
         get: function () {
-            return this.sslExpiryDate;
+            return this._sslExpiryDate;
         },
         set: function (sed) {
-            this.sslExpiryDate = sed;
+            this._sslExpiryDate = sed;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(CertificateProps.prototype, "SslStatus", {
         get: function () {
-            return this.sslStatus;
+            return this._sslStatus;
         },
         set: function (ss) {
-            this.sslStatus = ss;
+            this._sslStatus = ss;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CertificateProps.prototype, "Properties", {
+        get: function () {
+            var allProps = new Array();
+            allProps.push(this._sslName);
+            allProps.push(this._sslExpiryDate);
+            allProps.push(this._sslStatus);
+            return allProps;
         },
         enumerable: true,
         configurable: true

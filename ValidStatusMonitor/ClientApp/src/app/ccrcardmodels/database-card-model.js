@@ -3,91 +3,108 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ccr_card_model_1 = require("./ccr-card-model");
 var DatabaseProps = /** @class */ (function () {
     function DatabaseProps() {
-        this.ccrType = ccr_card_model_1.CcrType.Database;
+        this._ccrType = ccr_card_model_1.CcrType.Database;
     }
     Object.defineProperty(DatabaseProps.prototype, "CcrType", {
         get: function () {
-            return this.ccrType;
+            return this._ccrType;
         },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DatabaseProps.prototype, "Message", {
-        get: function () {
-            return this.message;
-        },
-        set: function (msg) {
-            this.message = msg;
+        set: function (ct) {
+            this._ccrType = ct;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "SeverityLevel", {
         get: function () {
-            return this.severityLevel;
+            return this._severityLevel;
         },
         set: function (sl) {
-            this.severityLevel = sl;
+            this._severityLevel = sl;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatabaseProps.prototype, "Message", {
+        get: function () {
+            return this._message;
+        },
+        set: function (msg) {
+            this._message = msg;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseName", {
         get: function () {
-            return this.databaseName;
+            return this._databaseName;
         },
         set: function (dbn) {
-            this.databaseName = dbn;
+            this._databaseName = dbn;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseServer", {
         get: function () {
-            return this.databaseServer;
+            return this._databaseServer;
         },
         set: function (dbs) {
-            this.databaseServer = dbs;
+            this._databaseServer = dbs;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseVersion", {
         get: function () {
-            return this.databaseVersion;
+            return this._databaseVersion;
         },
         set: function (dbv) {
-            this.databaseVersion = dbv;
+            this._databaseVersion = dbv;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseTemplate", {
         get: function () {
-            return this.databaseTemplate;
+            return this._databaseTemplate;
         },
         set: function (dbt) {
-            this.databaseTemplate = dbt;
+            this._databaseTemplate = dbt;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseSize", {
         get: function () {
-            return this.databaseSize;
+            return this._databaseSize;
         },
         set: function (dbs) {
-            this.databaseSize = dbs;
+            this._databaseSize = dbs;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseServiceLevel", {
         get: function () {
-            return this.databaseServiceLevel;
+            return this._databaseServiceLevel;
         },
         set: function (dbl) {
-            this.databaseServiceLevel = dbl;
+            this._databaseServiceLevel = dbl;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DatabaseProps.prototype, "Properties", {
+        get: function () {
+            var allProps = new Array();
+            allProps.push(this._databaseName);
+            allProps.push(this._databaseServer);
+            allProps.push(this._databaseVersion);
+            allProps.push(this._databaseTemplate);
+            allProps.push(this._databaseSize);
+            allProps.push(this._databaseServiceLevel);
+            return allProps;
         },
         enumerable: true,
         configurable: true

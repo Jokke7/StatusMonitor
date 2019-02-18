@@ -1,21 +1,22 @@
+
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
-import { CcrCardComponent } from '../ccr-card/ccr-card.component';
-import { DatabaseProps } from '../CcrCardModels/database-card-model';
-import { CcrCardModel, CcrType, SeverityLevel } from '../CcrCardModels/ccr-card-model';
-import { MiscProps } from '../CcrCardModels/misc-card-model';
-import { ApplicationProps } from '../CcrCardModels/application-card-model';
-import { CertificateProps } from '../CcrCardModels/certificate-card-model';
-import { StorageProps } from '../CcrCardModels/storage-card-model';
-import { CustomerProps } from '../CcrCardModels/customer-card-model';
+import { DatabaseProps } from '../ccrcardmodels/database-card-model';
+import { CcrCardModel, CcrType } from '../ccrcardmodels/ccr-card-model';
+import { MiscProps } from '../ccrcardmodels/misc-card-model';
+import { ApplicationProps } from '../ccrcardmodels/application-card-model';
+import { CertificateProps } from '../ccrcardmodels/certificate-card-model';
+import { StorageProps } from '../ccrcardmodels/storage-card-model';
+import { CustomerProps } from '../ccrcardmodels/customer-card-model';
+import { CustomerAssetsData } from '../customerassets/customerassets.component';
 
 export interface StatusMonitorData {
   StatusId: string;
   PlantName: string;
   LastUpdate: Date;
-  //CustomerId: number;
+  CustomerId: number;
   Description: string;
   Environment: string;
   ApplicationName: string;
@@ -23,31 +24,32 @@ export interface StatusMonitorData {
   ApplicationVersion: string;
   LicenceExpiryDate: Date;
   ApplicationServiceHealth: string;
-  SslName: string;
+  SslFriendlyName: string;
   SslExpiryDate: Date;
   SslStatus: string;
   StorageBlobNFiles: number;
   StorageBlobSizeMb: number;
-  StorageSL: string;
-  StorageSH: string;
+  StorageServiceLevel: string;
+  StorageServiceHealth: string;
   DatabaseName: string;
   DatabaseServer: string;
   DatabaseVersion: string;
   DatabaseTemplate: string;
   DatabaseSizeMb: number;
   DatabaseServiceLevel: string;
-  DatabaseSH: string;
+  DatabaseServiceHealth: string;
 }
 
 @Component({
-  templateUrl: './showstatuses.component.html'
+  templateUrl: './showstatuses.component.html',
+  styleUrls: ['./showstatuses.component.css']
 })
 
 export class ShowStatusesComponent implements OnInit{
   public statuses: StatusMonitorData[];
-  public databaseCcr;
-  public customerCcr;
+  public assets: CustomerAssetsData[];
   public statusCards: Array<CcrCardModel>;
+
 
   constructor(public http: HttpClient, private _router: Router, private _statusMonitorService: StatusMonitorService) {
     this.statusCards = new Array<CcrCardModel>();
@@ -55,19 +57,27 @@ export class ShowStatusesComponent implements OnInit{
 
   ngOnInit() {
     this.getStatuses();
+
   }
 
   getStatuses() {
     this._statusMonitorService.getAllStatuses()
       .subscribe((data: StatusMonitorData[]) => {
         this.statuses = data;
+        this.getAssets();
         this.setCcrCards();
+
       })
-    
+  }
+
+  getAssets() {
+    this._statusMonitorService.getCustomerAssets()
+      .subscribe((data: CustomerAssetsData[]) => {
+        this.assets = data;
+      })
   }
 
   private setCcrCards() {
-
     for (let status of this.statuses) {
       var customerCard = {} as CustomerProps;
       var applicationCard = {} as ApplicationProps;
@@ -75,46 +85,51 @@ export class ShowStatusesComponent implements OnInit{
       var certificatesCard = {} as CertificateProps;
       var storageCard = {} as StorageProps;
       var miscCard = {} as MiscProps;
+  
+
       //customerCard.CustomerId = status.CustomerId;
       customerCard.Description = status.Description;
       customerCard.Environment = status.Environment;
       customerCard.LastUpdate = status.LastUpdate;
       customerCard.PlantName = status.PlantName;
-      customerCard.ccrType = CcrType.Customer;
-      customerCard.severityLevel = SeverityLevel.Immediate;
+      customerCard.LicenceExpiryDate = status.LicenceExpiryDate;
+      customerCard.CcrType = CcrType.Customer;
+
 
       applicationCard.ApplicationName = status.ApplicationName;
       applicationCard.ApplicationInfo = status.ApplicationInfo;
       applicationCard.ApplicationVersion = status.ApplicationVersion;
-      applicationCard.ApplicationServiceLevel = "s1";
+      applicationCard.LicenceExpiryDate = status.LicenceExpiryDate;
+      applicationCard.ApplicationServiceLevel = "s1"
       applicationCard.ApplicationServiceHealth = status.ApplicationServiceHealth;
-      applicationCard.ccrType = CcrType.AppService;
-      applicationCard.severityLevel = SeverityLevel.Immediate;
+      applicationCard.CcrType = CcrType.AppService;
 
       databaseCard.DatabaseName = status.DatabaseName;
       databaseCard.DatabaseServer = status.DatabaseServer;
+      console.log("Server:" + databaseCard.DatabaseServer);
       databaseCard.DatabaseServiceLevel = status.DatabaseServiceLevel;
       databaseCard.DatabaseSize = status.DatabaseSizeMb;
       databaseCard.DatabaseTemplate = status.DatabaseTemplate;
       databaseCard.DatabaseVersion = status.DatabaseVersion;
-      databaseCard.ccrType = CcrType.Database;
-      databaseCard.severityLevel = SeverityLevel.Alert;
+      databaseCard.CcrType = CcrType.Database;
 
-      certificatesCard.SslName = status.SslName;
+
+      certificatesCard.SslName = status.SslFriendlyName;
       certificatesCard.SslExpiryDate = status.SslExpiryDate;
       certificatesCard.SslStatus = status.SslStatus;
-      certificatesCard.ccrType = CcrType.Certificate;
-      certificatesCard.severityLevel = SeverityLevel.Warning;
+      certificatesCard.CcrType = CcrType.Certificate;
+
 
       storageCard.StorageBlobNFiles = status.StorageBlobNFiles;
       storageCard.StorageBlobSizeMb = status.StorageBlobSizeMb;
-      storageCard.StorageServiceLevel = status.StorageSL;
-      storageCard.StorageServiceHealth = status.StorageSH;
-      storageCard.ccrType = CcrType.Storage;
-      storageCard.severityLevel = SeverityLevel.Informational;
+      storageCard.StorageServiceLevel = status.StorageServiceLevel;
+      storageCard.StorageServiceHealth = status.StorageServiceHealth;
+      storageCard.CcrType = CcrType.Storage;
 
-      //miscCard.
-      miscCard.ccrType = CcrType.Misc;
+      
+
+      miscCard.CcrType = CcrType.Misc;
+      
       this.statusCards.push(customerCard);
       this.statusCards.push(applicationCard);
       this.statusCards.push(databaseCard);
@@ -122,7 +137,7 @@ export class ShowStatusesComponent implements OnInit{
       this.statusCards.push(storageCard);
       this.statusCards.push(miscCard);
     }
-    
+    this._statusMonitorService.getCcrStatusSeverity(this.statusCards);
   }
 
   getCcrCards(): Array<CcrCardModel> {

@@ -29,6 +29,8 @@ namespace ValidStatusMonitor.Models
         public string DatabaseServiceHealth { get; set; }
         public int? DatabaseSizeMb { get; set; }
         public string DatabaseServiceLevel { get; set; }
+
+        public string HttpResponseE2eTest { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

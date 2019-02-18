@@ -1,0 +1,26 @@
+
+
+.row-container:nth-child(odd) > div {
+  background: blue;
+}
+
+.row-container:nth-child(even) > div {
+  background: red;
+}
+
+
+
+row-header {
+  width: 100%;
+  height: 30px;
+  background-color: #f09f02;
+  padding-bottom: 20px;
+  border-top: 1px solid #01495f;
+  text-align: center;
+  color: white;
+}
+
+
+.ui-accordion-content-wrapper-overflown {
+  overflow: hidden;
+}
