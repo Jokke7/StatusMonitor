@@ -14,15 +14,6 @@ var CcrType;
     CcrType["AppService"] = "Application";
     CcrType["Database"] = "Database";
     CcrType["Storage"] = "Storage";
-    CcrType["Misc"] = "Other assets";
+    CcrType["Misc"] = "Packages";
 })(CcrType = exports.CcrType || (exports.CcrType = {}));
-var CcrUtil = /** @class */ (function () {
-    function CcrUtil() {
-    }
-    CcrUtil.toString = function (ct) {
-        return CcrType[ct];
-    };
-    return CcrUtil;
-}());
-exports.CcrUtil = CcrUtil;
 //# sourceMappingURL=ccr-card-model.js.map

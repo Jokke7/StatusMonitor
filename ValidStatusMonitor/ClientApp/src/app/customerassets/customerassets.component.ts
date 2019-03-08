@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
-import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'customer-assets',
@@ -40,4 +39,12 @@ export interface CustomerAssetsData {
   InstCode: string;
   PlantName: string;
   Customer: Object;
+}
+
+export interface Customer {
+  Id: number;
+  Name: string;
+  CreatedDate: Date;
+  Email: string; 
+  Description: string;
 }

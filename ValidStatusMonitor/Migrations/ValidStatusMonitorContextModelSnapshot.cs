@@ -141,12 +141,6 @@ namespace ValidStatusMonitor.Migrations
                         .HasColumnName("DATABASE_SERVER")
                         .HasMaxLength(100);
 
-                    b.Property<bool>("Enabled3d")
-                        .HasColumnName("ENABLED_3D");
-
-                    b.Property<bool>("EnabledPdftron")
-                        .HasColumnName("ENABLED_PDFTRON");
-
                     b.Property<string>("EndpointTestUri");
 
                     b.Property<string>("InstCode")
@@ -229,6 +223,15 @@ namespace ValidStatusMonitor.Migrations
                         .HasColumnName("DESCRIPTION")
                         .HasMaxLength(255);
 
+                    b.Property<string>("E2eTestUri")
+                        .HasColumnName("E2E_TEST_URI");
+
+                    b.Property<bool?>("Enabled3dViewer")
+                        .HasColumnName("ENABLED_3D_VIEWER");
+
+                    b.Property<bool?>("EnabledPdfTron")
+                        .HasColumnName("ENABLED_PDFTRON_VIEWER");
+
                     b.Property<string>("Environment")
                         .HasColumnName("ENVIRONMENT")
                         .HasMaxLength(80);
@@ -242,6 +245,12 @@ namespace ValidStatusMonitor.Migrations
 
                     b.Property<DateTime?>("LicenceExpiryDate")
                         .HasColumnName("LICENCE_EXPIRY_DATE");
+
+                    b.Property<string>("LicenceNumber")
+                        .HasColumnName("LICENCE_NUMBER");
+
+                    b.Property<string>("LicenceServer")
+                        .HasColumnName("LICENCE_SERVER");
 
                     b.Property<string>("PlantName")
                         .HasColumnName("PLANT_NAME")

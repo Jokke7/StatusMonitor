@@ -51,8 +51,8 @@
     <None Remove="ClientApp\src\app\ccrcardmodels\database-card-model.ts" />
     <None Remove="ClientApp\src\app\ccrcardmodels\misc-card-model.ts" />
     <None Remove="ClientApp\src\app\ccrcardmodels\storage-card-model.ts" />
-    <None Remove="ClientApp\src\app\customerassets\customerassets.component.ts" />
     <None Remove="ClientApp\src\app\helpers\formatter.ts" />
+    <None Remove="ClientApp\src\app\helpers\util.ts" />
     <None Remove="ClientApp\src\app\installationstatuses\showstatuses.component.ts" />
     <None Remove="ClientApp\src\app\services\statusmonitor.service.ts" />
   </ItemGroup>
@@ -65,8 +65,8 @@
     <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\database-card-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\misc-card-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\storage-card-model.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\customerassets\customerassets.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\helpers\formatter.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\helpers\util.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\installationstatuses\showstatuses.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\statusmonitor.service.ts" />
   </ItemGroup>

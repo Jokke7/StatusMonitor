@@ -13,6 +13,8 @@ namespace ValidStatusMonitor.Models
         public string ApplicationName { get; set; }
         public string ApplicationInfo { get; set; }
         public string ApplicationVersion { get; set; }
+        public string LicenceNumber { get; set; }
+        public string LicenceServer { get; set; }
         public DateTime? LicenceExpiryDate { get; set; }
         public string ApplicationServiceHealth { get; set; }
         public string SslFriendlyName { get; set; }
@@ -30,7 +32,11 @@ namespace ValidStatusMonitor.Models
         public int? DatabaseSizeMb { get; set; }
         public string DatabaseServiceLevel { get; set; }
 
+        public bool? EnabledPdfTron { get; set; }
+        public bool? Enabled3dViewer { get; set; }
+
         public string HttpResponseE2eTest { get; set; }
+        public string E2eTestUri { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

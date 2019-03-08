@@ -4,7 +4,7 @@ var Formatter = /** @class */ (function () {
     function Formatter() {
     }
     Formatter.toolTipNotification = function (msgs) {
-        var formatted = "<ul>";
+        var formatted = "<ul style=\"padding-left:0px\">";
         for (var _i = 0, msgs_1 = msgs; _i < msgs_1.length; _i++) {
             var msg = msgs_1[_i];
             formatted += "<li>" + msg.toString() + "</li>";

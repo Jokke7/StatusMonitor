@@ -5,7 +5,7 @@ export class StorageProps implements CcrCardModel {
   private _ccrType: CcrType;
   private _message: string;
   private _severityLevel: SeverityLevel;
-  private _properties: Array<any>;
+  private _showCard: boolean;
 
   private _storageBlobNFiles: number;
   private _storageBlobSizeMb: number;
@@ -30,6 +30,14 @@ export class StorageProps implements CcrCardModel {
 
   public set SeverityLevel(sl: SeverityLevel) {
     this._severityLevel = sl;
+  }
+
+  public get ShowCard(): boolean {
+    return this._showCard;
+  }
+
+  public set ShowCard(sc: boolean) {
+    this._showCard = sc;
   }
 
   public get Message(): string {
@@ -63,13 +71,5 @@ export class StorageProps implements CcrCardModel {
   }
   public get StorageServiceHealth(): string {
     return this._storageServiceHealth;
-  }
-  public get Properties(): Array<any> {
-    var allProps: Array<any> = new Array<any>();
-    allProps.push(this._storageBlobNFiles);
-    allProps.push(this._storageBlobSizeMb);
-    allProps.push(this._storageServiceLevel);
-    allProps.push(this._storageServiceHealth);
-    return allProps;
   }
 }

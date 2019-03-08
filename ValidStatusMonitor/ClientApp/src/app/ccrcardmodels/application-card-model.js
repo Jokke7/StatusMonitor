@@ -35,12 +35,21 @@ var ApplicationProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ApplicationProps.prototype, "ShowCard", {
+        get: function () {
+            return this._showCard;
+        },
+        set: function (sc) {
+            this._showCard = sc;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ApplicationProps.prototype, "ApplicationName", {
         get: function () {
             return this._applicationName;
         },
         set: function (an) {
-            this._properties.push(an);
             this._applicationName = an;
         },
         enumerable: true,
@@ -51,7 +60,6 @@ var ApplicationProps = /** @class */ (function () {
             return this._applicationInfo;
         },
         set: function (ai) {
-            this._properties.push(ai);
             this._applicationInfo = ai;
         },
         enumerable: true,
@@ -62,8 +70,6 @@ var ApplicationProps = /** @class */ (function () {
             return this._applicationVersion;
         },
         set: function (av) {
-            this._properties.push(av);
-            this._properties.push(av);
             this._applicationVersion = av;
         },
         enumerable: true,
@@ -74,8 +80,27 @@ var ApplicationProps = /** @class */ (function () {
             return this._licenceExpiryDate;
         },
         set: function (led) {
-            this._properties.push(led);
             this._licenceExpiryDate = led;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApplicationProps.prototype, "LicenceServer", {
+        get: function () {
+            return this._licenceServer;
+        },
+        set: function (ls) {
+            this._licenceServer = ls;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApplicationProps.prototype, "LicenceSerial", {
+        get: function () {
+            return this._licenceSerial;
+        },
+        set: function (ls) {
+            this._licenceSerial = ls;
         },
         enumerable: true,
         configurable: true
@@ -85,7 +110,6 @@ var ApplicationProps = /** @class */ (function () {
             return this._applicationServiceHealth;
         },
         set: function (ash) {
-            this._properties.push(ash);
             this._applicationServiceHealth = ash;
         },
         enumerable: true,
@@ -101,9 +125,12 @@ var ApplicationProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ApplicationProps.prototype, "Properties", {
+    Object.defineProperty(ApplicationProps.prototype, "E2eTestResponse", {
         get: function () {
-            return this._properties;
+            return this._e2eTestResponse;
+        },
+        set: function (res) {
+            this._e2eTestResponse = res;
         },
         enumerable: true,
         configurable: true

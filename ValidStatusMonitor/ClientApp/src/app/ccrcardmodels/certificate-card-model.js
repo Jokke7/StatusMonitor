@@ -35,6 +35,16 @@ var CertificateProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(CertificateProps.prototype, "ShowCard", {
+        get: function () {
+            return this._showCard;
+        },
+        set: function (sc) {
+            this._showCard = sc;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(CertificateProps.prototype, "SslName", {
         get: function () {
             return this._sslName;
@@ -61,17 +71,6 @@ var CertificateProps = /** @class */ (function () {
         },
         set: function (ss) {
             this._sslStatus = ss;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(CertificateProps.prototype, "Properties", {
-        get: function () {
-            var allProps = new Array();
-            allProps.push(this._sslName);
-            allProps.push(this._sslExpiryDate);
-            allProps.push(this._sslStatus);
-            return allProps;
         },
         enumerable: true,
         configurable: true

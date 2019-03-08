@@ -1,0 +1,42 @@
+.msgBoard {
+  width: auto;
+  padding: 2px;
+  margin: 2px;
+  list-style:none;
+}
+
+msgBoard > ul {
+  padding-left: 0px;
+}
+
+.informational {
+    border: 2px solid #dfd706;
+    background-color: rgba(0, 128, 0, 0.3);
+}
+
+.warning {
+  border: 2px solid #dfd706;
+  background-color: rgba(255, 165, 0, 0.3);
+  list-style-image: url('../../assets/gfx/li-el-warn.png');
+}
+
+.immediate {
+    border: 2px solid orange;
+    background-color: rgba(255, 255, 0, 0.3);
+}
+
+.alert1 {
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 0.3);
+  list-style-image: url('../../assets/gfx/li-el-alrt.png');
+}
+
+.hide {
+  display: none;
+}
+
+
+/*list-style-image: url('../../assets/gfx/li-el-warn.png');
+list-style-image: url('../../assets/gfx/li-el-warn.png');
+list-style-image: url('../../assets/gfx/li-el-imd.png');
+list-style-image: url('../../assets/gfx/li-el-alrt.png');*/

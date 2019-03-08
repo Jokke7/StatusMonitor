@@ -5,15 +5,21 @@ export class MiscProps implements CcrCardModel {
   private _ccrType: CcrType;
   private _message: string;
   private _severityLevel: SeverityLevel;
-  private _properties: Array<any>;
+  private _showCard: boolean; 
 
   private _enabledPdfTron: boolean;
   private _enabled3dViewer: boolean;
+
+  private _properties: Array<any>;
 
  
 
   constructor() {
     this._ccrType = CcrType.Misc;
+    this._enabled3dViewer = null;
+    this._enabledPdfTron = null;
+    this._message = null;
+
   }
 
   public get CcrType(): CcrType {
@@ -40,6 +46,14 @@ export class MiscProps implements CcrCardModel {
     this._severityLevel = sl;
   }
 
+  public get ShowCard(): boolean {
+    return this._showCard;
+  }
+
+  public set ShowCard(sc: boolean) {
+    this._showCard = sc;
+  }
+
   public set EnabledPdfTron(en: boolean) {
     this._enabledPdfTron = en;
   }
@@ -56,11 +70,5 @@ export class MiscProps implements CcrCardModel {
     return this._enabled3dViewer;
   }
 
-
-  public get Properties(): Array<any> {
-    var allProps: Array<any> = new Array<any>();
-    //allProps.push(this.someProperty);
-    return allProps;
-  }
 
 }

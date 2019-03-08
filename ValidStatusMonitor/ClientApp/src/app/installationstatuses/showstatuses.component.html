@@ -3,11 +3,7 @@
        fxLayout.lt-sm="column wrap"
        fxLayoutAlign="flex-start">
 
-    <app-header fxFlex="calc(50%)">
-
-      fxFlex.lt-lg="0 1 calc(33.33%)"
-      fxFlex.lt-md="0 1 calc(50%)"
-      fxFlex.lt-sm="100%">
+    <app-header fxFlex="100%">
     </app-header>
   </div>
 </div>
@@ -18,19 +14,34 @@
         fxLayoutAlign="space-evenly center">
 
      <ng-container class="row" *ngFor="let card of statusCards">
-      <div *ngIf="card.CcrType =='Customer'" class="row-header" style="width: 100%; height: 30px; background-color: #fcf3d9; padding-top:4px; border-top:1px solid #f09f02; text-align:center;">
-        {{card.PlantName}}
-        <span class="row-headerleft" style="float:right; padding-right:15px; font-family:Arial; font-size:small">Last updated: {{card.LastUpdate | date: 'EEE, hh:mm:ss'}}</span>
-      </div>
+       <div *ngIf="card.CcrType =='Customer'" class="row-header" fxLayout="row" [ngClass]="setRowStyle(card)" (click)='toggleRow(card)'>
+         <div class="row-headertop" fxLayout="column" fxFlex="230px">
+           {{card.Description}}
+           <span style="font-size:x-small;">{{card.Name}} - {{card.PlantName}} | <a [href]="card.AppLink" target="_blank"> {{card.E2eTestUri}}</a></span>
+         </div>
+         <span class="detailsLink">
+            <a [routerLink]="['/installation-details/',card.CustomerId,card.StatusId]" style="height:100%" target="_blank" fxLayout="row">
+              <span style="font-size:small;" fxLayoutAlign="start start">Details</span>
+              <img [src]="toDetailsIcon" alt="To Details page" />
+            </a>
+         </span>
+         <div fxFlex></div>
+         <span class="row-headerright" style="float:right; padding-right:15px; padding-left: 4px; font-family:Arial; font-size:xx-small; line-height: 1.3rem">Last updated: {{card.LastUpdate | date: 'EEE, HH:mm:ss'}}</span><br />
 
-      <app-ccr-card [ccr]="card"
-                    fxFlex="0 1 calc(16.66%)"
-                    fxFlex.lt-lg="0 1 calc(33.33%)"
-                    fxFlex.lt-md="0 1 calc(50%)"
-                    fxFlex.lt-sm="100%">
-      </app-ccr-card>
 
-  </ng-container>
+       </div>
+       <ng-container *ngIf="card.CcrType != 'Customer'">
+         <app-ccr-card [ccr]="card"
+                       fxFlex="0 1 calc(20%)"
+                       fxFlex.lt-lg="0 1 calc(50%)"
+                       fxFlex.lt-md="0 1 calc(50%)"
+                       fxFlex.lt-sm="100%"
+                       [fxShow]='card.ShowCard'>
+         </app-ccr-card>
+       </ng-container>
+
+
+</ng-container>
     
 
 </div>

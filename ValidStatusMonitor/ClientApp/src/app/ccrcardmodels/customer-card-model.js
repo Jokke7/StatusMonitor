@@ -35,6 +35,46 @@ var CustomerProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(CustomerProps.prototype, "ShowCard", {
+        get: function () {
+            return this._showCard;
+        },
+        set: function (sc) {
+            this._showCard = sc;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CustomerProps.prototype, "StatusId", {
+        get: function () {
+            return this._statusId;
+        },
+        set: function (sid) {
+            this._statusId = sid;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CustomerProps.prototype, "AppLink", {
+        get: function () {
+            return this._appLink;
+        },
+        set: function (pn) {
+            this._appLink = pn;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CustomerProps.prototype, "Name", {
+        get: function () {
+            return this._name;
+        },
+        set: function (pn) {
+            this._name = pn;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(CustomerProps.prototype, "PlantName", {
         get: function () {
             return this._plantName;
@@ -95,16 +135,12 @@ var CustomerProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(CustomerProps.prototype, "Properties", {
+    Object.defineProperty(CustomerProps.prototype, "E2eTestUri", {
         get: function () {
-            var allProps = new Array();
-            allProps.push(this._plantName);
-            allProps.push(this._lastUpdate);
-            allProps.push(this._customerId);
-            allProps.push(this._description);
-            allProps.push(this._environment);
-            allProps.push(this._licenceExpiry);
-            return allProps;
+            return this._e2eTestUri;
+        },
+        set: function (env) {
+            this._e2eTestUri = env;
         },
         enumerable: true,
         configurable: true

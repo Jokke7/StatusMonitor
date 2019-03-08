@@ -1,0 +1,15 @@
+#details-container{
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid black;
+}
+
+.odd{
+  width: 100px;
+  background-color:grey;
+}
+
+.even{
+  width:100px;
+  background-color:lightgray;
+}

@@ -35,6 +35,16 @@ var DatabaseProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DatabaseProps.prototype, "ShowCard", {
+        get: function () {
+            return this._showCard;
+        },
+        set: function (sc) {
+            this._showCard = sc;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DatabaseProps.prototype, "DatabaseName", {
         get: function () {
             return this._databaseName;
@@ -91,20 +101,6 @@ var DatabaseProps = /** @class */ (function () {
         },
         set: function (dbl) {
             this._databaseServiceLevel = dbl;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(DatabaseProps.prototype, "Properties", {
-        get: function () {
-            var allProps = new Array();
-            allProps.push(this._databaseName);
-            allProps.push(this._databaseServer);
-            allProps.push(this._databaseVersion);
-            allProps.push(this._databaseTemplate);
-            allProps.push(this._databaseSize);
-            allProps.push(this._databaseServiceLevel);
-            return allProps;
         },
         enumerable: true,
         configurable: true

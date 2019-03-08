@@ -5,14 +5,18 @@ export class CustomerProps implements CcrCardModel {
   private _ccrType: CcrType;
   private _message: string;
   private _severityLevel: SeverityLevel;
-  private _properties: Array<any>;
+  private _showCard: boolean;
 
+  private _statusId: string;
+  private _appLink: string;
   private _plantName: string;
+  private _name: string;
   private _lastUpdate: Date;
   private _licenceExpiry: Date;
   private _customerId: number;
   private _description: string;
   private _environment: string;
+  private _e2eTestUri: string;
 
   constructor() {
     this._ccrType = CcrType.Customer;
@@ -41,6 +45,34 @@ export class CustomerProps implements CcrCardModel {
   public set SeverityLevel(sl: SeverityLevel) {
     this._severityLevel = sl;
   }
+  public get ShowCard(): boolean {
+    return this._showCard;
+  }
+
+  public set ShowCard(sc: boolean) {
+    this._showCard = sc;
+  }
+
+  public set StatusId(sid: string) {
+    this._statusId = sid;
+  }
+  public get StatusId(): string {
+    return this._statusId;
+  }
+
+  public set AppLink(pn: string) {
+    this._appLink = pn;
+  }
+  public get AppLink(): string {
+    return this._appLink;
+  }
+
+  public set Name(pn: string) {
+    this._name = pn;
+  }
+  public get Name(): string {
+    return this._name;
+  }
 
   public set PlantName(pn: string) {
     this._plantName = pn;
@@ -66,6 +98,7 @@ export class CustomerProps implements CcrCardModel {
   public set Description(d: string) {
     this._description = d;
   }
+
   public get Description(): string {
     return this._description;
   }
@@ -83,17 +116,13 @@ export class CustomerProps implements CcrCardModel {
 
   public get LicenceExpiryDate(): Date {
     return this._licenceExpiry;
-
   }
-  public get Properties(): Array<any> {
-    var allProps: Array<any> = new Array<any>();
-    allProps.push(this._plantName);
-    allProps.push(this._lastUpdate);
-    allProps.push(this._customerId);
-    allProps.push(this._description);
-    allProps.push(this._environment);
-    allProps.push(this._licenceExpiry);
-    return allProps;
+
+  public set E2eTestUri(env: string) {
+    this._e2eTestUri = env;
+  }
+  public get E2eTestUri(): string {
+    return this._e2eTestUri;
   }
 }
 

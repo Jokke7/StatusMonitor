@@ -1,0 +1,29 @@
+<div id="header-container">
+  <div fxLayout="row wrap"
+       fxLayout.lt-sm="column wrap"
+       fxLayoutAlign="flex-start">
+
+    <app-header fxFlex="100%">
+    </app-header>
+  </div>
+</div>
+<div id="details-container" fxLayout="row wrap">
+  <div fxLayout="row">
+    <div fxLayout="column">
+      <h3>{{customerName}} - {{statusRow.PlantName}} - {{statusRow.Environment}}</h3>
+      <img src="../../assets/gfx/plantmock.png" alt="Plant" style="max-height: 300px;" />
+    </div>
+    
+    <div fxLayout="row" fxLayoutAlign="start stretch">
+      <div class="odd" fxLayout="column">
+        {{appName}}
+      </div>
+      <div class="even" fxLayout="column">
+        Statistikk
+        <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
+      </div>
+    </div>
+  </div>
+  
+
+</div>

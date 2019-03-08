@@ -5,7 +5,7 @@ export class DatabaseProps implements CcrCardModel {
   private _ccrType: CcrType;
   private _message: string;
   private _severityLevel: SeverityLevel;
-  private _properties: Array<any>;
+  private _showCard: boolean;
 
   private _databaseName?: string;
   private _databaseServer?: string;
@@ -40,6 +40,14 @@ export class DatabaseProps implements CcrCardModel {
 
   public set SeverityLevel(sl: SeverityLevel) {
     this._severityLevel = sl;
+  }
+
+  public get ShowCard(): boolean {
+    return this._showCard;
+  }
+
+  public set ShowCard(sc: boolean) {
+    this._showCard = sc;
   }
 
   public get DatabaseName(): string {
@@ -84,16 +92,4 @@ export class DatabaseProps implements CcrCardModel {
   public set DatabaseServiceLevel(dbl: string) {
     this._databaseServiceLevel = dbl;
   }
-
-  public get Properties(): Array<any> {
-    var allProps: Array<any> = new Array<any>();
-    allProps.push(this._databaseName);
-    allProps.push(this._databaseServer);
-    allProps.push(this._databaseVersion);
-    allProps.push(this._databaseTemplate);
-    allProps.push(this._databaseSize);
-    allProps.push(this._databaseServiceLevel);
-    return allProps;
-  }
-
 }

@@ -5,8 +5,7 @@ export class CertificateProps implements CcrCardModel {
   private _ccrType: CcrType;
   private _message: string;
   private _severityLevel: SeverityLevel;
-  private _properties: Array<any>;
-
+  private _showCard: boolean;
 
   private _sslName: string;
   private _sslExpiryDate: Date;
@@ -40,6 +39,14 @@ export class CertificateProps implements CcrCardModel {
     this._severityLevel = sl;
   }
 
+  public get ShowCard(): boolean {
+    return this._showCard;
+  }
+
+  public set ShowCard(sc: boolean) {
+    this._showCard = sc;
+  }
+
   public set SslName(sn: string) {
     this._sslName = sn;
   }
@@ -59,14 +66,6 @@ export class CertificateProps implements CcrCardModel {
   }
   public get SslStatus(): string {
     return this._sslStatus;
-  }
-  public get Properties(): Array<any> {
-    var allProps: Array<any> = new Array<any>();
-    allProps.push(this._sslName);
-    allProps.push(this._sslExpiryDate);
-    allProps.push(this._sslStatus);
-
-    return allProps;
   }
 }
 

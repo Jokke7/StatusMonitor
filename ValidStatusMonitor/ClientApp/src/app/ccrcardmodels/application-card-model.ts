@@ -5,14 +5,17 @@ export class ApplicationProps implements CcrCardModel {
   private _ccrType: CcrType;
   private _message: string;
   private _severityLevel: SeverityLevel;
-  private _properties: Array<any>;
+  private _showCard: boolean; 
 
   private _applicationName: string;
   private _applicationInfo: string;
   private _applicationVersion: string;
   private _licenceExpiryDate: Date;
+  private _licenceSerial: string;
+  private _licenceServer: string;
   private _applicationServiceHealth: string;
   private _applicationServiceLevel: string;
+  private _e2eTestResponse: string;
 
   constructor() {
     this._ccrType = CcrType.AppService;
@@ -42,12 +45,19 @@ export class ApplicationProps implements CcrCardModel {
     this._severityLevel = sl;
   }
 
+  public get ShowCard(): boolean {
+    return this._showCard;
+  }
+
+  public set ShowCard(sc: boolean) {
+    this._showCard = sc;
+  }
+
   public get ApplicationName(): string {
     return this._applicationName;
   }
 
   public set ApplicationName(an: string) {
-    this._properties.push(an);
     this._applicationName = an;
   }
   public get ApplicationInfo(): string {
@@ -55,7 +65,6 @@ export class ApplicationProps implements CcrCardModel {
   }
 
   public set ApplicationInfo(ai: string) {
-    this._properties.push(ai);
     this._applicationInfo = ai;
   }
   public get ApplicationVersion(): string {
@@ -63,9 +72,6 @@ export class ApplicationProps implements CcrCardModel {
   }
 
   public set ApplicationVersion(av: string) {
-    this._properties.push(av);
-    this._properties.push(av);
-
     this._applicationVersion = av;
   }
   public get LicenceExpiryDate(): Date {
@@ -73,15 +79,30 @@ export class ApplicationProps implements CcrCardModel {
   }
 
   public set LicenceExpiryDate(led: Date) {
-    this._properties.push(led);
     this._licenceExpiryDate = led;
   }
+
+  public get LicenceServer(): string {
+    return this._licenceServer;
+  }
+
+  public set LicenceServer(ls: string) {
+    this._licenceServer = ls;
+  }
+
+  public get LicenceSerial(): string {
+    return this._licenceSerial;
+  }
+
+  public set LicenceSerial(ls: string) {
+    this._licenceSerial = ls;
+  }
+
   public get ApplicationServiceHealth(): string {
     return this._applicationServiceHealth;
   }
 
   public set ApplicationServiceHealth(ash: string) {
-    this._properties.push(ash);
     this._applicationServiceHealth = ash;
   }
   public get ApplicationServiceLevel(): string {
@@ -92,9 +113,12 @@ export class ApplicationProps implements CcrCardModel {
     this._applicationServiceLevel = asl;
   }
 
-  public get Properties(): Array<any> {
-    
-    return this._properties;
+  public set E2eTestResponse(res: string) {
+    this._e2eTestResponse = res;
+  }
+
+  public get E2eTestResponse(): string {
+    return this._e2eTestResponse;
   }
 }
 

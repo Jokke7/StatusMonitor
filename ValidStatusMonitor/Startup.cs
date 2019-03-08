@@ -117,14 +117,16 @@ namespace ValidStatusMonitor
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            //services.ConfigureExternalCookie(options => {
-            //    // Other options
-            //    options.Cookie.SameSite = SameSiteMode.None;
-            //}); services.ConfigureApplicationCookie(options => {
-            //    // Other options
-            //    options.Cookie.SameSite = SameSiteMode.None;
-            //});
-
+            //Workaround for prevent bug with authentication on iOS12-devices.
+            services.ConfigureExternalCookie(options =>
+            {
+                // Other options
+                options.Cookie.SameSite = SameSiteMode.None;
+            }); services.ConfigureApplicationCookie(options =>
+            {
+                // Other options
+                options.Cookie.SameSite = SameSiteMode.None;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

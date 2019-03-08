@@ -13,7 +13,9 @@ namespace ValidStatusMonitor.Models
         {
             try
             {
-                return db.InstallationStatus.ToList();
+                return db.InstallationStatus
+                    .OrderByDescending(x => x.HttpResponseE2eTest)
+                    .ToList();
             }
             catch
             {

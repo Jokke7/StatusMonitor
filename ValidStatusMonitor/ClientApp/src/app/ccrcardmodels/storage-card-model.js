@@ -25,6 +25,16 @@ var StorageProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(StorageProps.prototype, "ShowCard", {
+        get: function () {
+            return this._showCard;
+        },
+        set: function (sc) {
+            this._showCard = sc;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StorageProps.prototype, "Message", {
         get: function () {
             return this._message;
@@ -71,18 +81,6 @@ var StorageProps = /** @class */ (function () {
         },
         set: function (ssh) {
             this._storageServiceHealth = ssh;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(StorageProps.prototype, "Properties", {
-        get: function () {
-            var allProps = new Array();
-            allProps.push(this._storageBlobNFiles);
-            allProps.push(this._storageBlobSizeMb);
-            allProps.push(this._storageServiceLevel);
-            allProps.push(this._storageServiceHealth);
-            return allProps;
         },
         enumerable: true,
         configurable: true

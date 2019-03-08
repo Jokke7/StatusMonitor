@@ -1,79 +1,88 @@
-<div class="row" fxFlexFill="TRUE">
+<div class="row" fxFlexFill> <!--style="display:none"-->
   <div gdAreas="field content"
-       gdGap="4px"
-       gdRows="auto"
-       gdCols=" 33% 66%">
+       gdRows="auto" class="card" fxLayoutAlign="start stretch" fxFlexFill>
 
-    <div gdArea="field" [ngClass]="setFieldStyle()" class="field">
+      <div gdArea="field" [ngClass]="setFieldStyle()" fxLayout="column">
       <img [src]="fieldIconUri" alt="fieldIcon" />
       <span class="fieldDesc">{{ccr.CcrType}}</span>
-      <div *ngIf="ccr.SeverityLevel != 'INFO'">
-        <img [src]="ntfIconUri" alt="notification Icon" style="position:relative;top:50px; width: 20px;" pTooltip={{ccr.Message}} tooltipPosition="bottom" [escape]=false/>
+      <!--<img [src]="azureIconUri" style="width:60px; margin-top: 35px;"alt="to Azure icon" />-->
+      <!--<div *ngIf="ccr.SeverityLevel != 'INFO'">
+        <img [src]="ntfIconUri" alt="notification icon" style="width: 40px; margin-top:50px;" pTooltip={{ccr.Message}} tooltipPosition="bottom" toolTipEvent="touchstart" [escape]=false/>
 
-      </div>
+      </div>-->
     </div>
-    <div class="content-container" fxFlex="100">
+    <div class="content-container" fxFlex>
       <div *ngIf="ccr.CcrType=='Customer'" gdArea="content" class="content">
+        <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
+
         <ul class="square">
           <li>Plant name: {{ ccr.PlantName }} </li>
           <li>Description: {{ ccr.Description }}</li>
-          <li>Last update: {{ ccr.LastUpdate | date: 'EEE, hh:mm:ss' }}</li>
-          <li>Licence exp: {{ ccr.LicenceExpiryDate | date: shortTime }}</li>
+          <li>Last update: {{ ccr.LastUpdate | date: 'EEE, HH:mm:ss' }}</li>
           <li>Environment: {{ ccr.Environment }}</li>
         </ul>
-      <br />
-    </div>
+      </div>
 
-    <div *ngIf="ccr.CcrType=='Application'" gdArea="content" class="content">
-      <ul class="square">
-        <li>App name: {{ ccr.ApplicationName }}</li>
-        <li>Info: {{ ccr.ApplicationInfo | slice:0:contentViewLimit}}</li>
-        <li>Version: {{ ccr.ApplicationVersion }}</li>
-        <!--<li>Service Level: {{ ccr.ApplicationServiceLevel }}</li>-->
-        <li>Service Health: {{ ccr.ApplicationServiceHealth }}</li>
-      </ul>
-    </div>
+      <div *ngIf="ccr.CcrType=='Application'" gdArea="content" class="content" fxLayout="column">
+        <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
 
-    <div *ngIf="ccr.CcrType=='Certificates'" gdArea="content" class="content">
-      <ul class="square">
-        <li>Name: {{ ccr.SslFriendlyName }}</li>
-        <li>Expires: {{ ccr.SslExpiryDate | date: shortTime }}</li>
-        <li>Bindings: {{ ccr.SslStatus | slice:0:contentViewLimit }}</li>
-      </ul>
-    </div>
+        <ul class="square">
+          <li>Application: <a target="_blank" [href]="azurePortalLink">{{ ccr.ApplicationName }}</a></li>
+          <li>Version: {{ ccr.ApplicationVersion }}</li>
+          <li>Licence exp: {{ ccr.LicenceExpiryDate | date: shortTime }}</li>
+          <li>Licence number: {{ccr.LicenceSerial}}</li>
+          <li>Licence server: {{ccr.LicenceServer}}</li>
 
-    <div *ngIf="ccr.CcrType=='Storage'" gdArea="content" class="content">
-      <ul class="square">
-        <li>#Files: {{ ccr.StorageBlobNFiles }}</li>
-        <li>#Size: {{ ccr.StorageBlobSizeMb }}</li>
-        <li>Service Level: {{ ccr.StorageServiceLevel }}</li>
-      </ul>
-    </div>
+          <!--<li>Service Level: {{ ccr.ApplicationServiceLevel }}</li>-->
+          <li>Service Health: {{ ccr.ApplicationServiceHealth }}</li>
+        </ul>
 
-    <div *ngIf="ccr.CcrType=='Database'" gdArea="content" class="content">
-      <ul class="square">
-        <li>Name: {{ ccr.DatabaseName }}</li>
-        <li>Server: {{ ccr.DatabaseServer | slice:0:contentViewLimit }}</li>
-        <li>Version: {{ ccr.DatabaseVersion }}</li>
-        <li>Template: {{ ccr.DatabaseTemplate }}</li>
-        <li>Size(MB): {{ ccr.DatabaseSize }}</li>
-        <li>Service Level: {{ ccr.DatabaseServiceLevel }}</li>
-      </ul>
-    </div>
+      </div>
 
-    <div *ngIf="ccr.CcrType=='Other assets'" gdArea="content" class="content">
-      <ul class="square">
-        <li>PDFTron: {{ ccr.EnabledPdfTron }}</li>
-        <li>3Dviewer: {{ ccr.Enabled3dViewer }}</li>
-      </ul>
-      
-    </div>
+      <div *ngIf="ccr.CcrType=='Certificates'" gdArea="content" class="content">
+        <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
 
-    </div>
-    
+        <ul class="square">
+          <li>Name: {{ ccr.SslName }}</li>
+          <li>Expires: {{ ccr.SslExpiryDate | date: shortTime }}</li>
+          <li>Bindings: {{ ccr.SslStatus }}</li>
+        </ul>
 
+      </div>
+
+      <div *ngIf="ccr.CcrType=='Storage'" gdArea="content" class="content">
+        <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
+
+        <ul class="square">
+          <li>Service Level: {{ ccr.StorageServiceLevel }}</li>
+          <li>Number of files: {{ ccr.StorageBlobNFiles }}</li>
+
+        </ul>
+
+      </div>
+
+      <div *ngIf="ccr.CcrType=='Database'" gdArea="content" class="content">
+        <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
+
+        <ul class="square">
+          <li>Name: {{ ccr.DatabaseName }}</li>
+          <li>Server: {{ ccr.DatabaseServer | slice:0:contentViewLimit }}</li>
+          <li>Version: {{ ccr.DatabaseVersion }}</li>
+          <li>Size(MB): {{ ccr.DatabaseSize }}</li>
+          <li>Service Level: {{ ccr.DatabaseServiceLevel }}</li>
+        </ul>
+
+      </div>
+
+      <div *ngIf="ccr.CcrType=='Packages'" gdArea="content" class="content">
+        <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
+
+        <ul class="square">
+          <li>PDFTron: {{ ccr.EnabledPdfTron }}</li>
+          <li>3Dviewer: {{ ccr.Enabled3dViewer }}</li>
+        </ul>
+      </div>
+    </div>
+    </div>
   </div>
 
-
-
-</div>

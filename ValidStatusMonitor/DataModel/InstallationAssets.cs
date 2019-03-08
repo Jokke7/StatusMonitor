@@ -18,8 +18,6 @@ namespace ValidStatusMonitor.Models
         public string EndpointTestUri { get; set; }
         public string SslThumbprint { get; set; }
         public string StorageAccountKey { get; set; }
-        public bool EnabledPdftron { get; set; }
-        public bool Enabled3d { get; set; }
         public string InstCode { get; set; }
         public string PlantName { get; set; }
 

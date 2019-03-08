@@ -2,9 +2,9 @@ export interface CcrCardModel {
   Message: string;
   CcrType: CcrType;
   SeverityLevel: SeverityLevel;
-  Properties: Array<any>;
+  ShowCard: boolean;
+  //Properties: Array<any>;
 }
-
 
 export enum SeverityLevel {
   Informational = "INFO",
@@ -19,11 +19,5 @@ export enum CcrType {
   AppService = "Application",
   Database = "Database",
   Storage = "Storage",
-  Misc = "Other assets"
-}
-
-export class CcrUtil {
-  public static toString(ct: CcrType) {
-    return CcrType[ct];
-  }
+  Misc = "Packages"
 }

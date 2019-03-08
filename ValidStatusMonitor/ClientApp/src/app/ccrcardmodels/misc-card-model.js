@@ -4,6 +4,9 @@ var ccr_card_model_1 = require("./ccr-card-model");
 var MiscProps = /** @class */ (function () {
     function MiscProps() {
         this._ccrType = ccr_card_model_1.CcrType.Misc;
+        this._enabled3dViewer = null;
+        this._enabledPdfTron = null;
+        this._message = null;
     }
     Object.defineProperty(MiscProps.prototype, "CcrType", {
         get: function () {
@@ -35,6 +38,16 @@ var MiscProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(MiscProps.prototype, "ShowCard", {
+        get: function () {
+            return this._showCard;
+        },
+        set: function (sc) {
+            this._showCard = sc;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(MiscProps.prototype, "EnabledPdfTron", {
         get: function () {
             return this._enabledPdfTron;
@@ -51,15 +64,6 @@ var MiscProps = /** @class */ (function () {
         },
         set: function (en) {
             this._enabled3dViewer = en;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MiscProps.prototype, "Properties", {
-        get: function () {
-            var allProps = new Array();
-            //allProps.push(this.someProperty);
-            return allProps;
         },
         enumerable: true,
         configurable: true

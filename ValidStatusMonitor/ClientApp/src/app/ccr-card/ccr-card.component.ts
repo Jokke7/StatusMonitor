@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
-import { CcrCardModel, CcrType, SeverityLevel, CcrUtil } from '../ccrcardmodels/ccr-card-model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CcrCardModel, CcrType, SeverityLevel } from '../ccrcardmodels/ccr-card-model';
+import { Util } from '../helpers/util';
 
 
 @Component({
@@ -9,31 +10,39 @@ import { CcrCardModel, CcrType, SeverityLevel, CcrUtil } from '../ccrcardmodels/
 })
 export class CcrCardComponent implements OnInit {
   public severityLevel: SeverityLevel;
+
   public ccrType: CcrType;
   @Input() ccr: CcrCardModel;
+
+  public showCard: boolean;
   public fieldIconUri: string;
   public ntfIconUri: string;
+  //public azureIconUri: string;
+
+  public azurePortalLink: string;
+
   contentViewLimit: number;
   
 
   static readonly assetIconPath : string = "../../assets/icons/"
 
   constructor() {
+
     this.fieldIconUri = "";
     this.ntfIconUri = "";
-    this.contentViewLimit = 5;
-    
+    //this.azureIconUri = CcrCardComponent.assetIconPath + "to-azure.svg"
+    this.showCard = true;
+    this.contentViewLimit = 50;
   }
-
-  //@HostBinding('class.collapse') collapse: boolean = false;
 
   ngOnInit() {
     this.ccrType = this.ccr.CcrType;
     this.severityLevel = this.ccr.SeverityLevel;
-    //this.collapse = true;
     this.setCcrField();
     this.setNtfIcon();
+    this.azurePortalLink = Util.AzureRmLink(this.ccr);
   }
+
 
   setFieldStyle()
   {
@@ -41,7 +50,8 @@ export class CcrCardComponent implements OnInit {
       field: true,
       warning: this.severityLevel === SeverityLevel.Warning,
       immediate: this.severityLevel === SeverityLevel.Immediate,
-      alert1: this.severityLevel === SeverityLevel.Alert
+      alert1: this.severityLevel === SeverityLevel.Alert,
+      hidden: this.ccrType !== CcrType.Customer
     }
   }
 

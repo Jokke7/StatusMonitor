@@ -1,26 +1,55 @@
-
-
-.row-container:nth-child(odd) > div {
-  background: blue;
+.detailsLink {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-right: 2px solid #01495f;
+  border-left: 2px solid #01495f;
 }
 
-.row-container:nth-child(even) > div {
-  background: red;
+  .detailsLink img {
+    max-height: 20px;
+    max-width: 20px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+  }
+
+  .detailsLink a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .detailsLink span {
+    background-color: rgba(255,255,255,0.3);
+    min-width: 50px;
+    border-right: 1px solid white;
+    padding-left: 5px;
+  }
+
+.row-headertop {
+  display: block;
+  min-width: 180px;
+  height: 100%;
 }
 
-
-
-row-header {
+.row-header {
   width: 100%;
-  height: 30px;
-  background-color: #f09f02;
-  padding-bottom: 20px;
-  border-top: 1px solid #01495f;
-  text-align: center;
-  color: white;
+  padding-left: 20px;
+  min-height: 30px;
+  height: 50px;
+  font-weight: 400;
+  line-height: 1.5rem;
+  background-color: rgba(0, 128, 0, 0.3);
+  border-top: 2px solid #01495f;
 }
 
+.warning {
+  background-color: rgba(255, 165, 0, 0.3);
+}
 
-.ui-accordion-content-wrapper-overflown {
-  overflow: hidden;
+.immediate {
+  background-color: rgba(255, 255, 0, 0.3);
+}
+
+.alert1 {
+  background-color: rgba(255, 0, 0, 0.3);
 }

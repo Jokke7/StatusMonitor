@@ -100,10 +100,6 @@ namespace ValidStatusMonitor.Models
                     .HasColumnName("DATABASE_SERVER")
                     .HasMaxLength(100);
 
-                entity.Property(e => e.Enabled3d).HasColumnName("ENABLED_3D");
-
-                entity.Property(e => e.EnabledPdftron).HasColumnName("ENABLED_PDFTRON");
-
                 entity.Property(e => e.InstCode)
                     .HasColumnName("INST_CODE")
                     .HasMaxLength(10);
@@ -189,7 +185,14 @@ namespace ValidStatusMonitor.Models
                     .HasColumnName("LAST_UPDATE")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.LicenceExpiryDate).HasColumnName("LICENCE_EXPIRY_DATE");
+                entity.Property(e => e.LicenceExpiryDate)
+                    .HasColumnName("LICENCE_EXPIRY_DATE");
+
+                entity.Property(e => e.LicenceNumber)
+                    .HasColumnName("LICENCE_NUMBER");
+
+                entity.Property(e => e.LicenceServer)
+                    .HasColumnName("LICENCE_SERVER");
 
                 entity.Property(e => e.PlantName)
                     .HasColumnName("PLANT_NAME")
@@ -216,6 +219,15 @@ namespace ValidStatusMonitor.Models
                 entity.Property(e => e.StorageServiceLevel)
                     .HasColumnName("STORAGE_SERVICE_LEVEL")
                     .HasMaxLength(80);
+
+                entity.Property(e => e.EnabledPdfTron)
+                    .HasColumnName("ENABLED_PDFTRON_VIEWER");
+
+                entity.Property(e => e.Enabled3dViewer)
+                    .HasColumnName("ENABLED_3D_VIEWER");
+
+                entity.Property(e => e.E2eTestUri)
+                    .HasColumnName("E2E_TEST_URI");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.InstallationStatus)
