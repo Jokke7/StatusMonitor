@@ -56,7 +56,7 @@
         <ul class="square">
           <li>Service Level: {{ ccr.StorageServiceLevel }}</li>
           <li>Number of files: {{ ccr.StorageBlobNFiles }}</li>
-
+          <li>Space used: {{ ccr.StorageBlobSizeMb }}(MB)</li>
         </ul>
 
       </div>
@@ -78,8 +78,8 @@
         <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
 
         <ul class="square">
-          <li>PDFTron: {{ ccr.EnabledPdfTron }}</li>
-          <li>3Dviewer: {{ ccr.Enabled3dViewer }}</li>
+          <li>PDFTron: {{ ccr.EnabledPdfTron?"Enabled":"Disabled" }}</li>
+          <li>3Dviewer: {{ ccr.Enabled3dViewer?"Enabled":"Disabled" }}</li>
         </ul>
       </div>
     </div>

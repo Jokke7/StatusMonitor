@@ -20,6 +20,7 @@ namespace ValidStatusMonitor.Models
         public string StorageAccountKey { get; set; }
         public string InstCode { get; set; }
         public string PlantName { get; set; }
+        public string SlotSetting { get; set; }
 
         public virtual Customer Customer { get; set; }
     }

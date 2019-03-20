@@ -141,7 +141,9 @@ namespace ValidStatusMonitor.Migrations
                         .HasColumnName("DATABASE_SERVER")
                         .HasMaxLength(100);
 
-                    b.Property<string>("EndpointTestUri");
+                    b.Property<string>("EndpointTestUri")
+                        .HasColumnName("ENDPOINT_TEST_URI")
+                        .HasMaxLength(255);
 
                     b.Property<string>("InstCode")
                         .HasColumnName("INST_CODE")
@@ -149,6 +151,10 @@ namespace ValidStatusMonitor.Migrations
 
                     b.Property<string>("PlantName")
                         .HasColumnName("PLANT_NAME")
+                        .HasMaxLength(32);
+
+                    b.Property<string>("SlotSetting")
+                        .HasColumnName("SLOT_SETTING")
                         .HasMaxLength(32);
 
                     b.Property<string>("SslThumbprint")
@@ -236,7 +242,8 @@ namespace ValidStatusMonitor.Migrations
                         .HasColumnName("ENVIRONMENT")
                         .HasMaxLength(80);
 
-                    b.Property<string>("HttpResponseE2eTest");
+                    b.Property<string>("HttpResponseE2eTest")
+                        .HasColumnName("HTTP_RESPONSE_E2E_TEST");
 
                     b.Property<DateTime>("LastUpdate")
                         .ValueGeneratedOnAdd()
@@ -255,6 +262,9 @@ namespace ValidStatusMonitor.Migrations
                     b.Property<string>("PlantName")
                         .HasColumnName("PLANT_NAME")
                         .HasMaxLength(80);
+
+                    b.Property<string>("SlotSetting")
+                        .HasColumnName("SLOT_SETTING");
 
                     b.Property<DateTime?>("SslExpiryDate")
                         .HasColumnName("SSL_EXPIRY_DATE");

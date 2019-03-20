@@ -24,18 +24,19 @@ namespace ValidStatusMonitor.Controllers
 
         //Get a particular status
         [HttpGet]
-        [Route("api/Installations/{uid}")]
+        [Route("api/Installations/Status/{uid}")]
         public InstallationStatus Details(Guid uid)
         {
             return objValidStatusMonitor.GetStatus(uid);
         }
 
-        //Get a particular status
-        [HttpGet]
-        [Route("api/Installations/Test")]
+        ////Get a particular status with customer info
+        //[HttpGet]
+        //[Route("api/Installations/Status/{uid}/Cust")]
 
-        public string GetHelloFromAPI() {
-            return "Hei fra API!";
-        }
+        //public InstallationStatus DetailsWithCust(Guid uid)
+        //{
+        //    return objValidStatusMonitor.GetStatusWithCust(uid);
+        //}
     }
 }

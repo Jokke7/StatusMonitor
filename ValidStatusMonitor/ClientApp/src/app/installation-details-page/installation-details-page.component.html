@@ -19,11 +19,17 @@
         {{appName}}
       </div>
       <div class="even" fxLayout="column">
-        Statistikk
-        <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
+        <app-test-plot></app-test-plot>
+      </div>
+      <div class="odd" fxLayout="column">
+        <app-test-plot></app-test-plot>
+      </div>
+      <div class="even" fxLayout="column">
+        Statistikk 3
       </div>
     </div>
   </div>
+
   
 
 </div>

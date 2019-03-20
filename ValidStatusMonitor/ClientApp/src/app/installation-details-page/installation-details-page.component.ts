@@ -27,8 +27,8 @@ export class InstallationDetailsPageComponent implements OnInit {
   //private statusCards: Array<CcrCardModel>;
   private sub: any;
 
-  constructor(public http: HttpClient, private route: ActivatedRoute, private _statusMonitorService: StatusMonitorService, /*private messageService: MessageService*/) {
-    //this.route.params.subscribe(params => console.log(params));
+  constructor(public http: HttpClient, private route: ActivatedRoute, private _statusMonitorService: StatusMonitorService) {
+    this.route.params.subscribe(params => console.log(params));
     this.data = {
       labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       datasets: [

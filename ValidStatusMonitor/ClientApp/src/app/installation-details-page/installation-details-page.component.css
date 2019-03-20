@@ -5,11 +5,14 @@
 }
 
 .odd{
-  width: 100px;
+  min-width: 150px;
+  color: white;
   background-color:grey;
+  border-right: 1px solid black;
 }
 
-.even{
-  width:100px;
-  background-color:lightgray;
+.even {
+  min-width: 150px;
+  background-color: lightgray;
+  border-right: 1px solid black;
 }

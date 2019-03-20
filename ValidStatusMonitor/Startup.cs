@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using ValidStatusMonitor.Models;
 using ValidStatusMonitor.Security;
 
@@ -100,7 +101,16 @@ namespace ValidStatusMonitor
                         {
                             Trace.WriteLine("View: Access token acquisition exception: " + ex.Message);
                         }
+                    },
+                    OnTicketReceived = (context) =>
+                    {
+                        // stop by `/Pages/Continue` instead of going directly to the ReturnUri
+                        // to work around Safari's issues with SameSite=lax session cookies not being
+                        // returned on the final redirect of the authentication flow.
+                        context.ReturnUri = "/Pages/Continue?returnUrl=" + System.Net.WebUtility.UrlEncode(context.ReturnUri ?? "/");
+                        return Task.CompletedTask;
                     }
+
                 };
             });
 

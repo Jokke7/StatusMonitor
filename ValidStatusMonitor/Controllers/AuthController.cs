@@ -285,5 +285,19 @@ namespace ValidStatusMonitor.Controllers
                 return string.Empty;
             }
         }
+
+        /// <summary>
+        /// This view is invoked by the OpenIDConnect middleware after setting the authentication ticket
+        /// as an intermediate step to make sure that the session cookie is sent
+        /// to the returnUrl request in Safari iOS 12/Mojave.
+        /// It is marked as AllowAnonymous because this request will look as
+        /// unauthenticated on Safari.
+        /// </summary>
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+        public IActionResult Continue(string returnUrl = "/")
+        {
+            ViewBag.returnUrl = Url.IsLocalUrl(returnUrl) ? returnUrl : "/";
+            return View();
+        }
     }
 }

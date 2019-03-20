@@ -31,12 +31,11 @@ namespace ValidStatusMonitor.Models
         public string DatabaseServiceHealth { get; set; }
         public int? DatabaseSizeMb { get; set; }
         public string DatabaseServiceLevel { get; set; }
-
         public bool? EnabledPdfTron { get; set; }
         public bool? Enabled3dViewer { get; set; }
-
         public string HttpResponseE2eTest { get; set; }
         public string E2eTestUri { get; set; }
+        public string SlotSetting { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

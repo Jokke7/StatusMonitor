@@ -14,8 +14,8 @@
         fxLayoutAlign="space-evenly center">
 
      <ng-container class="row" *ngFor="let card of statusCards">
-       <div *ngIf="card.CcrType =='Customer'" class="row-header" fxLayout="row" [ngClass]="setRowStyle(card)" (click)='toggleRow(card)'>
-         <div class="row-headertop" fxLayout="column" fxFlex="230px">
+       <div *ngIf="card.CcrType =='Customer'" class="row-header" fxLayout="row" [ngClass]="setRowStyle(card)">
+         <div class="row-headertop" fxLayout="column" fxFlex="230px" (click)='toggleRow(card)'>
            {{card.Description}}
            <span style="font-size:x-small;">{{card.Name}} - {{card.PlantName}} | <a [href]="card.AppLink" target="_blank"> {{card.E2eTestUri}}</a></span>
          </div>
@@ -25,8 +25,8 @@
               <img [src]="toDetailsIcon" alt="To Details page" />
             </a>
          </span>
-         <div fxFlex></div>
-         <span class="row-headerright" style="float:right; padding-right:15px; padding-left: 4px; font-family:Arial; font-size:xx-small; line-height: 1.3rem">Last updated: {{card.LastUpdate | date: 'EEE, HH:mm:ss'}}</span><br />
+         <div fxFlex (click)='toggleRow(card)'></div>
+         <span class="row-headerright" style="float:right; padding-right:15px; padding-left: 4px; font-family:Arial; font-size:xx-small; line-height: 1.3rem" (click)='toggleRow(card)'>Last updated: {{card.LastUpdate | date: 'EEE, HH:mm:ss'}}</span><br />
 
 
        </div>

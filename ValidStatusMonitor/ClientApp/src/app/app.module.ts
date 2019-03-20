@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChartModule } from 'primeng/chart';
+import { PlotlyModule } from 'angular-plotly.js';
 //import { AccordionModule } from 'primeng/primeng';
 //import { TooltipModule } from 'primeng/tooltip';
 
@@ -19,6 +19,7 @@ import { CcrCardComponent } from './ccr-card/ccr-card.component';
 import { HeaderComponent } from './header/header.component';
 import { MsgboardComponent } from './msgboard/msgboard.component';
 import { InstallationDetailsPageComponent } from './installation-details-page/installation-details-page.component';
+import { TestPlotComponent } from './test-plot/test-plot.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { InstallationDetailsPageComponent } from './installation-details-page/in
     CcrCardComponent,
     HeaderComponent,
     MsgboardComponent,
-    InstallationDetailsPageComponent
+    InstallationDetailsPageComponent,
+    TestPlotComponent
 
   ],
   imports: [
@@ -37,6 +39,7 @@ import { InstallationDetailsPageComponent } from './installation-details-page/in
     FormsModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    PlotlyModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'show-statuses', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },

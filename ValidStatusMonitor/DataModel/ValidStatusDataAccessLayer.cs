@@ -14,7 +14,9 @@ namespace ValidStatusMonitor.Models
             try
             {
                 return db.InstallationStatus
+                    .OrderBy(z => z.CustomerId)
                     .OrderByDescending(x => x.HttpResponseE2eTest)
+                    
                     .ToList();
             }
             catch
@@ -23,7 +25,7 @@ namespace ValidStatusMonitor.Models
             }
         }
 
-        //Get the details of a particular customer 
+        //Get the details of a particular status 
         public InstallationStatus GetStatus(Guid uid)
         {
             try

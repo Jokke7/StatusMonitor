@@ -116,6 +116,14 @@ namespace ValidStatusMonitor.Models
                     .HasColumnName("STORAGE_ACCOUNT_KEY")
                     .HasMaxLength(255);
 
+                entity.Property(e => e.EndpointTestUri)
+                    .HasColumnName("ENDPOINT_TEST_URI")
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.SlotSetting)
+                    .HasColumnName("SLOT_SETTING")
+                    .HasMaxLength(32);
+
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.InstallationAssets)
                     .HasForeignKey(d => d.CustomerId)
@@ -228,6 +236,12 @@ namespace ValidStatusMonitor.Models
 
                 entity.Property(e => e.E2eTestUri)
                     .HasColumnName("E2E_TEST_URI");
+
+                entity.Property(e => e.HttpResponseE2eTest)
+                    .HasColumnName("HTTP_RESPONSE_E2E_TEST");
+
+                entity.Property(e => e.SlotSetting)
+                    .HasColumnName("SLOT_SETTING");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.InstallationStatus)

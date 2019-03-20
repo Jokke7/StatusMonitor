@@ -17,8 +17,6 @@ export class CcrCardComponent implements OnInit {
   public showCard: boolean;
   public fieldIconUri: string;
   public ntfIconUri: string;
-  //public azureIconUri: string;
-
   public azurePortalLink: string;
 
   contentViewLimit: number;
@@ -30,7 +28,6 @@ export class CcrCardComponent implements OnInit {
 
     this.fieldIconUri = "";
     this.ntfIconUri = "";
-    //this.azureIconUri = CcrCardComponent.assetIconPath + "to-azure.svg"
     this.showCard = true;
     this.contentViewLimit = 50;
   }
