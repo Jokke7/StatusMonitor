@@ -36,7 +36,7 @@ export class CcrCardComponent implements OnInit {
     this.ccrType = this.ccr.CcrType;
     this.severityLevel = this.ccr.SeverityLevel;
     this.setCcrField();
-    this.setNtfIcon();
+    //this.setNtfIcon();
     this.azurePortalLink = Util.AzureRmLink(this.ccr);
   }
 

@@ -1,0 +1,43 @@
+
+<div id="add-installation-container">
+  <div id="inplace-container">
+    <p-inplace [active]="active">
+      <div pInplaceDisplay (click)="active=!active">
+        <img [src]='addIcon' style="max-height:10px" />
+        Click to add a Valid installation
+      </div>
+      <div pInplaceContent>
+        <h3 style="text-align:center; color:#01495f">Add an instance of Valid to CCR</h3>
+        <form (submit)=addInstallation() fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="space-around center">
+          <div fxLayout="column">
+            <p-inplace [active]="active2">
+              <div pInplaceDisplay (click)="active2=!active2" style="padding-bottom: 50px;">
+                <img [src]='addIcon' style="max-height:10px" />
+                Add a new customer
+              </div>
+              <div pInplaceContent class="innerInplace" style="width:220px" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+                <input type="text" [(ngModel)]="addCust" placeholder="Name" name="addCust" required pInputText>
+                <input type="text" [(ngModel)]="addEmail" placeholder="Email" name="addEmail" pInputText>
+                <input type="text" [(ngModel)]="addDesc" placeholder="Description" name="addDesc" pInputText>
+
+                <button class="submit-button" type="button" (click)="addCustomer()">Add customer</button>
+                <button class="cancel-button" type="button" (click)="active2=!active2">Cancel</button>
+                <p-toast key="addCustKey" position="center"></p-toast>
+              </div>
+            </p-inplace>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+            <p-dropdown [options]="customerSelectList" [(ngModel)]="selectedCustomer" name="customer" optionLabel="Name" filter="true" required placeholder="Company name" [style]="{'width':'200px'}"></p-dropdown>
+            <input type="text" [(ngModel)]="appE2eUrl" placeholder="Url for monitoring" name="url" required style="padding: 5px;" pInputText>
+            <button class="submit-button" type="submit">Add to CCR </button>
+            <button class="cancel-button" type="reset" (click)="active=!active">Cancel</button>
+            <p-toast key="addInstKey" position="center"></p-toast>
+
+          </div>
+        </form>
+      </div>
+    </p-inplace>
+  </div>
+</div>
+
+

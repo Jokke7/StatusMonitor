@@ -8,7 +8,6 @@ import { CustomerProps } from '../ccrcardmodels/customer-card-model';
 export class Util {
 
   static empty(data) {
-    //console.log(data);
     if (typeof (data) == 'number' || typeof (data) == 'boolean') {
       return false;
     }

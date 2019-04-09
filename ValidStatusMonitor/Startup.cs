@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using ValidStatusMonitor.Controllers;
 using ValidStatusMonitor.Models;
 using ValidStatusMonitor.Security;
 
@@ -127,16 +129,24 @@ namespace ValidStatusMonitor
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            //Workaround for prevent bug with authentication on iOS12-devices.
-            services.ConfigureExternalCookie(options =>
+            services.AddTransient<IAuthorizationHandler, ApiKeyRequirementHandler>();
+            services.AddAuthorization(authConfig =>
             {
-                // Other options
-                options.Cookie.SameSite = SameSiteMode.None;
-            }); services.ConfigureApplicationCookie(options =>
-            {
-                // Other options
-                options.Cookie.SameSite = SameSiteMode.None;
+                authConfig.AddPolicy("ApiKeyPolicy",
+                    policyBuilder => policyBuilder
+                        .AddRequirements(new ApiKeyRequirement(new[] { "hemmelig-api-key" })));
             });
+
+            //Workaround for prevent bug with authentication on iOS12-devices.
+            //services.ConfigureExternalCookie(options =>
+            //{
+            //    // Other options
+            //    options.Cookie.SameSite = SameSiteMode.None;
+            //}); services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Other options
+            //    options.Cookie.SameSite = SameSiteMode.None;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

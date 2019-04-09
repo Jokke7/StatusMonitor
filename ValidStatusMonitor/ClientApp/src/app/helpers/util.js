@@ -5,8 +5,8 @@ var Util = /** @class */ (function () {
     function Util() {
     }
     Util.empty = function (data) {
-        //console.log(data);
         if (typeof (data) == 'number' || typeof (data) == 'boolean') {
+            console.log(data);
             return false;
         }
         if (typeof (data) == 'undefined' || data === null) {
@@ -19,7 +19,9 @@ var Util = /** @class */ (function () {
         for (var i in data) {
             if (data.hasOwnProperty(i)) {
                 count++;
+                console.log("Count " + i);
             }
+            console.log("Count " + i);
         }
         return count == 0;
     };

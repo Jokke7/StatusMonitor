@@ -70,12 +70,10 @@ namespace ValidStatusMonitor.Models
                     .HasMaxLength(100);
 
                 entity.Property(e => e.ApplicationName)
-                    .IsRequired()
                     .HasColumnName("APPLICATION_NAME")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.ApplicationResourceGroup)
-                    .IsRequired()
                     .HasColumnName("APPLICATION_RESOURCE_GROUP")
                     .HasMaxLength(80);
 
@@ -86,17 +84,14 @@ namespace ValidStatusMonitor.Models
                 entity.Property(e => e.CustomerId).HasColumnName("CUSTOMER_ID");
 
                 entity.Property(e => e.DatabaseName)
-                    .IsRequired()
                     .HasColumnName("DATABASE_NAME")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.DatabaseResourceGroup)
-                    .IsRequired()
                     .HasColumnName("DATABASE_RESOURCE_GROUP")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.DatabaseServer)
-                    .IsRequired()
                     .HasColumnName("DATABASE_SERVER")
                     .HasMaxLength(100);
 
@@ -117,6 +112,7 @@ namespace ValidStatusMonitor.Models
                     .HasMaxLength(255);
 
                 entity.Property(e => e.EndpointTestUri)
+                    .IsRequired()
                     .HasColumnName("ENDPOINT_TEST_URI")
                     .HasMaxLength(255);
 
@@ -134,8 +130,7 @@ namespace ValidStatusMonitor.Models
             modelBuilder.Entity<InstallationStatus>(entity =>
             {
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .HasDefaultValueSql("(newid())");
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.ApplicationInfo)
                     .HasColumnName("APPLICATION_INFO")

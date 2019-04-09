@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -40,6 +41,14 @@ namespace ValidStatusMonitor.Controllers
             return objValidStatusMonitor.UpdateCustomer(customer);
         }
 
+        [HttpPost]
+        [Route("api/Customer/Post")]
+        public string AddCustomer([FromBody] Customer cust)
+        {
+            Trace.WriteLine(cust.Name);
+            return objValidStatusMonitor.AddCustomer(cust) == 1 ? "success" : "error";
+        }
+
         [HttpDelete]
         [Route("api/Customer/Delete/{id}")]
         public int Delete(int id)
@@ -73,6 +82,14 @@ namespace ValidStatusMonitor.Controllers
         public InstallationAssets AssetDetails(Guid uid)
         {
             return objValidStatusMonitor.GetAsset(uid);
+        }
+
+        [HttpPost]
+        [Route("api/Installations/Post")]
+        public string AddAsset([FromBody] InstallationAssets asset)
+        {
+            //Trace.WriteLine(asset.CustomerId);
+            return objValidStatusMonitor.AddAsset(asset) == 1 ? "success" : "error";
         }
 
         [HttpPut]

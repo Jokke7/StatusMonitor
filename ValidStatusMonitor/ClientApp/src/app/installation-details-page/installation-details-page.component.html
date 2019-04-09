@@ -7,29 +7,52 @@
     </app-header>
   </div>
 </div>
-<div id="details-container" fxLayout="row wrap">
-  <div fxLayout="row">
-    <div fxLayout="column">
-      <h3>{{customerName}} - {{statusRow.PlantName}} - {{statusRow.Environment}}</h3>
-      <img src="../../assets/gfx/plantmock.png" alt="Plant" style="max-height: 300px;" />
+<div id="details-container">
+
+  <div fxLayout="row" fxLayout.lt-sm="column">
+    <div id="plant-profile">
+      <h3 style="background-color: darkseagreen">{{customerName}} - {{statusRow.PlantName}} - {{statusRow.Environment}}</h3>
+      <img src="../../assets/gfx/plantmock.png" alt="Plant" style="max-width: 536px; width:100%" />
     </div>
-    
-    <div fxLayout="row" fxLayoutAlign="start stretch">
-      <div class="odd" fxLayout="column">
-        {{appName}}
-      </div>
-      <div class="even" fxLayout="column">
-        <app-test-plot></app-test-plot>
-      </div>
-      <div class="odd" fxLayout="column">
-        <app-test-plot></app-test-plot>
-      </div>
-      <div class="even" fxLayout="column">
-        Statistikk 3
-      </div>
+    <div fxFlex="3" fxShow fxHide.xs="true"></div>
+    <div id="status-cards-container" fxLayout="row wrap" fxLayoutGap.gt-xs="32px">
+      <h3 style="background-color: darkseagreen; width: calc(100% - 32px)">Statuses</h3>
+
+      <ng-container *ngFor="let card of statusCards">
+        <app-ccr-card [ccr]="card"
+             fxFlex="0 1 calc(33.3% - 32px)"
+             fxFlex.lt-lg="0 1 calc(50% - 32px)"
+             fxFlex.lt-sm="0 1 100%"
+             style="border-bottom:1px solid black; margin-bottom: 5px;">
+        </app-ccr-card>
+      </ng-container>
     </div>
   </div>
 
-  
+  <div id="usage-statistics-container" fxLayout="row wrap" fxLayoutGap="32px">
+    <h3 style="background-color: darkseagreen; width: calc(100% - 32px)">Usage Statistics</h3>
 
+    <ng-container *ngFor="let _ of [1,2,3]">
+      <div class="panel"
+           fxFlex="0 1 calc(33.33% - 32px)"
+           fxFlex.lt-md="0 1 calc(50% - 32px)"
+           fxFlex.lt-sm="0 1 calc(100% - 32px)">
+        <app-test-plot></app-test-plot>
+      </div>
+    </ng-container>
+  </div>
 </div>
+
+
+<!--<div class="odd">
+  {{appName}}
+</div>
+<div class="even">
+  <app-test-plot></app-test-plot>
+</div>
+<div class="odd">
+  <app-test-plot></app-test-plot>
+</div>
+<div class="even">
+  Statistikk 3
+</div>-->

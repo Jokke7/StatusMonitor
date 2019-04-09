@@ -7,42 +7,47 @@
     </app-header>
   </div>
 </div>
- <div class="card-container">
-   <div fxLayout="row wrap"
-        fxLayout.lt-sm="column"
-        fxLayoutGap="0px"
-        fxLayoutAlign="space-evenly center">
+<div class="card-container">
+  <div fxLayout="row wrap"
+       fxLayout.lt-sm="column"
+       fxLayoutGap="0px"
+       fxLayoutAlign="space-evenly center">
 
-     <ng-container class="row" *ngFor="let card of statusCards">
-       <div *ngIf="card.CcrType =='Customer'" class="row-header" fxLayout="row" [ngClass]="setRowStyle(card)">
-         <div class="row-headertop" fxLayout="column" fxFlex="230px" (click)='toggleRow(card)'>
-           {{card.Description}}
-           <span style="font-size:x-small;">{{card.Name}} - {{card.PlantName}} | <a [href]="card.AppLink" target="_blank"> {{card.E2eTestUri}}</a></span>
-         </div>
-         <span class="detailsLink">
-            <a [routerLink]="['/installation-details/',card.CustomerId,card.StatusId]" style="height:100%" target="_blank" fxLayout="row">
-              <span style="font-size:small;" fxLayoutAlign="start start">Details</span>
-              <img [src]="toDetailsIcon" alt="To Details page" />
-            </a>
-         </span>
-         <div fxFlex (click)='toggleRow(card)'></div>
-         <span class="row-headerright" style="float:right; padding-right:15px; padding-left: 4px; font-family:Arial; font-size:xx-small; line-height: 1.3rem" (click)='toggleRow(card)'>Last updated: {{card.LastUpdate | date: 'EEE, HH:mm:ss'}}</span><br />
-
-
-       </div>
-       <ng-container *ngIf="card.CcrType != 'Customer'">
-         <app-ccr-card [ccr]="card"
-                       fxFlex="0 1 calc(20%)"
-                       fxFlex.lt-lg="0 1 calc(50%)"
-                       fxFlex.lt-md="0 1 calc(50%)"
-                       fxFlex.lt-sm="100%"
-                       [fxShow]='card.ShowCard'>
-         </app-ccr-card>
-       </ng-container>
+    <ng-container class="row" *ngFor="let card of statusCards">
+      <div *ngIf="card.CcrType =='Customer'" class="row-header" fxLayout="row" [ngClass]="setRowStyle(card)">
+        <div class="row-headertop" fxLayout="column" fxFlex="230px" (click)='toggleRow(card)'>
+          {{card.Description}}
+          <span style="font-size:x-small;">{{card.Name}} - {{card.PlantName}} | <a [href]="card.AppLink" target="_blank"> {{card.E2eTestUri}}</a></span>
+        </div>
+        <span class="detailsLink">
+          <a [routerLink]="['/installation-details/',card.CustomerId,card.StatusId]" style="height:100%" target="_blank" fxLayout="row">
+            <span style="font-size:small;" fxLayoutAlign="start start">Details</span>
+            <img [src]="toDetailsIcon" alt="To Details page" />
+          </a>
+        </span>
+        <div fxFlex (click)='toggleRow(card)'></div>
+        <span class="row-headerright" style="float:right; padding-right:15px; padding-left: 4px; font-family:Arial; font-size:xx-small; line-height: 1.3rem" (click)='toggleRow(card)'>Last updated: {{card.LastUpdate | date: 'EEE, HH:mm:ss'}}</span><br />
 
 
-</ng-container>
-    
+      </div>
+      <ng-container *ngIf="card.CcrType != 'Customer'">
+        <app-ccr-card [ccr]="card"
+                      fxFlex="0 1 calc(20%)"
+                      fxFlex.lt-lg="0 1 calc(50%)"
+                      fxFlex.lt-md="0 1 calc(50%)"
+                      fxFlex.lt-sm="100%"
+                      [fxShow]='card.ShowCard'>
+        </app-ccr-card>
+      </ng-container>
 
+
+    </ng-container>
+
+
+  </div>
 </div>
- </div>
+<div *ngIf="customers" fxShow fxHide.lt-md>
+  <app-add-installation-panel [customerSelectList]='customers'></app-add-installation-panel>
+</div>
+
+

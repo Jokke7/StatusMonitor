@@ -1,7 +1,6 @@
 #details-container{
   padding-left: 20px;
   padding-right: 20px;
-  border: 1px solid black;
 }
 
 .odd{
@@ -15,4 +14,26 @@
   min-width: 150px;
   background-color: lightgray;
   border-right: 1px solid black;
+}
+
+.panel{
+  min-height: 200px;
+  border: 1px solid black;
+  margin: 16px 0 32px 0;
+}
+
+#status-cards-container{
+  width: 100%;
+}
+
+.statusCard {
+  height: 200px;
+  border: 1px solid black;
+  margin-bottom: 15px;
+  min-width: 100px;
+}
+
+h3 {
+  padding: 3px 0 3px 10px;
+  color:#01495f 
 }

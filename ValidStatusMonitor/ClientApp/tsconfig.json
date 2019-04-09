@@ -8,6 +8,8 @@
     "importHelpers": true,
     "lib": [
       "es2017",
+      "es5",
+      "es6",
       "dom"
     ],
     "module": "es2015",

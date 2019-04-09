@@ -1,11 +1,24 @@
-<div fxLayout="row" 
-     fxLayout.lt-md="column"
-     fxFlex="100%">
+<div id="header-container" fxLayout="row" fxLayoutAlign="start stretch" style="background-color: orange">
+  <div fxFlex="65%" fxLayoutAlign="start center">
+    <div fxFlex="50" fxLayoutAlign="space-around">
+      <a href="/show-statuses" style="color: white; font-size:large; line-height:40px; display:flex">
+        Valid&nbsp;CCR
+        <img src="../../assets/icons/heart-rate.svg" alt="Heartbeat" style="height: 30px; padding-top: 10px;" />
+      </a>
+    </div>
+    <div fxFlex="40" fxLayoutAlign="end stretch">
+      <a href="/show-statuses">
+        <img src="../../assets/icons/home-icon.svg" alt="Home Link" style="height:25px; padding-right: 20px;" />
+      </a>
+      <img src="../../assets/icons/update-icon.svg" alt="Update Asset Status" style="height:25px" />
 
-  <div fxFlex.lt-md="50%" fxLayoutAlign.lt-md="center center" class="header">
-    <img src="../../assets/gfx/vnLogo.png" alt="Visionova Logo" style="height:30px" />
+    </div>
   </div>
-  <div fxFlex.lt-md="50%" fxLayoutAlign="end center" fxLayoutAlign.lt-md="center" class="header right">
-    Valid CCR <img src="../../assets/icons/heart-rate.svg" alt="Heatbeat" />
+  <div fxFlex></div>
+
+  <div fxFlex="32%" fxLayoutAlign="center center" style="background-color: white;">
+    <img src="../../assets/gfx/vnLogo.png" alt="Visionova Logo" style="height:25px" fxShow fxHide.lt-md />
+    <img src="../../assets/gfx/vnLogo-xs.png" alt="Visionova Logo" style="height:25px" fxShow fxHide.gt-sm />
   </div>
 </div>
+

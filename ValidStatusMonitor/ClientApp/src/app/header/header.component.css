@@ -9,14 +9,18 @@
     height: 50px;
 }
 
-.right {
+.right{
   padding-top: 5px;
   padding-right: 30px;
   background-color: #f09f02;
   color: white;
-  line-height: 35px;
   margin-bottom: 10px;
   font-size:larger;
+}
+
+.right a {
+  color: white;
+  line-height: 35px;
 }
 
 /*@media screen and (max-width: 959px) {
@@ -25,11 +29,18 @@
     }
 }*/
 
-.right > img {
+/*a img {
   padding-top: 5px;
   padding-left: 5px;
   height: 1.5em;
   width: 2.5em;
   margin-left: 0px;
+}*/
+
+#header-container {
+  min-height:40px;
+  border-bottom: 1px solid orange;
+  padding: 0;
+  margin-bottom: 15px;
 }
   

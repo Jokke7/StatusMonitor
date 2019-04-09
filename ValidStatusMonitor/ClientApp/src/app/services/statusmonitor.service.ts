@@ -1,9 +1,9 @@
 
-import {throwError as observableThrowError,  Observable} from 'rxjs';
+import {throwError as observableThrowError,  Observable, throwError} from 'rxjs';
 
 import { map, catchError } from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core'; 
-import { HttpClient } from '@angular/common/http' 
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http' 
 import { Router } from '@angular/router'; 
  
  
@@ -35,8 +35,18 @@ export class StatusMonitorService {
       catch (e) {
         console.log(e.message);
         return Observable.throw(e.message);
-      } 
+        }
+  }
+
+  getStatusById(uid: string): Observable<StatusMonitorData> {
+    try {
+      return this._http.get<StatusMonitorData>(this.appUrl + "api/Installations/Status/" + uid);
     }
+    catch (e) {
+      console.log(e.message);
+      return Observable.throw(e.message);
+    }
+  }
 
     getCustomerAssets(): Observable<CustomerAssetsData[]>{
       try {
@@ -47,6 +57,48 @@ export class StatusMonitorService {
         return Observable.throw(e.message);
       } 
     }
+
+  getCustomerAssetById(uid: string): Observable<CustomerAssetsData> {
+    try {
+      return this._http.get<CustomerAssetsData>(this.appUrl + 'api/Installations/' + uid);
+    }
+    catch (e) {
+      console.log(e.message);
+      return Observable.throw(e.message);
+    }
+  }
+
+
+
+  addAsset(asset: CustomerAssetsData): Observable<CustomerAssetsData> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+      try {
+        return this._http.post<CustomerAssetsData>('api/Installations/Post', asset, httpOptions);
+      }
+      catch (e) {
+        console.log(e.message);
+        return Observable.throw(e.message);
+      } 
+  }
+
+  addCustomer(cust: Customer): Observable<Customer> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    try {
+      return this._http.post<Customer>('api/Customer/Post', cust, httpOptions);
+    }
+    catch (e) {
+      console.log(e.message);
+      return Observable.throw(e.message);
+    }
+  }
 
     getCustomers(): Observable<Customer[]> {
       try {
@@ -66,24 +118,15 @@ export class StatusMonitorService {
         console.log(e.message);
         return Observable.throw(e.message);
       }
-     
     }
-   
-    getInstallationAssetsByCustId(id: number) : Observable<CustomerAssetsData>{
-      return this._http.get<CustomerAssetsData>(this.appUrl + "api/Installations/" + id);
-    }
-
-    getInstallationAssetByCustomerAndAppName(id: number, appName: string): Observable<CustomerAssetsData> {
-      return this._http.get<CustomerAssetsData>(this.appUrl + "api/Installations/" + id +"/" + appName);
-    }
-   
-    updateEmployee(customer) { 
+  
+    updateCustomer(customer) { 
       return this._http.put(this.appUrl + 'api/Customer/Edit', customer);
             //.map((response: Response) => response.json()) 
             //.catch(this.errorHandler); 
     } 
    
-    deleteEmployee(id) { 
+    deleteCustomer(id) { 
       return this._http.delete(this.appUrl + "api/Customer/Delete/" + id);
             //.map((response: Response) => response.json()) 
             //.catch(this.errorHandler); 
@@ -123,8 +166,21 @@ export class StatusMonitorService {
     }
 
   private getAppServiceCardSeverity(card: ApplicationProps): ApplicationProps {
-    card.SeverityLevel = SeverityLevel.Informational;
     var msgs: string[] = [];
+
+    const warningDaysTH = 30;
+    const immidiateDaysTH = 14;
+    const alertDaysTH = 7;
+
+    var exp = new Date(Date.parse(card.LicenceExpiryDate.toString()));
+    var now = new Date();
+
+    console.log("expiry date" + exp);
+
+    var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
+    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+    console.log("DIFF " + diffDays);
 
     if (Util.empty(card.ApplicationInfo) ||
       Util.empty(card.ApplicationName) ||
@@ -135,6 +191,18 @@ export class StatusMonitorService {
       Util.empty(card.LicenceServer)) {
       msgs.push("Empty properties for App");
       card.SeverityLevel = SeverityLevel.Warning;
+    }
+
+    if (diffDays < warningDaysTH) {
+      card.SeverityLevel = SeverityLevel.Warning;
+      card.SeverityLevel = (diffDays < immidiateDaysTH ?
+        (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Warning);
+      if (diffDays < 0) {
+        msgs.push("App-certificate expired " + diffDays + " ago.")
+      }
+      else {
+        msgs.push("License expires in " + diffDays + " days.");
+      }
     }
 
     if (card.E2eTestResponse !== '200') {
@@ -159,7 +227,7 @@ export class StatusMonitorService {
 
     var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
     const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-   
+
     if (Util.empty(card.SslExpiryDate) ||
         Util.empty(card.SslName) ||
         Util.empty(card.SslStatus)) {
@@ -168,16 +236,17 @@ export class StatusMonitorService {
     }
 
     if (diffDays < warningDaysTH) {
-      card.SeverityLevel = SeverityLevel.Alert;
+      card.SeverityLevel = SeverityLevel.Warning;
+      card.SeverityLevel = (diffDays < immidiateDaysTH ?
+        (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Informational);
       console.log("DIFF " + diffDays);
       if (diffDays < 0) {
-        msgs.push("SSL-certificate expired " + diffDays + " ago.")
+        msgs.push("SSL-certificate expired " + diffDays + "ago.")
       }
       else {
-        msgs.push("Days until expiry " + diffDays);
+        msgs.push("SSL-certificate expires in " + diffDays + " days.");
       }
     }
-
     card.Message = Formatter.toolTipNotification(msgs.reverse());
     return card;
   }
@@ -187,7 +256,7 @@ export class StatusMonitorService {
     var msgs: string[] = [];
 
     if (Util.empty(card.Description) ||
-        Util.empty(card.Description) ||
+        Util.empty(card.E2eTestUri) ||
         Util.empty(card.Environment) ||
         Util.empty(card.LastUpdate) ||
         Util.empty(card.LicenceExpiryDate) ||
@@ -250,6 +319,22 @@ export class StatusMonitorService {
 
     return card;
   }
+
+  //private handleError(error: HttpErrorResponse) {
+  //  if (error.error instanceof ErrorEvent) {
+  //    // A client-side or network error occurred. Handle it accordingly.
+  //    console.error('An error occurred:', error.error.message);
+  //  } else {
+  //    // The backend returned an unsuccessful response code.
+  //    // The response body may contain clues as to what went wrong,
+  //    console.error(
+  //      `Backend returned code ${error.status}, ` +
+  //      `body was: ${error.error}`);
+  //  }
+  //  // return an observable with a user-facing error message
+  //  return throwError(
+  //    'Something bad happened; please try again later.');
+  //};
 
   //private sortCcrCards(cards: Array<CcrCardModel>): Array<CcrCardModel> {
   //  let sorted = {} as Array<CcrCardModel>;

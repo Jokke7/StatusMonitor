@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ValidStatusMonitor.Models;
 
 namespace ValidStatusMonitor.Migrations
 {
     [DbContext(typeof(ValidStatusMonitorContext))]
-    partial class ValidStatusMonitorContextModelSnapshot : ModelSnapshot
+    [Migration("20190327132523_setAzNamePropsNotRequired")]
+    partial class setAzNamePropsNotRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,7 +173,9 @@ namespace ValidStatusMonitor.Migrations
             modelBuilder.Entity("ValidStatusMonitor.Models.InstallationStatus", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnName("ID");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ID")
+                        .HasDefaultValueSql("(newid())");
 
                     b.Property<string>("ApplicationInfo")
                         .HasColumnName("APPLICATION_INFO")
@@ -306,11 +310,6 @@ namespace ValidStatusMonitor.Migrations
                         .WithMany("InstallationStatus")
                         .HasForeignKey("CustomerId")
                         .HasConstraintName("fk_Status_CustomerID");
-
-                    b.HasOne("ValidStatusMonitor.Models.InstallationAssets", "InstallationAssets")
-                        .WithOne("Status")
-                        .HasForeignKey("ValidStatusMonitor.Models.InstallationStatus", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

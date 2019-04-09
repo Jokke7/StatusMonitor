@@ -1,0 +1,63 @@
+#add-installation-container {
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  max-width: 500px;
+}
+
+#inplace-container {
+  padding: 0;
+  margin: 0;
+  border: 2px dashed lightgrey;
+}
+
+:host ::ng-deep .ui-dropdown-panel{
+  font-size:small;
+}
+
+.innerInplace {
+  border: 1px dashed lightgrey;
+  padding: 10px;
+}
+/*:host ::ng-deep .ui-dropdown-items-wrapper {
+  background-color: #000000;
+  background-image: none;
+  color: red;
+}*/
+
+:host ::ng-deep .ui-inplace {
+  background-color: #eef9ed;
+  padding: 10px;
+}
+
+:host ::ng-deep .ui-inplace .ui-inplace-display {
+  display:block;
+}
+
+:host ::ng-deep .ui-inputtext {
+  /*height: 1.4rem;*/
+  border-radius: 0px;
+}
+
+.submit-button{
+  height: 30px;
+  background-color: #01495f;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.cancel-button {
+  height: 30px;
+  background-color: lightgrey;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+

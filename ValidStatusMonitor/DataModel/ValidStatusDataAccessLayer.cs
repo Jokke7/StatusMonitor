@@ -106,6 +106,20 @@ namespace ValidStatusMonitor.Models
             }
         }
 
+        public int AddAsset(InstallationAssets asset)
+        {
+            try
+            {
+                db.InstallationAssets.Add(asset);
+                db.SaveChanges();
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         //Get the details of a particular customer 
         public Customer GetCustomer(int id)

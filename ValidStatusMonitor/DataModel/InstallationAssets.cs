@@ -6,6 +6,7 @@ namespace ValidStatusMonitor.Models
 {
     public partial class InstallationAssets
     {
+        [Key]
         public Guid Id { get; set; }
         public int CustomerId { get; set; }
         public string DatabaseName { get; set; }
@@ -23,5 +24,6 @@ namespace ValidStatusMonitor.Models
         public string SlotSetting { get; set; }
 
         public virtual Customer Customer { get; set; }
+        public virtual InstallationStatus Status { get; set; }
     }
 }

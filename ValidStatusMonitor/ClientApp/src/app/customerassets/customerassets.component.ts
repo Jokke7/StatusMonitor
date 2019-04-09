@@ -22,29 +22,29 @@ export class CustomerAssetsComponent {
 }
 
 export interface CustomerAssetsData {
-  Id: string;
+  Id?: string;
   CustomerId: number;
-  DatabaseName: string;
-  DatabaseServer: string;
-  DatabaseResourceGroup: string;
-  ApplicationName: string;
-  ApplicationResourceGroup;
-  ApplicationLicenceId: string;
-  CustomDomainName: string;
+  DatabaseName?: string;
+  DatabaseServer?: string;
+  DatabaseResourceGroup?: string;
+  ApplicationName?: string;
+  ApplicationResourceGroup?;
+  ApplicationLicenceId?: string;
+  CustomDomainName?: string;
   EndpointTestUri: string;
-  SslThumbPrint: string;
-  StorageAccountKey: string;
-  EnabledPdftron: boolean;
-  Enabled3d: boolean;
-  InstCode: string;
-  PlantName: string;
-  Customer: Object;
+  SslThumbPrint?: string;
+  StorageAccountKey?: string;
+  EnabledPdftron?: boolean;
+  Enabled3d?: boolean;
+  InstCode?: string;
+  PlantName?: string;
+  //Customer: Object;
 }
 
 export interface Customer {
-  Id: number;
+  Id?: number;
   Name: string;
-  CreatedDate: Date;
-  Email: string; 
-  Description: string;
+  CreatedDate?: Date;
+  Email?: string; 
+  Description?: string;
 }

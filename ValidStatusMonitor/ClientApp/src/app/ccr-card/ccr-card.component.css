@@ -37,6 +37,7 @@
 .row {
   width: 100%;
   margin: 0;
+  padding:0;
 }
 
 .content-container {
@@ -44,6 +45,7 @@
   float: left;
   text-align: left;
   width: 100%;
+  padding:0;
 }
 
 .content {
@@ -97,7 +99,6 @@
 
 
   .field > img {
-
     width: 50%;
     height: 30px;
     margin: 10px;

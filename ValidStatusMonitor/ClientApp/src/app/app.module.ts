@@ -6,8 +6,10 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PlotlyModule } from 'angular-plotly.js';
-//import { AccordionModule } from 'primeng/primeng';
-//import { TooltipModule } from 'primeng/tooltip';
+import { MessageService } from 'primeng/api';
+import { InplaceModule } from 'primeng/inplace';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 
 
 import { AppComponent } from './app.component';
@@ -20,6 +22,7 @@ import { HeaderComponent } from './header/header.component';
 import { MsgboardComponent } from './msgboard/msgboard.component';
 import { InstallationDetailsPageComponent } from './installation-details-page/installation-details-page.component';
 import { TestPlotComponent } from './test-plot/test-plot.component';
+import { AddInstallationPanelComponent } from './add-installation-panel/add-installation-panel.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,8 @@ import { TestPlotComponent } from './test-plot/test-plot.component';
     HeaderComponent,
     MsgboardComponent,
     InstallationDetailsPageComponent,
-    TestPlotComponent
+    TestPlotComponent,
+    AddInstallationPanelComponent
 
   ],
   imports: [
@@ -40,6 +44,9 @@ import { TestPlotComponent } from './test-plot/test-plot.component';
     FlexLayoutModule,
     BrowserAnimationsModule,
     PlotlyModule,
+    InplaceModule,
+    DropdownModule,
+    ToastModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'show-statuses', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
@@ -50,7 +57,7 @@ import { TestPlotComponent } from './test-plot/test-plot.component';
       { path: '**', redirectTo: 'home' }
     ])
   ],
-  providers: [ StatusMonitorService ],
+  providers: [StatusMonitorService, MessageService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

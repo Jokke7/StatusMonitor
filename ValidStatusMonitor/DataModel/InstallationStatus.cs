@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ValidStatusMonitor.Models
 {
     public partial class InstallationStatus
     {
+        [ForeignKey("InstallationAssets")]
         public Guid Id { get; set; }
         public string PlantName { get; set; }
         public DateTime LastUpdate { get; set; }
@@ -37,5 +40,7 @@ namespace ValidStatusMonitor.Models
         public string E2eTestUri { get; set; }
         public string SlotSetting { get; set; }
         public virtual Customer Customer { get; set; }
+
+        public virtual InstallationAssets InstallationAssets { get; set; }
     }
 }

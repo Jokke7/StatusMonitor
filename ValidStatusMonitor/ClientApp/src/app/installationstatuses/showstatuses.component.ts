@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
@@ -9,7 +9,7 @@ import { ApplicationProps } from '../ccrcardmodels/application-card-model';
 import { CertificateProps } from '../ccrcardmodels/certificate-card-model';
 import { StorageProps } from '../ccrcardmodels/storage-card-model';
 import { CustomerProps } from '../ccrcardmodels/customer-card-model';
-import { CustomerAssetsData, Customer } from '../customerassets/customerassets.component';
+import { Customer } from '../customerassets/customerassets.component';
 
 export interface StatusMonitorData {
   Id: string;
@@ -56,12 +56,10 @@ export class ShowStatusesComponent implements OnInit{
   public statuses: StatusMonitorData[];
   public customers: Customer[];
 
-
   static readonly cardsPerRow: number = 6;
   public toDetailsIcon: string;
 
   public statusCards: Array<CcrCardModel>;
-
 
   constructor(public http: HttpClient, private _statusMonitorService: StatusMonitorService) {
     this.statusCards = new Array<CcrCardModel>();
@@ -69,18 +67,21 @@ export class ShowStatusesComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.getStatuses();
+    this.updateStatuses();
+    setInterval(() => {
+      this.updateStatuses();
+    }, 300000);
   }
 
-  getStatuses() {
+  updateStatuses() {
     this._statusMonitorService.getAllStatuses()
       .subscribe((data: StatusMonitorData[]) => {
         this.statuses = data;
-        this.getCustomers();
+        this.updateCustomers();
       })
   }
 
-  getCustomers() {
+  updateCustomers() {
     this._statusMonitorService.getCustomers()
       .subscribe((data: Customer[]) => {
         this.customers = data;
@@ -117,38 +118,50 @@ export class ShowStatusesComponent implements OnInit{
         sever = iSever;
       }
     }
-    //if (sever == SeverityLevel.Alert) { this.toggleRow(firstCardInRow);}
     return {
       warning: sever == SeverityLevel.Warning,
       immediate: sever == SeverityLevel.Immediate,
       alert1: sever == SeverityLevel.Alert
     }
-
   }
 
   private setCcrCards() {
-
+    var cards = new Array<CcrCardModel>();
     for (let status of this.statuses) {
-      var customerCard = {} as CustomerProps;
-      var applicationCard = {} as ApplicationProps;
-      var databaseCard = {} as DatabaseProps;
-      var certificatesCard = {} as CertificateProps;
-      var storageCard = {} as StorageProps;
-      var miscCard = {} as MiscProps;
-  
+      var customerCard;
+      var applicationCard;
+      var databaseCard;
+      var certificatesCard;
+      var storageCard;
+      var miscCard;
+      if (this.statusCards === undefined || this.statusCards.length == 0) {
+        customerCard = {} as CustomerProps;
+        applicationCard = {} as ApplicationProps;
+        databaseCard = {} as DatabaseProps;
+        certificatesCard = {} as CertificateProps;
+        storageCard = {} as StorageProps;
+        miscCard = {} as MiscProps;
+      }
+      else {
+        customerCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow];
+        applicationCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +1];
+        databaseCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +2];
+        certificatesCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +3];
+        storageCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 4];
+        miscCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 5];
+      }
 
       customerCard.CustomerId = status.CustomerId;
       customerCard.StatusId = status.Id;
-      customerCard.Name = this.customers.find(cust => cust.Id === customerCard.CustomerId).Name;
+      //customerCard.Name = this.customers.find(cust => cust.Id === customerCard.CustomerId).Name;
       customerCard.Description = status.Description;
-      customerCard.Environment = status.Environment;
       customerCard.LastUpdate = status.LastUpdate;
+      customerCard.Environment = status.Environment;
       customerCard.PlantName = status.PlantName;
       customerCard.LicenceExpiryDate = status.LicenceExpiryDate;
       customerCard.E2eTestUri = status.E2eTestUri;
       customerCard.AppLink = "http://" + status.E2eTestUri;
       customerCard.CcrType = CcrType.Customer;
-
 
       applicationCard.ApplicationName = status.ApplicationName;
       applicationCard.ApplicationInfo = status.ApplicationInfo;
@@ -173,7 +186,7 @@ export class ShowStatusesComponent implements OnInit{
       certificatesCard.SslExpiryDate = status.SslExpiryDate;
       certificatesCard.SslStatus = status.SslStatus;
       certificatesCard.CcrType = CcrType.Certificate;
-
+        
       storageCard.StorageBlobNFiles = status.StorageBlobNfiles;
       storageCard.StorageBlobSizeMb = status.StorageBlobSizeMb;
       storageCard.StorageServiceLevel = status.StorageServiceLevel;
@@ -183,18 +196,19 @@ export class ShowStatusesComponent implements OnInit{
       miscCard.CcrType = CcrType.Misc;
       miscCard.Enabled3dViewer = status.Enabled3dViewer;
       miscCard.EnabledPdfTron = status.EnabledPdfTron;
-      
-      this.statusCards.push(customerCard);
-      this.statusCards.push(applicationCard);
-      this.statusCards.push(databaseCard);
-      this.statusCards.push(certificatesCard);
-      this.statusCards.push(storageCard);
-      this.statusCards.push(miscCard);
+
+      cards.push(customerCard);
+      cards.push(applicationCard);
+      cards.push(databaseCard);
+      cards.push(certificatesCard);
+      cards.push(storageCard);
+      cards.push(miscCard);
     }
+    this.statusCards = cards;
     this._statusMonitorService.getCcrStatusSeverity(this.statusCards);
   }
-
-  
 }
+
+
 
 
