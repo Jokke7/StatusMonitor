@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Customer, CustomerAssetsData } from '../customerassets/customerassets.component';
+import { Customer, CustomerAssetsData } from '../ccrtypes/interfaces';
 import { StatusMonitorService } from '../services/statusmonitor.service';
 import { MessageService } from 'primeng/api';
 import { Util } from '../helpers/util';

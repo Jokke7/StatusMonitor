@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
  
  
  
-import { StatusMonitorData } from '../installationstatuses/showstatuses.component';
-import { CustomerAssetsData, Customer } from '../customerassets/customerassets.component';
+import { CustomerAssetsData, Customer, StatusMonitorData } from '../ccrtypes/interfaces';
 import { SeverityLevel, CcrCardModel, CcrType } from '../ccrcardmodels/ccr-card-model';
 import { ApplicationProps } from '../ccrcardmodels/application-card-model';
 import { CertificateProps } from '../ccrcardmodels/certificate-card-model';
@@ -19,23 +18,26 @@ import { DatabaseProps } from '../ccrcardmodels/database-card-model';
 import { MiscProps } from '../ccrcardmodels/misc-card-model';
 import { Formatter } from '../helpers/formatter';
 import { Util } from '../helpers/util';
+import { SummaryProps } from '../ccrcardmodels/summary-card-model';
    
 @Injectable() 
 export class StatusMonitorService { 
-    private appUrl: string = "";
+  private appUrl: string = "";
+  private static taskList: string[] = [];
+  private static aggregatedSeverity: SeverityLevel = SeverityLevel.Informational;
    
-    constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
-      this.appUrl = baseUrl;
-    }
+  constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
+    this.appUrl = baseUrl;
+  }
 
-    getAllStatuses() : Observable<StatusMonitorData[]>{
-      try {
-        return this._http.get<StatusMonitorData[]>(this.appUrl + 'api/Installations/Status/All');
-      }
-      catch (e) {
-        console.log(e.message);
-        return Observable.throw(e.message);
-        }
+  getAllStatuses() : Observable<StatusMonitorData[]>{
+    try {
+      return this._http.get<StatusMonitorData[]>(this.appUrl + 'api/Installations/Status/All');
+    }
+    catch (e) {
+      console.log(e.message);
+      return Observable.throw(e.message);
+    }
   }
 
   getStatusById(uid: string): Observable<StatusMonitorData> {
@@ -56,7 +58,32 @@ export class StatusMonitorService {
         console.log(e.message);
         return Observable.throw(e.message);
       } 
+  }
+
+  updateStatusOnDemand(statusId: string): Observable<any> {
+    //const headers = new HttpHeaders({
+    //  'key1': 'value1',
+    //  'key2': 'value2',
+    //  // the rest ..
+    //});
+
+    //const httpOptions = {
+    //  headers: new HttpHeaders({
+    //    'Content-Type': 'application/json'
+    //  })
+    //};
+    try {
+      console.log("update pressed");
+
+      return this._http.post(this.appUrl + 'api/Installations/Refresh/' + statusId, true);
+      //return this._http.post('lol', true);
+
     }
+    catch (e) {
+      console.log(e.message);
+      return Observable.throw(e.message);
+    }
+  }
 
   getCustomerAssetById(uid: string): Observable<CustomerAssetsData> {
     try {
@@ -67,8 +94,6 @@ export class StatusMonitorService {
       return Observable.throw(e.message);
     }
   }
-
-
 
   addAsset(asset: CustomerAssetsData): Observable<CustomerAssetsData> {
     const httpOptions = {
@@ -158,6 +183,9 @@ export class StatusMonitorService {
           case CcrType.Misc:
             this.getMiscCardSeverity(<MiscProps>card);
             break;
+          case CcrType.Summary:
+            this.getSummaryCardSeverity(<SummaryProps>card);
+            break;
           default:
             break;
         }
@@ -166,6 +194,8 @@ export class StatusMonitorService {
     }
 
   private getAppServiceCardSeverity(card: ApplicationProps): ApplicationProps {
+    card.SeverityLevel = SeverityLevel.Informational;
+
     var msgs: string[] = [];
 
     const warningDaysTH = 30;
@@ -175,12 +205,8 @@ export class StatusMonitorService {
     var exp = new Date(Date.parse(card.LicenceExpiryDate.toString()));
     var now = new Date();
 
-    console.log("expiry date" + exp);
-
     var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
     const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-
-    console.log("DIFF " + diffDays);
 
     if (Util.empty(card.ApplicationInfo) ||
       Util.empty(card.ApplicationName) ||
@@ -190,6 +216,7 @@ export class StatusMonitorService {
       Util.empty(card.LicenceSerial) ||
       Util.empty(card.LicenceServer)) {
       msgs.push("Empty properties for App");
+      StatusMonitorService.taskList.push("Check missing properties for App Service: " + card.ApplicationName);
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
@@ -202,15 +229,19 @@ export class StatusMonitorService {
       }
       else {
         msgs.push("License expires in " + diffDays + " days.");
+        StatusMonitorService.taskList.push("Renew application licence for " + card.ApplicationName + ".");
       }
     }
 
     if (card.E2eTestResponse !== '200') {
       msgs.push("End to end test missing or has no response. Errorcode: " + card.E2eTestResponse);
+      StatusMonitorService.taskList.push("Application is unresponsive(ErrCode: " + card.E2eTestResponse + "). Check " + card.ApplicationName + ".");
       card.SeverityLevel = SeverityLevel.Alert;
     }
     
     card.Message = Formatter.toolTipNotification(msgs.reverse());
+    this.setAggregatedSeverity(card.SeverityLevel);
+
     return card;
   }
 
@@ -232,6 +263,7 @@ export class StatusMonitorService {
         Util.empty(card.SslName) ||
         Util.empty(card.SslStatus)) {
       msgs.push("Empty properties set for Certificates");
+      StatusMonitorService.taskList.push("Check missing properties for SSL-certificates " + card.SslName);
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
@@ -239,15 +271,18 @@ export class StatusMonitorService {
       card.SeverityLevel = SeverityLevel.Warning;
       card.SeverityLevel = (diffDays < immidiateDaysTH ?
         (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Informational);
-      console.log("DIFF " + diffDays);
       if (diffDays < 0) {
         msgs.push("SSL-certificate expired " + diffDays + "ago.")
+        StatusMonitorService.taskList.push("SSL-certificate " + card.SslName + " expired " + diffDays + " ago.");
       }
       else {
         msgs.push("SSL-certificate expires in " + diffDays + " days.");
+        StatusMonitorService.taskList.push("Renew SSL- certificate " + card.SslName);
       }
     }
     card.Message = Formatter.toolTipNotification(msgs.reverse());
+    this.setAggregatedSeverity(card.SeverityLevel);
+
     return card;
   }
 
@@ -262,14 +297,17 @@ export class StatusMonitorService {
         Util.empty(card.LicenceExpiryDate) ||
         Util.empty(card.PlantName)){
       msgs.push("Empty properties set for Customer");
+      StatusMonitorService.taskList.push("Check missing properties for Customer " + card.CustomerId);
+
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
     if (Util.empty(card.E2eTestUri)) {
       card.E2eTestUri = "No response from application";
     }
-
     card.Message = Formatter.toolTipNotification(msgs.reverse());
+    this.setAggregatedSeverity(card.SeverityLevel);
+
     return card;
   }
 
@@ -284,10 +322,13 @@ export class StatusMonitorService {
         Util.empty(card.DatabaseTemplate) ||
         Util.empty(card.DatabaseVersion)){
       msgs.push("Empty properties set for Database");
+      StatusMonitorService.taskList.push("Check missing properties for Database " + card.DatabaseName);
+
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
     card.Message = Formatter.toolTipNotification(msgs.reverse());
+    this.setAggregatedSeverity(card.SeverityLevel);
 
     return card;
   }
@@ -297,12 +338,15 @@ export class StatusMonitorService {
     var msgs: string[] = [];
 
     if (Util.empty(card.StorageServiceLevel) ||
-        Util.empty(card.StorageBlobNFiles)) {
+        Util.empty(card.StorageBlobNFiles) ||
+        Util.empty(card.StorageBlobSizeMb)){
       msgs.push("Empty properties set for Storage");
+      StatusMonitorService.taskList.push("Check emtpy properties of Storage.");
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
     card.Message = Formatter.toolTipNotification(msgs.reverse());
+    this.setAggregatedSeverity(card.SeverityLevel);
     return card;
   }
 
@@ -312,12 +356,45 @@ export class StatusMonitorService {
 
     if (Util.empty(card.Enabled3dViewer) || Util.empty(card.EnabledPdfTron)) {
       msgs.push("Empty properties set for Other Assets");
+      StatusMonitorService.taskList.push("Check missing properties for 'Other Assets'");
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-
+    this.setAggregatedSeverity(card.SeverityLevel);
     return card;
+  }
+
+  private getSummaryCardSeverity(card: SummaryProps): SummaryProps {
+    card.SeverityLevel = SeverityLevel.Informational;
+    var msgs: string[] = [];
+    if (Util.empty(StatusMonitorService.taskList)) {
+      msgs.push("No upcoming maintenance tasks! &nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp")
+    }
+    else {
+      msgs = StatusMonitorService.taskList;
+    }
+    card.Message = Formatter.toolTipNotification(msgs.reverse());
+    StatusMonitorService.taskList = [];
+
+    card.SeverityLevel = StatusMonitorService.aggregatedSeverity;
+    StatusMonitorService.aggregatedSeverity = SeverityLevel.Informational;
+    return card;
+  }
+
+  public setAggregatedSeverity(sever: SeverityLevel) {
+    if (sever == SeverityLevel.Alert) {
+      StatusMonitorService.aggregatedSeverity = sever;
+      return;
+    }
+    else if (sever == SeverityLevel.Immediate) {
+      StatusMonitorService.aggregatedSeverity = sever;
+      return;
+    }
+    else if (sever == SeverityLevel.Warning) {
+      StatusMonitorService.aggregatedSeverity = sever;
+      return;
+    }
   }
 
   //private handleError(error: HttpErrorResponse) {

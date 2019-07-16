@@ -9,26 +9,29 @@ import { Util } from '../helpers/util';
 })
 export class MsgboardComponent implements OnInit {
 
-    @Input() msgSl: SeverityLevel;
-    @Input() msgs: string[];
+  @Input() msgSl: SeverityLevel;
+  @Input() msgs: string[];
 
   constructor() {
     this.msgs = undefined;
-    }
-
+  }
   
-    ngOnInit() {
-        this.setBoardStyle();
-    }
+  ngOnInit() {
+      this.setBoardStyle();
+  }
 
-    setBoardStyle() {
-      return {
-          msg: true,
-          warning: this.msgSl === SeverityLevel.Warning,
-          immediate: this.msgSl === SeverityLevel.Immediate,
-          alert1: this.msgSl === SeverityLevel.Alert,
-          hide: (this.msgs === undefined || this.msgs.length == 0)
-        }
-    }
+  setBoardStyle() {
+    return {
+      msg: true,
+      informational: this.msgSl === SeverityLevel.Informational,
+      warning: this.msgSl === SeverityLevel.Warning,
+      immediate: this.msgSl === SeverityLevel.Immediate,
+      alert1: this.msgSl === SeverityLevel.Alert,
+      hide: this.msgs === undefined || this.msgs.length == 0,
+      }
+  }
 
+  show() {
+    return !(Util.empty(this.msgs[0]));
+  }
 }

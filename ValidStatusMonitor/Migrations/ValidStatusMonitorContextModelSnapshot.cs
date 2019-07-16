@@ -173,6 +173,9 @@ namespace ValidStatusMonitor.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnName("ID");
 
+                    b.Property<string>("AppResourceLink")
+                        .HasColumnName("APP_LINK");
+
                     b.Property<string>("ApplicationInfo")
                         .HasColumnName("APPLICATION_INFO")
                         .HasMaxLength(255);
@@ -218,6 +221,9 @@ namespace ValidStatusMonitor.Migrations
                     b.Property<string>("DatabaseVersion")
                         .HasColumnName("DATABASE_VERSION")
                         .HasMaxLength(50);
+
+                    b.Property<string>("DbResourceLink")
+                        .HasColumnName("DB_LINK");
 
                     b.Property<string>("Description")
                         .HasColumnName("DESCRIPTION")
@@ -267,15 +273,25 @@ namespace ValidStatusMonitor.Migrations
                         .HasColumnName("SSL_FRIENDLY_NAME")
                         .HasMaxLength(120);
 
+                    b.Property<string>("SslResourceLink")
+                        .HasColumnName("SSL_LINK");
+
                     b.Property<string>("SslStatus")
                         .HasColumnName("SSL_STATUS")
                         .HasMaxLength(50);
+
+                    b.Property<string>("StorageAccountName")
+                        .HasColumnName("STORAGE_NAME")
+                        .HasMaxLength(80);
 
                     b.Property<int?>("StorageBlobNfiles")
                         .HasColumnName("STORAGE_BLOB_NFILES");
 
                     b.Property<int?>("StorageBlobSizeMb")
                         .HasColumnName("STORAGE_BLOB_SIZE_MB");
+
+                    b.Property<string>("StorageResourceLink")
+                        .HasColumnName("STORAGE_LINK");
 
                     b.Property<string>("StorageServiceHealth")
                         .HasColumnName("STORAGE_SERVICE_HEALTH")

@@ -120,6 +120,9 @@ namespace ValidStatusMonitor.Models
                     .HasColumnName("SLOT_SETTING")
                     .HasMaxLength(32);
 
+                entity.Property(e => e.BlackOut)
+                    .HasColumnName("BLACKOUT");
+
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.InstallationAssets)
                     .HasForeignKey(d => d.CustomerId)
@@ -218,6 +221,9 @@ namespace ValidStatusMonitor.Models
                 entity.Property(e => e.StorageServiceHealth)
                     .HasColumnName("STORAGE_SERVICE_HEALTH")
                     .HasMaxLength(80);
+                entity.Property(e => e.StorageAccountName)
+                    .HasColumnName("STORAGE_NAME")
+                    .HasMaxLength(80);
 
                 entity.Property(e => e.StorageServiceLevel)
                     .HasColumnName("STORAGE_SERVICE_LEVEL")
@@ -237,6 +243,15 @@ namespace ValidStatusMonitor.Models
 
                 entity.Property(e => e.SlotSetting)
                     .HasColumnName("SLOT_SETTING");
+
+                entity.Property(e => e.AppResourceLink)
+                    .HasColumnName("APP_LINK");
+                entity.Property(e => e.DbResourceLink)
+                    .HasColumnName("DB_LINK");
+                entity.Property(e => e.StorageResourceLink)
+                    .HasColumnName("STORAGE_LINK");
+                entity.Property(e => e.SslResourceLink)
+                    .HasColumnName("SSL_LINK");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.InstallationStatus)

@@ -30,7 +30,6 @@ namespace ValidStatusMonitor
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
         }
 
         public IConfiguration Configuration { get; set; }
@@ -38,13 +37,13 @@ namespace ValidStatusMonitor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             // Require HTTPS
             services.Configure<MvcOptions>(options =>
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
-            
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(AdalTokenAcquisitionExceptionFilter));
@@ -61,6 +60,7 @@ namespace ValidStatusMonitor
             .AddCookie(options =>
             {
                 options.Cookie.Name = Configuration["CookieAuthentication:Name"];
+                options.Cookie.IsEssential = true;
             })
             .AddOpenIdConnect(options =>
             {
@@ -129,6 +129,7 @@ namespace ValidStatusMonitor
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            //TODO ADD API KEY AUTH - SEE AUTHCONTROLLER
             services.AddTransient<IAuthorizationHandler, ApiKeyRequirementHandler>();
             services.AddAuthorization(authConfig =>
             {
@@ -136,17 +137,6 @@ namespace ValidStatusMonitor
                     policyBuilder => policyBuilder
                         .AddRequirements(new ApiKeyRequirement(new[] { "hemmelig-api-key" })));
             });
-
-            //Workaround for prevent bug with authentication on iOS12-devices.
-            //services.ConfigureExternalCookie(options =>
-            //{
-            //    // Other options
-            //    options.Cookie.SameSite = SameSiteMode.None;
-            //}); services.ConfigureApplicationCookie(options =>
-            //{
-            //    // Other options
-            //    options.Cookie.SameSite = SameSiteMode.None;
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

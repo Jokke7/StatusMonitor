@@ -19,5 +19,6 @@ export enum CcrType {
   AppService = "Application",
   Database = "Database",
   Storage = "Storage",
-  Misc = "Packages"
+  Misc = "Packages",
+  Summary = "Summary"
 }

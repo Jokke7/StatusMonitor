@@ -16,6 +16,8 @@ export class ApplicationProps implements CcrCardModel {
   private _applicationServiceHealth: string;
   private _applicationServiceLevel: string;
   private _e2eTestResponse: string;
+  private _resourceLink: string;
+  private _licenceLink: string;
 
   constructor() {
     this._ccrType = CcrType.AppService;
@@ -120,5 +122,22 @@ export class ApplicationProps implements CcrCardModel {
   public get E2eTestResponse(): string {
     return this._e2eTestResponse;
   }
+
+  public set ResourceLink(res: string) {
+    this._resourceLink = res;
+  }
+
+  public get ResourceLink(): string {
+    return this._resourceLink;
+  }
+
+  public set LicenceLink(res: string) {
+    this._licenceLink = res;
+  }
+
+  public get LicenceLink(): string {
+    return this._licenceLink;
+  }
+
 }
 

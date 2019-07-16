@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 import { InplaceModule } from 'primeng/inplace';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 import { AppComponent } from './app.component';
@@ -47,6 +48,7 @@ import { AddInstallationPanelComponent } from './add-installation-panel/add-inst
     InplaceModule,
     DropdownModule,
     ToastModule,
+    InputSwitchModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'show-statuses', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },

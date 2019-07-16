@@ -7,10 +7,12 @@ export class StorageProps implements CcrCardModel {
   private _severityLevel: SeverityLevel;
   private _showCard: boolean;
 
+  private _storageAccountName: string;
   private _storageBlobNFiles: number;
   private _storageBlobSizeMb: number;
   private _storageServiceLevel: string 
   private _storageServiceHealth: string;
+  private _resourceLink?: string;
 
   constructor() {
     this._ccrType = CcrType.Storage;
@@ -48,6 +50,12 @@ export class StorageProps implements CcrCardModel {
     this._message = msg;
   }
 
+  public set StorageAccountName(san: string) {
+    this._storageAccountName = san;
+  }
+  public get StorageAccountName(): string {
+    return this._storageAccountName;
+  }
   public set StorageBlobNFiles(sbnf: number) {
     this._storageBlobNFiles = sbnf;
   }
@@ -71,5 +79,11 @@ export class StorageProps implements CcrCardModel {
   }
   public get StorageServiceHealth(): string {
     return this._storageServiceHealth;
+  }
+  public set ResourceLink(res: string) {
+    this._resourceLink = res;
+  }
+  public get ResourceLink(): string {
+    return this._resourceLink;
   }
 }

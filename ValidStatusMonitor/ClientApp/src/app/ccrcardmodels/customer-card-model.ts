@@ -17,6 +17,7 @@ export class CustomerProps implements CcrCardModel {
   private _description: string;
   private _environment: string;
   private _e2eTestUri: string;
+  private _blackOut: boolean;
 
   constructor() {
     this._ccrType = CcrType.Customer;
@@ -123,6 +124,13 @@ export class CustomerProps implements CcrCardModel {
   }
   public get E2eTestUri(): string {
     return this._e2eTestUri;
+  }
+
+  public set BlackOut(bo: boolean) {
+    this._blackOut = bo;
+  }
+  public get BlackOut(): boolean {
+    return this._blackOut;
   }
 }
 

@@ -135,6 +135,26 @@ var ApplicationProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(ApplicationProps.prototype, "ResourceLink", {
+        get: function () {
+            return this._resourceLink;
+        },
+        set: function (res) {
+            this._resourceLink = res;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApplicationProps.prototype, "LicenceLink", {
+        get: function () {
+            return this._licenceLink;
+        },
+        set: function (res) {
+            this._licenceLink = res;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return ApplicationProps;
 }());
 exports.ApplicationProps = ApplicationProps;

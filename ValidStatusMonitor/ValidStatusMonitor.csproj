@@ -40,14 +40,18 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\customerassets\**" />
     <Compile Remove="ClientApp\src\app\home\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\customerassets\**" />
     <Content Remove="ClientApp\src\app\home\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\app\customerassets\**" />
     <EmbeddedResource Remove="ClientApp\src\app\home\**" />
+    <None Remove="ClientApp\src\app\customerassets\**" />
     <None Remove="ClientApp\src\app\home\**" />
   </ItemGroup>
 
@@ -59,6 +63,7 @@
     <None Remove="ClientApp\src\app\ccrcardmodels\database-card-model.ts" />
     <None Remove="ClientApp\src\app\ccrcardmodels\misc-card-model.ts" />
     <None Remove="ClientApp\src\app\ccrcardmodels\storage-card-model.ts" />
+    <None Remove="ClientApp\src\app\ccrcardmodels\summary-card-model.ts" />
     <None Remove="ClientApp\src\app\helpers\formatter.ts" />
     <None Remove="ClientApp\src\app\helpers\util.ts" />
     <None Remove="ClientApp\src\app\installationstatuses\showstatuses.component.ts" />
@@ -73,6 +78,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\database-card-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\misc-card-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\storage-card-model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\ccrcardmodels\summary-card-model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\helpers\formatter.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\helpers\util.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\installationstatuses\showstatuses.component.ts" />

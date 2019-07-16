@@ -3,6 +3,27 @@ html {
   height: 100%;
 }
 
+@font-face {
+  font-family: Segoe;
+  src: url('assets/fontface/segoeui.ttf');
+}
+
+/*PrimeNG inputswitch*/
+:host ::ngdeep body .ui-inputswitch.ui-inputswitch-checked.ui-inputswitch-slider {
+  background-color: #d56610 !important;
+  background: #dfd706 !important;
+}
+
+:host ::ngdeep body .ui-inputswitch.ui-inputswitch-checked:not(.ui-state-disabled):hover.ui-inputswitch-slider {
+  background-color: #d56610 !important;
+  background: #dfd706;
+}
+
+:host ::ngdeep body .ui-inputswitch.ui-inputswitch-checked.ui-inputswitch-focus.ui-inputswitch-slider {
+  background-color: #d56610 !important;
+  background: #dfd706;
+}
+
 body {
   width: 100%; /*fallback*/
   width: 100vw;
@@ -18,7 +39,7 @@ body {
 footer {
   height: 100px;
   flex-shrink: 0;
-  background-color: orange;
+  background-color: #ed7314;
   width: 100%;
 }
 
@@ -44,3 +65,4 @@ header-container {
   width: 100%; /*fallback*/
   width: 100vw;
 }
+

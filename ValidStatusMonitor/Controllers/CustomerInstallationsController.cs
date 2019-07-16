@@ -63,12 +63,12 @@ namespace ValidStatusMonitor.Controllers
             return objValidStatusMonitor.GetAllAssets();
         }
 
-        [HttpGet]
-        [Route("api/Installations/{id}")]
-        public IEnumerable<InstallationAssets> CustomerInstallations(int id)
-        {
-            return objValidStatusMonitor.GetCustomerAssets(id);
-        }
+        //[HttpGet]
+        //[Route("api/Installations/{id}")]
+        //public IEnumerable<InstallationAssets> CustomerInstallations(int id)
+        //{
+        //    return objValidStatusMonitor.GetCustomerAssets(id);
+        //}
 
         [HttpGet]
         [Route("api/Installations/{id}/{installationName}")]

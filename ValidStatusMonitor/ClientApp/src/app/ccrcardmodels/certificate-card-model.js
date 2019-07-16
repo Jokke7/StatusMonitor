@@ -75,6 +75,16 @@ var CertificateProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(CertificateProps.prototype, "ResourceLink", {
+        get: function () {
+            return this._resourceLink;
+        },
+        set: function (res) {
+            this._resourceLink = res;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return CertificateProps;
 }());
 exports.CertificateProps = CertificateProps;

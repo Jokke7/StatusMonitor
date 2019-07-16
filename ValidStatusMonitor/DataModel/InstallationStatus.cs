@@ -23,6 +23,7 @@ namespace ValidStatusMonitor.Models
         public string SslFriendlyName { get; set; }
         public DateTime? SslExpiryDate { get; set; }
         public string SslStatus { get; set; }
+        public string StorageAccountName { get; set; }
         public string StorageServiceHealth { get; set; }
         public string StorageServiceLevel { get; set; }
         public int? StorageBlobNfiles { get; set; }
@@ -39,6 +40,12 @@ namespace ValidStatusMonitor.Models
         public string HttpResponseE2eTest { get; set; }
         public string E2eTestUri { get; set; }
         public string SlotSetting { get; set; }
+        public string AppResourceLink { get; set; }
+        public string StorageResourceLink { get; set; }
+        public string DbResourceLink { get; set; }
+        public string SslResourceLink { get; set; }
+
+
         public virtual Customer Customer { get; set; }
 
         public virtual InstallationAssets InstallationAssets { get; set; }

@@ -7,7 +7,6 @@ namespace ValidStatusMonitor.Security
     {
         [JsonProperty]
         private List<string> value;
-
         public List<string> FromValue => value;
         public List<string> GroupIds { get; set; }
 

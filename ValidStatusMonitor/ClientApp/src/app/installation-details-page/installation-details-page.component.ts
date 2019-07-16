@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusMonitorData } from '../installationstatuses/showstatuses.component';
-import { Customer } from '../customerassets/customerassets.component';
+import { Customer, StatusMonitorData } from '../ccrtypes/interfaces';
 import { StatusMonitorService } from '../services/statusmonitor.service';
 import { HttpClient } from '@angular/common/http';
 import { CcrCardModel, CcrType } from '../ccrcardmodels/ccr-card-model';
@@ -20,21 +19,25 @@ import { MiscProps } from '../ccrcardmodels/misc-card-model';
 export class InstallationDetailsPageComponent implements OnInit {
 
   private plantImageUrl: string;
+  private hideStatuses: boolean;
+  private hideStatistics: boolean;
   //data: any;
   private statusId: string;
-  private plantName: string;
   private custId: number;
   private customerName: string;
+  private environment: string;
   private customerDesc: string;
+  private plantName: string;
   private customer: Customer;
   private statusRow: StatusMonitorData;
-  private appName: string;
   public statusCards: Array<CcrCardModel>;
-  //private statusCards: Array<CcrCardModel>;
   private sub: any;
 
   constructor(public http: HttpClient, private route: ActivatedRoute, private _statusMonitorService: StatusMonitorService) {
-    this.route.params.subscribe(params => console.log(params));
+    this.route.params.subscribe();
+    this.statusCards = new Array<CcrCardModel>();
+    this.hideStatuses = this.hideStatistics = false;
+    this.plantName = this.customerName = this.customerDesc = this.environment = "";
     //this.data = {
     //  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     //  datasets: [
@@ -59,7 +62,6 @@ export class InstallationDetailsPageComponent implements OnInit {
       this.custId = +params['cust'];
       this.statusId = params['statusid'];
     });
-
     this.getStatus();
     this.getCustomer();
   }
@@ -68,7 +70,6 @@ export class InstallationDetailsPageComponent implements OnInit {
     this._statusMonitorService.getStatusById(this.statusId)
       .subscribe((data: StatusMonitorData) => {
         this.statusRow = data;
-        this.plantName = this.statusRow.PlantName;
         this.setCcrCards();
       })
   }
@@ -114,10 +115,10 @@ export class InstallationDetailsPageComponent implements OnInit {
     customerCard.CustomerId = this.statusRow.CustomerId
     customerCard.StatusId = this.statusRow.Id;
     //customerCard.Name = this.customers.find(cust => cust.Id === customerCard.CustomerId).Name;
-    customerCard.Description = this.statusRow.Description;
+    customerCard.Description = this.customerDesc = this.statusRow.Description;
     customerCard.LastUpdate = this.statusRow.LastUpdate;
-    customerCard.Environment = this.statusRow.Environment;
-    customerCard.PlantName = this.statusRow.PlantName;
+    customerCard.Environment = this. environment = this.statusRow.Environment;
+    customerCard.PlantName = this.plantName = this.statusRow.PlantName;
     customerCard.LicenceExpiryDate = this.statusRow.LicenceExpiryDate;
     customerCard.E2eTestUri = this.statusRow.E2eTestUri;
     customerCard.AppLink = "http://" + this.statusRow.E2eTestUri;
@@ -167,4 +168,16 @@ export class InstallationDetailsPageComponent implements OnInit {
     this.statusCards = cards;
     this._statusMonitorService.getCcrStatusSeverity(this.statusCards);
   }
+
+  toggleStatusContainer() {
+    console.log("togglestatus pressed for statuses" + this.hideStatuses.toString())
+    this.hideStatuses = !this.hideStatuses;
+    return this.hideStatuses;
+  }
+
+  toggleStatisticsContainer() {
+    this.hideStatistics = !this.hideStatistics;
+    return !this.hideStatistics;
+  }
+
 }

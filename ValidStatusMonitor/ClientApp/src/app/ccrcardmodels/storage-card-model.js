@@ -45,6 +45,16 @@ var StorageProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(StorageProps.prototype, "StorageAccountName", {
+        get: function () {
+            return this._storageAccountName;
+        },
+        set: function (san) {
+            this._storageAccountName = san;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StorageProps.prototype, "StorageBlobNFiles", {
         get: function () {
             return this._storageBlobNFiles;
@@ -81,6 +91,16 @@ var StorageProps = /** @class */ (function () {
         },
         set: function (ssh) {
             this._storageServiceHealth = ssh;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(StorageProps.prototype, "ResourceLink", {
+        get: function () {
+            return this._resourceLink;
+        },
+        set: function (res) {
+            this._resourceLink = res;
         },
         enumerable: true,
         configurable: true

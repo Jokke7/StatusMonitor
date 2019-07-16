@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { CcrCardModel, CcrType, SeverityLevel } from '../ccrcardmodels/ccr-card-model';
-import { Util } from '../helpers/util';
 
 
 @Component({
@@ -17,7 +16,8 @@ export class CcrCardComponent implements OnInit {
   public showCard: boolean;
   public fieldIconUri: string;
   public ntfIconUri: string;
-  public azurePortalLink: string;
+  public azurePortalLink: string = "";
+  public appLicenceLink: string = "";
 
   contentViewLimit: number;
   
@@ -25,7 +25,6 @@ export class CcrCardComponent implements OnInit {
   static readonly assetIconPath : string = "../../assets/icons/"
 
   constructor() {
-
     this.fieldIconUri = "";
     this.ntfIconUri = "";
     this.showCard = true;
@@ -36,10 +35,7 @@ export class CcrCardComponent implements OnInit {
     this.ccrType = this.ccr.CcrType;
     this.severityLevel = this.ccr.SeverityLevel;
     this.setCcrField();
-    //this.setNtfIcon();
-    this.azurePortalLink = Util.AzureRmLink(this.ccr);
   }
-
 
   setFieldStyle()
   {
@@ -71,17 +67,13 @@ export class CcrCardComponent implements OnInit {
       case CcrType.Database:
         file = "database.svg"
         break;
+      case CcrType.Summary:
+        file = "summary.svg"
+        break;
       default:
         file = "other-assets.svg";
         break;
     }
     this.fieldIconUri = path.concat(file);
-  }
-
-  private setNtfIcon() {
-    if (this.severityLevel === SeverityLevel.Warning) { this.ntfIconUri = CcrCardComponent.assetIconPath + "ntf-warn.svg"; }
-    else if (this.severityLevel === SeverityLevel.Immediate) { this.ntfIconUri = CcrCardComponent.assetIconPath + "ntf-imdt.svg"; }
-    else if (this.severityLevel === SeverityLevel.Alert) { this.ntfIconUri = CcrCardComponent.assetIconPath + "ntf-alert.svg"; }
-    else { this.ntfIconUri = CcrCardComponent.assetIconPath + "ntf-info.svg" }
   }
 }

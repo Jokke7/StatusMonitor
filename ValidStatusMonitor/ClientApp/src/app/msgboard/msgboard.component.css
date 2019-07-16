@@ -10,7 +10,7 @@ msgBoard > ul {
 }
 
 .informational {
-    border: 2px solid #dfd706;
+    border: 2px solid green;
     background-color: rgba(0, 128, 0, 0.3);
 }
 

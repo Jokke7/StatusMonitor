@@ -23,6 +23,8 @@ namespace ValidStatusMonitor.Models
         public string PlantName { get; set; }
         public string SlotSetting { get; set; }
 
+        public Boolean BlackOut { get; set; }
+
         public virtual Customer Customer { get; set; }
         public virtual InstallationStatus Status { get; set; }
     }

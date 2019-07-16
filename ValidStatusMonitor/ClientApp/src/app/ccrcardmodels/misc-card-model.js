@@ -68,6 +68,16 @@ var MiscProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(MiscProps.prototype, "AdminLink", {
+        get: function () {
+            return this._adminLink;
+        },
+        set: function (al) {
+            this._adminLink = al;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return MiscProps;
 }());
 exports.MiscProps = MiscProps;

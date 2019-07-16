@@ -9,10 +9,9 @@ export class MiscProps implements CcrCardModel {
 
   private _enabledPdfTron: boolean;
   private _enabled3dViewer: boolean;
+  private _adminLink: string;
 
   private _properties: Array<any>;
-
- 
 
   constructor() {
     this._ccrType = CcrType.Misc;
@@ -68,6 +67,14 @@ export class MiscProps implements CcrCardModel {
 
   public get Enabled3dViewer(): boolean {
     return this._enabled3dViewer;
+  }
+
+  public set AdminLink(al: string) {
+    this._adminLink = al;
+  }
+
+  public get AdminLink(): string {
+    return this._adminLink;
   }
 
 

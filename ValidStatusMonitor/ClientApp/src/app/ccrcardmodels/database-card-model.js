@@ -105,6 +105,16 @@ var DatabaseProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DatabaseProps.prototype, "ResourceLink", {
+        get: function () {
+            return this._resourceLink;
+        },
+        set: function (res) {
+            this._resourceLink = res;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return DatabaseProps;
 }());
 exports.DatabaseProps = DatabaseProps;

@@ -145,6 +145,16 @@ var CustomerProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(CustomerProps.prototype, "BlackOut", {
+        get: function () {
+            return this._blackOut;
+        },
+        set: function (bo) {
+            this._blackOut = bo;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return CustomerProps;
 }());
 exports.CustomerProps = CustomerProps;

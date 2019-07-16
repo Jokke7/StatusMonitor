@@ -13,6 +13,7 @@ export class DatabaseProps implements CcrCardModel {
   private _databaseTemplate?: string;
   private _databaseSize?: number;
   private _databaseServiceLevel?: string;
+  private _resourceLink?: string;
 
   constructor() {
     this._ccrType = CcrType.Database;
@@ -91,5 +92,13 @@ export class DatabaseProps implements CcrCardModel {
 
   public set DatabaseServiceLevel(dbl: string) {
     this._databaseServiceLevel = dbl;
+  }
+
+  public set ResourceLink(res: string) {
+    this._resourceLink = res;
+  }
+
+  public get ResourceLink(): string {
+    return this._resourceLink;
   }
 }

@@ -10,6 +10,7 @@ export class CertificateProps implements CcrCardModel {
   private _sslName: string;
   private _sslExpiryDate: Date;
   private _sslStatus: string;
+  private _resourceLink: string;
 
   constructor() {
     this._ccrType = CcrType.Certificate;
@@ -67,5 +68,12 @@ export class CertificateProps implements CcrCardModel {
   public get SslStatus(): string {
     return this._sslStatus;
   }
+  public set ResourceLink(res: string) {
+    this._resourceLink = res;
+  }
+  public get ResourceLink(): string {
+    return this._resourceLink;
+  }
+
 }
 

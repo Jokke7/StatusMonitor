@@ -9,57 +9,23 @@ import { ApplicationProps } from '../ccrcardmodels/application-card-model';
 import { CertificateProps } from '../ccrcardmodels/certificate-card-model';
 import { StorageProps } from '../ccrcardmodels/storage-card-model';
 import { CustomerProps } from '../ccrcardmodels/customer-card-model';
-import { Customer } from '../customerassets/customerassets.component';
+import { Customer, StatusMonitorData, CustomerAssetsData } from '../ccrtypes/interfaces';
 
-export interface StatusMonitorData {
-  Id: string;
-  PlantName: string;
-  LastUpdate: Date;
-  CustomerId: number;
-  Description: string;
-  Environment: string;
-  ApplicationName: string;
-  ApplicationInfo: string;
-  ApplicationVersion: string;
-  LicenceExpiryDate: Date;
-  LicenceServer: string;
-  LicenceNumber: string;
-  ApplicationServiceHealth: string;
-  SslFriendlyName: string;
-  SslExpiryDate: Date;
-  SslStatus: string;
-  StorageBlobNfiles: number;
-  StorageBlobSizeMb: number;
-  StorageServiceLevel: string;
-  StorageServiceHealth: string;
-  DatabaseName: string;
-  DatabaseServer: string;
-  DatabaseVersion: string;
-  DatabaseTemplate: string;
-  DatabaseSizeMb: number;
-  DatabaseServiceLevel: string;
-  DatabaseServiceHealth: string;
-  EnabledPdfTron: boolean;
-  Enabled3dViewer: boolean;
-  E2eTestUri: string;
-  HttpResponseE2eTest: string;
-  Customer: Object;
-}
+import { SummaryProps } from '../ccrcardmodels/summary-card-model';
 
 @Component({
   selector: 'list-statuses',
   templateUrl: './showstatuses.component.html',
-  styleUrls: ['./showstatuses.component.css']
+  styleUrls: ['./showstatuses.component.css'],
 })
 
 export class ShowStatusesComponent implements OnInit{
   public statuses: StatusMonitorData[];
   public customers: Customer[];
-
-  static readonly cardsPerRow: number = 6;
   public toDetailsIcon: string;
-
   public statusCards: Array<CcrCardModel>;
+  static readonly cardsPerRow: number = 7;
+
 
   constructor(public http: HttpClient, private _statusMonitorService: StatusMonitorService) {
     this.statusCards = new Array<CcrCardModel>();
@@ -70,7 +36,7 @@ export class ShowStatusesComponent implements OnInit{
     this.updateStatuses();
     setInterval(() => {
       this.updateStatuses();
-    }, 300000);
+    }, 120000);
   }
 
   updateStatuses() {
@@ -125,6 +91,14 @@ export class ShowStatusesComponent implements OnInit{
     }
   }
 
+  isUpToDate(lu: Date) {
+    var lagTH = new Date();
+    lagTH.setHours(lagTH.getHours() + 2);
+
+    lu = new Date(lu.toString());
+    return lu.getTime() > lagTH.getTime();
+  }
+
   private setCcrCards() {
     var cards = new Array<CcrCardModel>();
     for (let status of this.statuses) {
@@ -134,6 +108,7 @@ export class ShowStatusesComponent implements OnInit{
       var certificatesCard;
       var storageCard;
       var miscCard;
+      var summaryCard;
       if (this.statusCards === undefined || this.statusCards.length == 0) {
         customerCard = {} as CustomerProps;
         applicationCard = {} as ApplicationProps;
@@ -141,6 +116,7 @@ export class ShowStatusesComponent implements OnInit{
         certificatesCard = {} as CertificateProps;
         storageCard = {} as StorageProps;
         miscCard = {} as MiscProps;
+        summaryCard = {} as SummaryProps;
       }
       else {
         customerCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow];
@@ -149,7 +125,16 @@ export class ShowStatusesComponent implements OnInit{
         certificatesCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +3];
         storageCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 4];
         miscCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 5];
+        summaryCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 6];
       }
+
+      var asset: CustomerAssetsData = null;
+      this._statusMonitorService.getCustomerAssetById(status.Id)
+        .subscribe((data: CustomerAssetsData) => {
+          asset = data;
+        })
+
+      customerCard.BlackOut = false;
 
       customerCard.CustomerId = status.CustomerId;
       customerCard.StatusId = status.Id;
@@ -173,6 +158,8 @@ export class ShowStatusesComponent implements OnInit{
       applicationCard.ApplicationServiceHealth = status.ApplicationServiceHealth;
       applicationCard.E2eTestResponse = status.HttpResponseE2eTest;
       applicationCard.CcrType = CcrType.AppService;
+      applicationCard.ResourceLink = status.AppResourceLink;
+      applicationCard.LicenceLink = "https://license.visionova.no/license/" + status.LicenceNumber.substring(1).slice(0, -1);
 
       databaseCard.DatabaseName = status.DatabaseName;
       databaseCard.DatabaseServer = status.DatabaseServer;
@@ -181,21 +168,30 @@ export class ShowStatusesComponent implements OnInit{
       databaseCard.DatabaseTemplate = status.DatabaseTemplate;
       databaseCard.DatabaseVersion = status.DatabaseVersion;
       databaseCard.CcrType = CcrType.Database;
+      databaseCard.ResourceLink = status.DbResourceLink;
 
       certificatesCard.SslName = status.SslFriendlyName;
       certificatesCard.SslExpiryDate = status.SslExpiryDate;
       certificatesCard.SslStatus = status.SslStatus;
       certificatesCard.CcrType = CcrType.Certificate;
-        
+      certificatesCard.ResourceLink = status.SslResourceLink;
+
+
+      storageCard.StorageAccountName = status.StorageAccountName;
       storageCard.StorageBlobNFiles = status.StorageBlobNfiles;
       storageCard.StorageBlobSizeMb = status.StorageBlobSizeMb;
       storageCard.StorageServiceLevel = status.StorageServiceLevel;
       storageCard.StorageServiceHealth = status.StorageServiceHealth;
       storageCard.CcrType = CcrType.Storage;
+      storageCard.ResourceLink = status.StorageResourceLink;
 
       miscCard.CcrType = CcrType.Misc;
       miscCard.Enabled3dViewer = status.Enabled3dViewer;
       miscCard.EnabledPdfTron = status.EnabledPdfTron;
+      miscCard.AdminLink = "https://" + status.E2eTestUri + "/admin/settings/app";
+
+      summaryCard.CcrType = CcrType.Summary
+      summaryCard.SeverityLevel = SeverityLevel.Informational;
 
       cards.push(customerCard);
       cards.push(applicationCard);
@@ -203,12 +199,9 @@ export class ShowStatusesComponent implements OnInit{
       cards.push(certificatesCard);
       cards.push(storageCard);
       cards.push(miscCard);
+      cards.push(summaryCard)
     }
     this.statusCards = cards;
     this._statusMonitorService.getCcrStatusSeverity(this.statusCards);
   }
 }
-
-
-
-

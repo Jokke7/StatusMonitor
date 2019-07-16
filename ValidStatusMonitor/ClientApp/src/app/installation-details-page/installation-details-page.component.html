@@ -1,37 +1,31 @@
-<div id="header-container">
-  <div fxLayout="row wrap"
-       fxLayout.lt-sm="column wrap"
-       fxLayoutAlign="flex-start">
-
-    <app-header fxFlex="100%">
-    </app-header>
-  </div>
-</div>
+<app-header></app-header>
 <div id="details-container">
 
   <div fxLayout="row" fxLayout.lt-sm="column">
     <div id="plant-profile">
-      <h3 style="background-color: darkseagreen">{{customerName}} - {{statusRow.PlantName}} - {{statusRow.Environment}}</h3>
+      <h3 style="background-color: darkseagreen">{{customerName}} - {{plantName}} - {{environment}}</h3>
+
       <img src="../../assets/gfx/plantmock.png" alt="Plant" style="max-width: 536px; width:100%" />
     </div>
     <div fxFlex="3" fxShow fxHide.xs="true"></div>
-    <div id="status-cards-container" fxLayout="row wrap" fxLayoutGap.gt-xs="32px">
-      <h3 style="background-color: darkseagreen; width: calc(100% - 32px)">Statuses</h3>
-
-      <ng-container *ngFor="let card of statusCards">
-        <app-ccr-card [ccr]="card"
-             fxFlex="0 1 calc(33.3% - 32px)"
-             fxFlex.lt-lg="0 1 calc(50% - 32px)"
-             fxFlex.lt-sm="0 1 100%"
-             style="border-bottom:1px solid black; margin-bottom: 5px;">
-        </app-ccr-card>
-      </ng-container>
+    <div fxLayout="column" style="min-width: 300px;">
+      <h3 style="background-color: darkseagreen; width: calc(100% - 32px)" (click)='toggleStatusContainer()'>Statuses</h3>
+      <div id="status-cards-container" fxLayout="row wrap" fxLayoutGap.gt-xs="32px" [fxShow.lt-md]="!hideStatuses">
+        <ng-container *ngFor="let card of statusCards">
+          <app-ccr-card [ccr]="card"
+                        [fxShow]='true'
+                        fxFlex="0 1 calc(33.3% - 32px)"
+                        fxFlex.lt-lg="0 1 calc(50% - 32px)"
+                        fxFlex.lt-sm="0 1 100%"
+                        style="border-bottom:1px solid black; margin-bottom: 5px;">
+          </app-ccr-card>
+        </ng-container>
+      </div>
     </div>
   </div>
 
-  <div id="usage-statistics-container" fxLayout="row wrap" fxLayoutGap="32px">
-    <h3 style="background-color: darkseagreen; width: calc(100% - 32px)">Usage Statistics</h3>
-
+  <h3 style="background-color: darkseagreen; width: calc(100% - 32px)" (click)='toggleStatisticsContainer()'>Usage Statistics</h3>
+  <div id="usage-statistics-container" fxLayout="row wrap" fxLayoutGap="32px" [fxShow.lt-md]="!hideStatistics">
     <ng-container *ngFor="let _ of [1,2,3]">
       <div class="panel"
            fxFlex="0 1 calc(33.33% - 32px)"
@@ -45,7 +39,7 @@
 
 
 <!--<div class="odd">
-  {{appName}}
+
 </div>
 <div class="even">
   <app-test-plot></app-test-plot>
