@@ -58,6 +58,26 @@ var MiscProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(MiscProps.prototype, "PdfTronLicence", {
+        get: function () {
+            return this._pdfTronLicence;
+        },
+        set: function (lc) {
+            this._pdfTronLicence = lc;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MiscProps.prototype, "PdfTronLicenceExpiryDate", {
+        get: function () {
+            return this._pdfTronLicenceExpiryDate;
+        },
+        set: function (ex) {
+            this._pdfTronLicenceExpiryDate = ex;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(MiscProps.prototype, "Enabled3dViewer", {
         get: function () {
             return this._enabled3dViewer;

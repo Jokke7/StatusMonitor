@@ -189,6 +189,8 @@ export class ShowStatusesComponent implements OnInit{
       miscCard.Enabled3dViewer = status.Enabled3dViewer;
       miscCard.EnabledPdfTron = status.EnabledPdfTron;
       miscCard.AdminLink = "https://" + status.E2eTestUri + "/admin/settings/app";
+      miscCard.PdfTronLicence = status.PdfTronLicence;
+      miscCard.PdfTronLicenceExpiryDate = status.PdfTronLicenceExpiryDate;
 
       summaryCard.CcrType = CcrType.Summary
       summaryCard.SeverityLevel = SeverityLevel.Informational;

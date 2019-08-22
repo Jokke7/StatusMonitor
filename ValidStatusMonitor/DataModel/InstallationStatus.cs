@@ -36,6 +36,8 @@ namespace ValidStatusMonitor.Models
         public int? DatabaseSizeMb { get; set; }
         public string DatabaseServiceLevel { get; set; }
         public bool? EnabledPdfTron { get; set; }
+        public string PdfTronLicence { get; set; }
+        public DateTime? PdfTronLicenceExpiryDate { get; set; }
         public bool? Enabled3dViewer { get; set; }
         public string HttpResponseE2eTest { get; set; }
         public string E2eTestUri { get; set; }

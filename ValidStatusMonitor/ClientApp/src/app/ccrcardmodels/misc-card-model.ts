@@ -8,6 +8,8 @@ export class MiscProps implements CcrCardModel {
   private _showCard: boolean; 
 
   private _enabledPdfTron: boolean;
+  private _pdfTronLicence: string;
+  private _pdfTronLicenceExpiryDate: Date;
   private _enabled3dViewer: boolean;
   private _adminLink: string;
 
@@ -18,7 +20,6 @@ export class MiscProps implements CcrCardModel {
     this._enabled3dViewer = null;
     this._enabledPdfTron = null;
     this._message = null;
-
   }
 
   public get CcrType(): CcrType {
@@ -59,6 +60,22 @@ export class MiscProps implements CcrCardModel {
 
   public get EnabledPdfTron(): boolean {
     return this._enabledPdfTron;
+  }
+
+  public set PdfTronLicence(lc: string) {
+    this._pdfTronLicence = lc;
+  }
+
+  public get PdfTronLicence(): string {
+    return this._pdfTronLicence;
+  }
+
+  public set PdfTronLicenceExpiryDate(ex: Date) {
+    this._pdfTronLicenceExpiryDate = ex;
+  }
+
+  public get PdfTronLicenceExpiryDate(): Date {
+    return this._pdfTronLicenceExpiryDate;
   }
 
   public set Enabled3dViewer(en: boolean) {

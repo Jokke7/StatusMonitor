@@ -56,6 +56,8 @@ export interface StatusMonitorData {
   DatabaseServiceLevel: string;
   DatabaseServiceHealth: string;
   EnabledPdfTron: boolean;
+  PdfTronLicence: string;
+  PdfTronLicenceExpiryDate: Date;
   Enabled3dViewer: boolean;
   E2eTestUri: string;
   HttpResponseE2eTest: string;

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { CcrCardModel, CcrType, SeverityLevel } from '../ccrcardmodels/ccr-card-model';
+import { MiscProps } from '../ccrcardmodels/misc-card-model';
 
 
 @Component({

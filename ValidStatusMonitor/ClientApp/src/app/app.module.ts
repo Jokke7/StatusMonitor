@@ -14,7 +14,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+//import { HomeComponent } from './home/home.component';
 import { StatusMonitorService } from './services/statusmonitor.service';
 import { ShowStatusesComponent } from './installationstatuses/showstatuses.component';
 //import { CustomerAssetsComponent } from './customerassets/customerassets.component';
@@ -28,7 +28,7 @@ import { AddInstallationPanelComponent } from './add-installation-panel/add-inst
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    //HomeComponent,
     ShowStatusesComponent,
     CcrCardComponent,
     HeaderComponent,
@@ -51,12 +51,12 @@ import { AddInstallationPanelComponent } from './add-installation-panel/add-inst
     InputSwitchModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'show-statuses', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
+      //{ path: 'home', component: HomeComponent },
       { path: 'show-statuses', component: ShowStatusesComponent },
       { path: 'update-statuses', component: ShowStatusesComponent },
       { path: 'installation-details/:cust/:statusid', component: InstallationDetailsPageComponent },
       //{ path: 'customer-assets', component: CustomerAssetsComponent },
-      { path: '**', redirectTo: 'home' }
+      { path: '**', redirectTo: 'show-statuses' }
     ])
   ],
   providers: [StatusMonitorService, MessageService ],

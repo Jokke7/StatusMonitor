@@ -120,8 +120,8 @@ namespace ValidStatusMonitor.Models
                     .HasColumnName("SLOT_SETTING")
                     .HasMaxLength(32);
 
-                entity.Property(e => e.BlackOut)
-                    .HasColumnName("BLACKOUT");
+                //entity.Property(e => e.BlackOut)
+                //    .HasColumnName("BLACKOUT");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.InstallationAssets)
@@ -231,6 +231,14 @@ namespace ValidStatusMonitor.Models
 
                 entity.Property(e => e.EnabledPdfTron)
                     .HasColumnName("ENABLED_PDFTRON_VIEWER");
+
+                entity.Property(e => e.PdfTronLicence)
+                    .HasColumnName("PDFTRON_LICENCE")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.PdfTronLicenceExpiryDate)
+                    .HasColumnName("PDFTRON_LICENCE_EXPIRY_DATE")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Enabled3dViewer)
                     .HasColumnName("ENABLED_3D_VIEWER");

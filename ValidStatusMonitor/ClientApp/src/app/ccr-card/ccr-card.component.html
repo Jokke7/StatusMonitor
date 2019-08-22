@@ -79,7 +79,14 @@
 
           <ul class="square" style="width: 100%">
             <li>PDFTron: {{ ccr.EnabledPdfTron?"Enabled":"Disabled" }}</li>
+            <li *ngIf="ccr.EnabledPdfTron">
+              <ul>
+                <li>Licence: ...{{ ccr.PdfTronLicence  | slice:54}}</li>
+                <li>Expires: {{ ccr.PdfTronLicenceExpiryDate | date: shortTime }}</li>
+              </ul>
+            </li>
             <li>3Dviewer: {{ ccr.Enabled3dViewer?"Enabled":"Disabled" }}</li>
+
           </ul>
           <br />
           <a [target]="_blank" [href]="ccr.AdminLink"><div style="padding-left: 10px;">Configure packages<img src="assets/icons/valid-admin.svg" style="height: 11px; padding-left: 3px; line-height:1.1em" /></div></a>

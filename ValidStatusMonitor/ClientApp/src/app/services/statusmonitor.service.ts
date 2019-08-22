@@ -354,11 +354,38 @@ export class StatusMonitorService {
     card.SeverityLevel = SeverityLevel.Informational;
     var msgs: string[] = [];
 
+
     if (Util.empty(card.Enabled3dViewer) || Util.empty(card.EnabledPdfTron)) {
       msgs.push("Empty properties set for Other Assets");
       StatusMonitorService.taskList.push("Check missing properties for 'Other Assets'");
       card.SeverityLevel = SeverityLevel.Warning;
     }
+
+    //if (card.EnabledPdfTron) {
+    //  const warningDaysTH = 30;
+    //  const immidiateDaysTH = 14;
+    //  const alertDaysTH = 7;
+    //  var exp = new Date(Date.parse(card.PdfTronLicenceExpiryDate.toString()));
+    //  var now = new Date();
+
+    //  var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
+    //  const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+
+    //  if (diffDays < warningDaysTH) {
+    //    card.SeverityLevel = SeverityLevel.Warning;
+    //    card.SeverityLevel = (diffDays < immidiateDaysTH ?
+    //      (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Informational);
+    //    if (diffDays < 0) {
+    //      msgs.push("PdfTron licence expired " + diffDays + "ago.")
+    //      StatusMonitorService.taskList.push("PdfTron licence  expired " + diffDays + " ago.");
+    //    }
+    //    else {
+    //      msgs.push("PdfTron licence expires in " + diffDays + " days.");
+    //      StatusMonitorService.taskList.push("Renew PdfTron licence");
+    //    }
+    //  }
+    //}
+    
 
     card.Message = Formatter.toolTipNotification(msgs.reverse());
     this.setAggregatedSeverity(card.SeverityLevel);

@@ -19,12 +19,12 @@
         </span>
         <div fxFlex (click)='toggleRow(card)'>
         </div>
-        <div fxLayout="column" style="padding: 0 2px 0 0;">
+        <!--<div fxLayout="column" style="padding: 0 2px 0 0;">
           <span style="font-size: xx-small;">
             Set in blackout
           </span>
           <p-inputSwitch [(ngModel)]="card.Blackout"></p-inputSwitch>
-        </div>
+        </div>-->
 
         <span class="row-headerright" style="float:right; max-width:120px; padding-right:10px; padding-left: 5px; font-family:Arial; font-size:xx-small; line-height: 1.3rem" (click)='toggleRow(card)'>
           <mark>Updated: {{card.LastUpdate | date: 'EEE, HH:mm:ss'}}</mark>
