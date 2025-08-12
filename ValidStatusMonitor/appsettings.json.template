@@ -1,0 +1,25 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+
+  "ConnectionStrings": {
+    "ValidStatusMonitor": "Server=YOUR_SERVER;Initial Catalog=YOUR_DATABASE;Persist Security Info=False;User ID=YOUR_USERNAME;Password=YOUR_PASSWORD;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  },
+  "Authentication": {
+    "ClientId": "YOUR_CLIENT_ID",
+    "ApiId": "YOUR_API_ID",
+    "Authority": "https://login.microsoftonline.com/YOUR_TENANT_ID",
+    "CallbackPath": "/auth/signin-oidc",
+    "ResponseType": "code id_token",
+    "Resource": "YOUR_RESOURCE_URL",
+    "GraphResource": "https://graph.microsoft.com/"
+  },
+  "CookieAuthentication": {
+    "Name": ".AspNetCore.Cookies.Ccr"
+  }
+
+}
