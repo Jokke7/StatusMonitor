@@ -263,3 +263,23 @@ __pycache__/
 /ValidStatusMonitor/CcrTypes
 /ValidStatusMonitor/ClientApp/src/app/ccr-card
 /ValidStatusMonitor/ClientApp/src/assets/gfx/plantmock.png
+
+# SECURITY: Sensitive configuration files with secrets
+appsettings.json
+appsettings.Development.json
+appsettings.Production.json
+appsettings.*.json
+connectionstrings.json
+web.config
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+*.env
+
+# Secrets
+secrets.json
+appsettings.secrets.json
+launchSettings.json
