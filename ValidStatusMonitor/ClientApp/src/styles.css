@@ -3,10 +3,10 @@ html {
   height: 100%;
 }
 
-@font-face {
+/*@font-face {
   font-family: Segoe;
   src: url('assets/fontface/segoeui.ttf');
-}
+}*/
 
 /*PrimeNG inputswitch*/
 :host ::ngdeep body .ui-inputswitch.ui-inputswitch-checked.ui-inputswitch-slider {
@@ -27,7 +27,7 @@ html {
 body {
   width: 100%; /*fallback*/
   width: 100vw;
-  font-family: 'Segoe UI';
+  font-family: 'Segoe UI', 'Open Sans';
   font-weight: 300;
   margin: 0;
   padding: 0;

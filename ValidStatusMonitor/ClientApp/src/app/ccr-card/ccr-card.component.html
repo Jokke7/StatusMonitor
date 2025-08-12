@@ -1,8 +1,8 @@
-<div class="row" fxFlexFill> <!--style="display:none"-->
+<div class="row" fxFlexFill> 
   <div gdAreas="field content"
        gdRows="auto" class="card" fxLayoutAlign="start stretch" fxFlexFill>
 
-      <div gdArea="field" [ngClass]="setFieldStyle()" fxLayout="column">
+      <div gdArea="field" class="field" [ngClass]="setFieldStyle()" [style.height.px]="height" fxLayout="column">
       <img [src]="fieldIconUri" alt="fieldIcon" />
       <span class="fieldDesc">{{ccr.CcrType}}</span>
       <!--<img [src]="azureIconUri" style="width:60px; margin-top: 35px;"alt="to Azure icon" />-->
@@ -55,6 +55,7 @@
           <ul class="square">
             <li>Account Name: <a [target]="_blank" [href]="ccr.ResourceLink">{{ccr.StorageAccountName}}</a></li>
             <li>Service Level: {{ ccr.StorageServiceLevel }}</li>
+            <li>Container name: {{ccr.StorageContainerName}}</li>
             <li>Number of files: {{ ccr.StorageBlobNFiles }}</li>
             <li>Space used: {{ ccr.StorageBlobSizeMb }}(MB)</li>
           </ul>
@@ -80,23 +81,19 @@
           <ul class="square" style="width: 100%">
             <li>PDFTron: {{ ccr.EnabledPdfTron?"Enabled":"Disabled" }}</li>
             <li *ngIf="ccr.EnabledPdfTron">
-              <ul>
-                <li>Licence: ...{{ ccr.PdfTronLicence  | slice:54}}</li>
-                <li>Expires: {{ ccr.PdfTronLicenceExpiryDate | date: shortTime }}</li>
-              </ul>
+              Expires: {{ ccr.PdfTronLicenceExpiryDate | date: shortTime }}
+              &nbsp; &nbsp;<img src="../../assets/icons/show-button.svg" alt="Show PdfTron Licence" style="height:15px; line-height: 1.7em" (click)="showPdfTronLicenceInfo()"/>
             </li>
             <li>3Dviewer: {{ ccr.Enabled3dViewer?"Enabled":"Disabled" }}</li>
-
           </ul>
-          <br />
+          <p-dialog header="Pdftron Licence file" [(visible)]="displayPdfTronLicenceInfo" positionTop="100"  [contentStyle]="{background: '#b3d9b2', width: '400px'}">
+            <div style="width: 380px; word-wrap: break-word; font-size: small; font-family: 'Segoe UI', 'Open Sans'">{{ ccr.PdfTronLicence }}</div>
+          </p-dialog>
           <a [target]="_blank" [href]="ccr.AdminLink"><div style="padding-left: 10px;">Configure packages<img src="assets/icons/valid-admin.svg" style="height: 11px; padding-left: 3px; line-height:1.1em" /></div></a>
         </div>
-
         <div *ngIf="ccr.CcrType=='Summary'" gdArea="content" class="content">
           <app-msgboard [msgs]="ccr.Message" [msgSl]="ccr.SeverityLevel"></app-msgboard>
-
         </div>
-
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ export class StorageProps implements CcrCardModel {
   private _showCard: boolean;
 
   private _storageAccountName: string;
+  private _storageContainerName: string;
   private _storageBlobNFiles: number;
   private _storageBlobSizeMb: number;
   private _storageServiceLevel: string 
@@ -56,6 +57,14 @@ export class StorageProps implements CcrCardModel {
   public get StorageAccountName(): string {
     return this._storageAccountName;
   }
+
+  public set StorageContainerName(scn: string) {
+    this._storageContainerName = scn;
+  }
+  public get StorageContainerName(): string {
+    return this._storageContainerName;
+  }
+
   public set StorageBlobNFiles(sbnf: number) {
     this._storageBlobNFiles = sbnf;
   }

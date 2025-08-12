@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ValidStatusMonitor.Models;
 
 namespace ValidStatusMonitor.Migrations
 {
     [DbContext(typeof(ValidStatusMonitorContext))]
-    partial class ValidStatusMonitorContextModelSnapshot : ModelSnapshot
+    [Migration("20190828121836_removedHasMaxLenghtForPdfLicenceField")]
+    partial class removedHasMaxLenghtForPdfLicenceField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,10 +299,6 @@ namespace ValidStatusMonitor.Migrations
 
                     b.Property<int?>("StorageBlobSizeMb")
                         .HasColumnName("STORAGE_BLOB_SIZE_MB");
-
-                    b.Property<string>("StorageContainerName")
-                        .HasColumnName("STORAGE_CONTAINER_NAME")
-                        .HasMaxLength(80);
 
                     b.Property<string>("StorageResourceLink")
                         .HasColumnName("STORAGE_LINK");

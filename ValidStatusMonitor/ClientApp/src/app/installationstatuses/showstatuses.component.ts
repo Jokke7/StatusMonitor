@@ -1,6 +1,5 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Router, ActivatedRoute } from '@angular/router';
 import { StatusMonitorService } from '../services/statusmonitor.service';
 import { DatabaseProps } from '../ccrcardmodels/database-card-model';
 import { CcrCardModel, CcrType, SeverityLevel } from '../ccrcardmodels/ccr-card-model';
@@ -12,6 +11,7 @@ import { CustomerProps } from '../ccrcardmodels/customer-card-model';
 import { Customer, StatusMonitorData, CustomerAssetsData } from '../ccrtypes/interfaces';
 
 import { SummaryProps } from '../ccrcardmodels/summary-card-model';
+import { Util } from '../helpers/util';
 
 @Component({
   selector: 'list-statuses',
@@ -20,12 +20,13 @@ import { SummaryProps } from '../ccrcardmodels/summary-card-model';
 })
 
 export class ShowStatusesComponent implements OnInit{
-  public statuses: StatusMonitorData[];
-  public customers: Customer[];
-  public toDetailsIcon: string;
-  public statusCards: Array<CcrCardModel>;
-  static readonly cardsPerRow: number = 7;
+  statuses: StatusMonitorData[];
+  customers: Customer[];
 
+  toDetailsIcon: string;
+  statusCards: Array<CcrCardModel>;
+  public calculatedHeight: number;
+  static readonly cardsPerRow: number = 7;
 
   constructor(public http: HttpClient, private _statusMonitorService: StatusMonitorService) {
     this.statusCards = new Array<CcrCardModel>();
@@ -67,23 +68,28 @@ export class ShowStatusesComponent implements OnInit{
   }
 
   setRowStyle(firstCardInRow: CcrCardModel) {
+    var longestMessage: number = 0;
     var first: number = this.statusCards.indexOf(firstCardInRow);
     var last: number = first + ShowStatusesComponent.cardsPerRow;
     var row: Array<CcrCardModel> = this.statusCards.slice(first, last);
     var sever = SeverityLevel.Informational;
     for (let card of row) {
+      if (card.CcrType !== CcrType.Summary && card.Message !== 'undefined' && card.Message.length > longestMessage) {
+        longestMessage = card.Message.length;
+      }
       var iSever = card.SeverityLevel;
       if (iSever == SeverityLevel.Alert) {
         sever = iSever;
         break;
       }
-      else if (iSever == SeverityLevel.Immediate) {
+      else if (iSever == SeverityLevel.Immediate) { 
         sever = iSever;
       }
       else if (iSever == SeverityLevel.Warning) {
         sever = iSever;
       }
     }
+    this.calculatedHeight = 140 + longestMessage;
     return {
       warning: sever == SeverityLevel.Warning,
       immediate: sever == SeverityLevel.Immediate,
@@ -93,6 +99,7 @@ export class ShowStatusesComponent implements OnInit{
 
   isUpToDate(lu: Date) {
     var lagTH = new Date();
+    //TODO TAKE SUMMER TIME OFFSET INTO ACCOUNT
     lagTH.setHours(lagTH.getHours() + 2);
 
     lu = new Date(lu.toString());
@@ -119,13 +126,14 @@ export class ShowStatusesComponent implements OnInit{
         summaryCard = {} as SummaryProps;
       }
       else {
-        customerCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow];
-        applicationCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +1];
-        databaseCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +2];
-        certificatesCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow +3];
-        storageCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 4];
-        miscCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 5];
-        summaryCard = this.statusCards[this.statuses.indexOf(status) * ShowStatusesComponent.cardsPerRow + 6];
+        let cardCount = ShowStatusesComponent.cardsPerRow;
+        customerCard = this.statusCards[this.statuses.indexOf(status) * cardCount];
+        applicationCard = this.statusCards[this.statuses.indexOf(status) * cardCount +1];
+        databaseCard = this.statusCards[this.statuses.indexOf(status) * cardCount +2];
+        certificatesCard = this.statusCards[this.statuses.indexOf(status) * cardCount +3];
+        storageCard = this.statusCards[this.statuses.indexOf(status) * cardCount + 4];
+        miscCard = this.statusCards[this.statuses.indexOf(status) * cardCount + 5];
+        summaryCard = this.statusCards[this.statuses.indexOf(status) * cardCount + 6];
       }
 
       var asset: CustomerAssetsData = null;
@@ -159,7 +167,7 @@ export class ShowStatusesComponent implements OnInit{
       applicationCard.E2eTestResponse = status.HttpResponseE2eTest;
       applicationCard.CcrType = CcrType.AppService;
       applicationCard.ResourceLink = status.AppResourceLink;
-      applicationCard.LicenceLink = "https://license.visionova.no/license/" + status.LicenceNumber.substring(1).slice(0, -1);
+      applicationCard.LicenceLink = Util.empty(status.LicenceNumber) ? " " : "https://license.visionova.no/license/" + status.LicenceNumber.substring(1).slice(0, -1);
 
       databaseCard.DatabaseName = status.DatabaseName;
       databaseCard.DatabaseServer = status.DatabaseServer;
@@ -178,6 +186,7 @@ export class ShowStatusesComponent implements OnInit{
 
 
       storageCard.StorageAccountName = status.StorageAccountName;
+      storageCard.StorageContainerName = status.StorageContainerName;
       storageCard.StorageBlobNFiles = status.StorageBlobNfiles;
       storageCard.StorageBlobSizeMb = status.StorageBlobSizeMb;
       storageCard.StorageServiceLevel = status.StorageServiceLevel;

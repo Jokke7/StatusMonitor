@@ -8,7 +8,7 @@
     <ng-container class="row" *ngFor="let card of statusCards">
       <div *ngIf="card.CcrType =='Customer'" class="row-header" fxLayout="row" [ngClass]="setRowStyle(card)">
         <div class="row-headertop" fxLayout="column" fxFlex="230px" (click)='toggleRow(card)'>
-          {{card.Description}}
+          {{card.Description | slice:0:30 }}
           <span style="font-size:x-small;">{{card.Name}} - {{card.PlantName}} | <a [href]="card.AppLink" [target]="_blank"> {{card.E2eTestUri}}</a></span>
         </div>
         <span class="detailsLink" fxShow fxHide.lt-sm>
@@ -39,7 +39,8 @@
                       fxFlex.lt-lg="0 1 calc(33.33%)"
                       fxFlex.lt-md="0 1 calc(50%)"
                       fxFlex.lt-sm="100%"
-                      [fxShow]='card.ShowCard'>
+                      [fxShow]='card.ShowCard'
+                      [height]="calculatedHeight">
         </app-ccr-card>
       </ng-container>
     </ng-container>

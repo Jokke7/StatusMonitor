@@ -24,6 +24,8 @@ namespace ValidStatusMonitor.Models
         public DateTime? SslExpiryDate { get; set; }
         public string SslStatus { get; set; }
         public string StorageAccountName { get; set; }
+        public string StorageContainerName { get; set; }
+
         public string StorageServiceHealth { get; set; }
         public string StorageServiceLevel { get; set; }
         public int? StorageBlobNfiles { get; set; }

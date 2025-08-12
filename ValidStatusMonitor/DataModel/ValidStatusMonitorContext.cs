@@ -224,6 +224,9 @@ namespace ValidStatusMonitor.Models
                 entity.Property(e => e.StorageAccountName)
                     .HasColumnName("STORAGE_NAME")
                     .HasMaxLength(80);
+                entity.Property(e => e.StorageContainerName)
+                    .HasColumnName("STORAGE_CONTAINER_NAME")
+                    .HasMaxLength(80);
 
                 entity.Property(e => e.StorageServiceLevel)
                     .HasColumnName("STORAGE_SERVICE_LEVEL")
@@ -233,8 +236,7 @@ namespace ValidStatusMonitor.Models
                     .HasColumnName("ENABLED_PDFTRON_VIEWER");
 
                 entity.Property(e => e.PdfTronLicence)
-                    .HasColumnName("PDFTRON_LICENCE")
-                    .HasMaxLength(100);
+                    .HasColumnName("PDFTRON_LICENCE");
 
                 entity.Property(e => e.PdfTronLicenceExpiryDate)
                     .HasColumnName("PDFTRON_LICENCE_EXPIRY_DATE")

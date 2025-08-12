@@ -44,6 +44,7 @@ export interface StatusMonitorData {
   SslExpiryDate: Date;
   SslStatus: string;
   StorageAccountName: string;
+  StorageContainerName: string;
   StorageBlobNfiles: number;
   StorageBlobSizeMb: number;
   StorageServiceLevel: string;

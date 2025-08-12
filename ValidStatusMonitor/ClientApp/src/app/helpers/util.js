@@ -21,10 +21,8 @@ var Util = /** @class */ (function () {
         }
         return count == 0;
     };
-    Util.DaysBetween = function (date1, date2) {
-        var diff = Math.abs(date1.getTime() - date2.getTime());
-        var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-        return diffDays;
+    Util.DaysFromNow = function (date) {
+        return Math.ceil((date.getTime() - (new Date()).getTime()) / (1000 * 3600 * 24));
     };
     return Util;
 }());

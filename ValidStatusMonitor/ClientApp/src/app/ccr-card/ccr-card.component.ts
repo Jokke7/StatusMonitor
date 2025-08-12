@@ -1,7 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { CcrCardModel, CcrType, SeverityLevel } from '../ccrcardmodels/ccr-card-model';
-import { MiscProps } from '../ccrcardmodels/misc-card-model';
-
 
 @Component({
   selector: 'app-ccr-card',
@@ -9,19 +7,21 @@ import { MiscProps } from '../ccrcardmodels/misc-card-model';
   styleUrls: ['./ccr-card.component.css']
 })
 export class CcrCardComponent implements OnInit {
+    
   public severityLevel: SeverityLevel;
 
   public ccrType: CcrType;
   @Input() ccr: CcrCardModel;
+  @Input() height: number;
 
-  public showCard: boolean;
-  public fieldIconUri: string;
-  public ntfIconUri: string;
-  public azurePortalLink: string = "";
-  public appLicenceLink: string = "";
+  displayPdfTronLicenceInfo: boolean;
+  showCard: boolean;
+  fieldIconUri: string;
+  ntfIconUri: string;
+  azurePortalLink: string = "";
+  appLicenceLink: string = "";
 
   contentViewLimit: number;
-  
 
   static readonly assetIconPath : string = "../../assets/icons/"
 
@@ -48,6 +48,11 @@ export class CcrCardComponent implements OnInit {
       hidden: this.ccrType !== CcrType.Customer
     }
   }
+
+  showPdfTronLicenceInfo() {
+    this.displayPdfTronLicenceInfo = true;
+  }
+
 
   private setCcrField() {
     var path = CcrCardComponent.assetIconPath;

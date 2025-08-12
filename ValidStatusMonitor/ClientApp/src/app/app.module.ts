@@ -11,10 +11,9 @@ import { InplaceModule } from 'primeng/inplace';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { InputSwitchModule } from 'primeng/inputswitch';
-
+import { DialogModule } from 'primeng/dialog';
 
 import { AppComponent } from './app.component';
-//import { HomeComponent } from './home/home.component';
 import { StatusMonitorService } from './services/statusmonitor.service';
 import { ShowStatusesComponent } from './installationstatuses/showstatuses.component';
 //import { CustomerAssetsComponent } from './customerassets/customerassets.component';
@@ -28,7 +27,6 @@ import { AddInstallationPanelComponent } from './add-installation-panel/add-inst
 @NgModule({
   declarations: [
     AppComponent,
-    //HomeComponent,
     ShowStatusesComponent,
     CcrCardComponent,
     HeaderComponent,
@@ -49,6 +47,7 @@ import { AddInstallationPanelComponent } from './add-installation-panel/add-inst
     DropdownModule,
     ToastModule,
     InputSwitchModule,
+    DialogModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'show-statuses', pathMatch: 'full' },
       //{ path: 'home', component: HomeComponent },
@@ -59,6 +58,7 @@ import { AddInstallationPanelComponent } from './add-installation-panel/add-inst
       { path: '**', redirectTo: 'show-statuses' }
     ])
   ],
+  
   providers: [StatusMonitorService, MessageService ],
   bootstrap: [AppComponent]
 })

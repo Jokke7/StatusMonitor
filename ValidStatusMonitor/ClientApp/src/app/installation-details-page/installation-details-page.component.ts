@@ -149,6 +149,8 @@ export class InstallationDetailsPageComponent implements OnInit {
     certificatesCard.CcrType = CcrType.Certificate;
 
     storageCard.StorageBlobNFiles = this.statusRow.StorageBlobNfiles;
+    storageCard.StorageAccountName = this.statusRow.StorageAccountName;
+    storageCard.StorageContainerName = this.statusRow.StorageContainerName;
     storageCard.StorageBlobSizeMb = this.statusRow.StorageBlobSizeMb;
     storageCard.StorageServiceLevel = this.statusRow.StorageServiceLevel;
     storageCard.StorageServiceHealth = this.statusRow.StorageServiceHealth;
@@ -157,6 +159,9 @@ export class InstallationDetailsPageComponent implements OnInit {
     miscCard.CcrType = CcrType.Misc;
     miscCard.Enabled3dViewer = this.statusRow.Enabled3dViewer;
     miscCard.EnabledPdfTron = this.statusRow.EnabledPdfTron;
+    miscCard.AdminLink = "https://" + this.statusRow.E2eTestUri + "/admin/settings/app";
+    miscCard.PdfTronLicence = this.statusRow.PdfTronLicence;
+    miscCard.PdfTronLicenceExpiryDate = this.statusRow.PdfTronLicenceExpiryDate;
 
     cards.push(customerCard);
     cards.push(applicationCard);

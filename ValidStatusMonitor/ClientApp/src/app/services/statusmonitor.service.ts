@@ -3,10 +3,7 @@ import {throwError as observableThrowError,  Observable, throwError} from 'rxjs'
 
 import { map, catchError } from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core'; 
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http' 
-import { Router } from '@angular/router'; 
- 
- 
+import { HttpClient, HttpHeaders } from '@angular/common/http' 
  
 import { CustomerAssetsData, Customer, StatusMonitorData } from '../ccrtypes/interfaces';
 import { SeverityLevel, CcrCardModel, CcrType } from '../ccrcardmodels/ccr-card-model';
@@ -25,7 +22,8 @@ export class StatusMonitorService {
   private appUrl: string = "";
   private static taskList: string[] = [];
   private static aggregatedSeverity: SeverityLevel = SeverityLevel.Informational;
-   
+
+
   constructor(private _http: HttpClient, @Inject('BASE_URL') baseUrl: string) { 
     this.appUrl = baseUrl;
   }
@@ -61,22 +59,10 @@ export class StatusMonitorService {
   }
 
   updateStatusOnDemand(statusId: string): Observable<any> {
-    //const headers = new HttpHeaders({
-    //  'key1': 'value1',
-    //  'key2': 'value2',
-    //  // the rest ..
-    //});
-
-    //const httpOptions = {
-    //  headers: new HttpHeaders({
-    //    'Content-Type': 'application/json'
-    //  })
-    //};
     try {
       console.log("update pressed");
 
       return this._http.post(this.appUrl + 'api/Installations/Refresh/' + statusId, true);
-      //return this._http.post('lol', true);
 
     }
     catch (e) {
@@ -195,18 +181,7 @@ export class StatusMonitorService {
 
   private getAppServiceCardSeverity(card: ApplicationProps): ApplicationProps {
     card.SeverityLevel = SeverityLevel.Informational;
-
     var msgs: string[] = [];
-
-    const warningDaysTH = 30;
-    const immidiateDaysTH = 14;
-    const alertDaysTH = 7;
-
-    var exp = new Date(Date.parse(card.LicenceExpiryDate.toString()));
-    var now = new Date();
-
-    var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
-    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
 
     if (Util.empty(card.ApplicationInfo) ||
       Util.empty(card.ApplicationName) ||
@@ -220,27 +195,24 @@ export class StatusMonitorService {
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
-    if (diffDays < warningDaysTH) {
-      card.SeverityLevel = SeverityLevel.Warning;
-      card.SeverityLevel = (diffDays < immidiateDaysTH ?
-        (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Warning);
-      if (diffDays < 0) {
-        msgs.push("App-certificate expired " + diffDays + " ago.")
-      }
-      else {
-        msgs.push("License expires in " + diffDays + " days.");
-        StatusMonitorService.taskList.push("Renew application licence for " + card.ApplicationName + ".");
-      }
+    const diffDays = Util.DaysFromNow(new Date(Date.parse(card.LicenceExpiryDate.toString())));
+    const expiryDateSeverity: SeverityLevel = this.getTresholdBasedSeverity(diffDays, 14, 7, 0);
+
+    if (expiryDateSeverity !== SeverityLevel.Informational) {
+      card.SeverityLevel = expiryDateSeverity;
+      let expMsg = this.getAssetExpirationMessage("Application Licence", diffDays, card.SeverityLevel)
+      msgs.push(expMsg[0]);
+      StatusMonitorService.taskList.push(expMsg[1]);
     }
 
     if (card.E2eTestResponse !== '200') {
-      msgs.push("End to end test missing or has no response. Errorcode: " + card.E2eTestResponse);
+      msgs.push("End to end test failed with errorcode: " + card.E2eTestResponse);
       StatusMonitorService.taskList.push("Application is unresponsive(ErrCode: " + card.E2eTestResponse + "). Check " + card.ApplicationName + ".");
       card.SeverityLevel = SeverityLevel.Alert;
     }
     
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-    this.setAggregatedSeverity(card.SeverityLevel);
+    StatusMonitorService.aggregatedSeverity = (card.SeverityLevel);
 
     return card;
   }
@@ -248,16 +220,6 @@ export class StatusMonitorService {
   private getCertificateCardSeverity(card: CertificateProps): CertificateProps {
     card.SeverityLevel = SeverityLevel.Informational;
     var msgs: string[] = [];
-
-    const warningDaysTH = 30;
-    const immidiateDaysTH = 14;
-    const alertDaysTH = 7;
-
-    var exp = new Date(Date.parse(card.SslExpiryDate.toString()));
-    var now = new Date();
-
-    var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
-    const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
 
     if (Util.empty(card.SslExpiryDate) ||
         Util.empty(card.SslName) ||
@@ -267,21 +229,18 @@ export class StatusMonitorService {
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
-    if (diffDays < warningDaysTH) {
-      card.SeverityLevel = SeverityLevel.Warning;
-      card.SeverityLevel = (diffDays < immidiateDaysTH ?
-        (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Informational);
-      if (diffDays < 0) {
-        msgs.push("SSL-certificate expired " + diffDays + "ago.")
-        StatusMonitorService.taskList.push("SSL-certificate " + card.SslName + " expired " + diffDays + " ago.");
-      }
-      else {
-        msgs.push("SSL-certificate expires in " + diffDays + " days.");
-        StatusMonitorService.taskList.push("Renew SSL- certificate " + card.SslName);
-      }
+    const diffDays = Util.DaysFromNow(new Date(Date.parse(card.SslExpiryDate.toString())));
+    const expiryDateSeverity: SeverityLevel = this.getTresholdBasedSeverity(diffDays, 14, 7, 0);
+
+    if (expiryDateSeverity !== SeverityLevel.Informational) {
+      card.SeverityLevel = expiryDateSeverity;
+      let expMsg = this.getAssetExpirationMessage("SSL-Certificate", diffDays, card.SeverityLevel)
+      msgs.push(expMsg[0]);
+      StatusMonitorService.taskList.push(expMsg[1]);
     }
+    
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-    this.setAggregatedSeverity(card.SeverityLevel);
+    StatusMonitorService.aggregatedSeverity = card.SeverityLevel;
 
     return card;
   }
@@ -303,10 +262,11 @@ export class StatusMonitorService {
     }
 
     if (Util.empty(card.E2eTestUri)) {
-      card.E2eTestUri = "No response from application";
+      card.E2eTestUri = "N/A";
+      StatusMonitorService.taskList.push("Specify a URL for application");
     }
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-    this.setAggregatedSeverity(card.SeverityLevel);
+    StatusMonitorService.aggregatedSeverity = card.SeverityLevel;
 
     return card;
   }
@@ -328,7 +288,7 @@ export class StatusMonitorService {
     }
 
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-    this.setAggregatedSeverity(card.SeverityLevel);
+    StatusMonitorService.aggregatedSeverity = card.SeverityLevel;
 
     return card;
   }
@@ -346,7 +306,7 @@ export class StatusMonitorService {
     }
 
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-    this.setAggregatedSeverity(card.SeverityLevel);
+    StatusMonitorService.aggregatedSeverity = card.SeverityLevel;
     return card;
   }
 
@@ -354,41 +314,26 @@ export class StatusMonitorService {
     card.SeverityLevel = SeverityLevel.Informational;
     var msgs: string[] = [];
 
-
     if (Util.empty(card.Enabled3dViewer) || Util.empty(card.EnabledPdfTron)) {
       msgs.push("Empty properties set for Other Assets");
       StatusMonitorService.taskList.push("Check missing properties for 'Other Assets'");
       card.SeverityLevel = SeverityLevel.Warning;
     }
 
-    //if (card.EnabledPdfTron) {
-    //  const warningDaysTH = 30;
-    //  const immidiateDaysTH = 14;
-    //  const alertDaysTH = 7;
-    //  var exp = new Date(Date.parse(card.PdfTronLicenceExpiryDate.toString()));
-    //  var now = new Date();
+    if (card.EnabledPdfTron) {
+      const diffDays = Util.DaysFromNow(new Date(Date.parse(card.PdfTronLicenceExpiryDate.toString())));
+      const expiryDateSeverity: SeverityLevel = this.getTresholdBasedSeverity(diffDays, 14, 7, 0);
 
-    //  var diff = (now.getTime() > exp.getTime()) ? now.getTime() - exp.getTime() : exp.getTime() - now.getTime();
-    //  const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-
-    //  if (diffDays < warningDaysTH) {
-    //    card.SeverityLevel = SeverityLevel.Warning;
-    //    card.SeverityLevel = (diffDays < immidiateDaysTH ?
-    //      (diffDays <= alertDaysTH ? SeverityLevel.Alert : SeverityLevel.Immediate) : SeverityLevel.Informational);
-    //    if (diffDays < 0) {
-    //      msgs.push("PdfTron licence expired " + diffDays + "ago.")
-    //      StatusMonitorService.taskList.push("PdfTron licence  expired " + diffDays + " ago.");
-    //    }
-    //    else {
-    //      msgs.push("PdfTron licence expires in " + diffDays + " days.");
-    //      StatusMonitorService.taskList.push("Renew PdfTron licence");
-    //    }
-    //  }
-    //}
-    
-
+      if (expiryDateSeverity !== SeverityLevel.Informational) {
+        card.SeverityLevel = expiryDateSeverity;
+        let expMsg = this.getAssetExpirationMessage("PdfTron-licence", diffDays, card.SeverityLevel)
+        msgs.push(expMsg[0]);
+        StatusMonitorService.taskList.push(expMsg[1]);
+      } 
+    }
     card.Message = Formatter.toolTipNotification(msgs.reverse());
-    this.setAggregatedSeverity(card.SeverityLevel);
+    StatusMonitorService.aggregatedSeverity = card.SeverityLevel;
+
     return card;
   }
 
@@ -401,7 +346,7 @@ export class StatusMonitorService {
     else {
       msgs = StatusMonitorService.taskList;
     }
-    card.Message = Formatter.toolTipNotification(msgs.reverse());
+    card.Message = Formatter.toolTipNotification(msgs);
     StatusMonitorService.taskList = [];
 
     card.SeverityLevel = StatusMonitorService.aggregatedSeverity;
@@ -409,68 +354,39 @@ export class StatusMonitorService {
     return card;
   }
 
-  public setAggregatedSeverity(sever: SeverityLevel) {
-    if (sever == SeverityLevel.Alert) {
-      StatusMonitorService.aggregatedSeverity = sever;
-      return;
-    }
-    else if (sever == SeverityLevel.Immediate) {
-      StatusMonitorService.aggregatedSeverity = sever;
-      return;
-    }
-    else if (sever == SeverityLevel.Warning) {
-      StatusMonitorService.aggregatedSeverity = sever;
-      return;
-    }
+  private getTresholdBasedSeverity(diff: number, warning: number, immidiate: number, alert: number): SeverityLevel {
+    if (diff <= alert)
+      return SeverityLevel.Alert;
+    else if (diff <= immidiate)
+      return SeverityLevel.Immediate;
+    else if (diff <= warning)
+      return SeverityLevel.Warning;
+    return SeverityLevel.Informational;
   }
 
-  //private handleError(error: HttpErrorResponse) {
-  //  if (error.error instanceof ErrorEvent) {
-  //    // A client-side or network error occurred. Handle it accordingly.
-  //    console.error('An error occurred:', error.error.message);
-  //  } else {
-  //    // The backend returned an unsuccessful response code.
-  //    // The response body may contain clues as to what went wrong,
-  //    console.error(
-  //      `Backend returned code ${error.status}, ` +
-  //      `body was: ${error.error}`);
-  //  }
-  //  // return an observable with a user-facing error message
-  //  return throwError(
-  //    'Something bad happened; please try again later.');
-  //};
-
-  //private sortCcrCards(cards: Array<CcrCardModel>): Array<CcrCardModel> {
-  //  let sorted = {} as Array<CcrCardModel>;
-  //  let arr = {} as Array<CcrCardModel>;
-  //  let tempTupleArray: Array<[SeverityLevel, Array<CcrCardModel>]>;
-  //  let i, all = cards.length, chunk = 6;
-  //  for (i = 0; i < all; i += chunk) {
-  //    let tempArray: Array<CcrCardModel> = cards.slice(i, i + chunk);
-  //    var rowSever = SeverityLevel.Informational;
-  //    for (let c of tempArray) {
-  //      var sever = c.SeverityLevel;
-  //      if (sever == SeverityLevel.Alert) {
-  //        rowSever = sever;
-  //        break;
-  //      }
-  //      else if (sever == SeverityLevel.Immediate) {
-  //        rowSever = sever;
-  //      }
-  //      else if (sever == SeverityLevel.Warning && rowSever != SeverityLevel.Immediate) {
-  //        rowSever = sever;
-  //      }
-  //    }
-  //    tempTupleArray.push([sever, tempArray]);
-  //    //tempTupleArray[i][0] = sever;
-  //    //tempTupleArray[i][1] = tempArray;
-  //  }
-  //  for (let chunk of tempTupleArray) {
-  //    for (let _arr of chunk[1]) {
-  //      console.log(_arr);
-  //    }
-  //  }
-  //  return sorted;
-  //}
-  
+  private getAssetExpirationMessage(assetName: string, diffDays: number, sever: SeverityLevel): string[] {
+    var msgs: string[] = [];
+    switch (sever) {
+      case SeverityLevel.Alert: {
+        msgs.push(`${assetName} expired ${diffDays} ago.`);
+        msgs.push(`Renew ${assetName}, it's expired.`)
+        break;
+      }
+      case SeverityLevel.Immediate: {
+        msgs.push(`${assetName} will expire in ${diffDays}.`);
+        msgs.push(`Renew ${assetName} ASAP`)
+        break;
+      }
+      case SeverityLevel.Warning: {
+        msgs.push(`${assetName} will expire in ${diffDays}.`);
+        msgs.push(`Renew ${assetName} before expiration date.`)
+        break;
+      }
+      default: {
+        msgs.push(null);
+        break;
+      }
+    }
+    return msgs;
+  }
 }

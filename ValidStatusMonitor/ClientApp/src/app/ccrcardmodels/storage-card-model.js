@@ -55,6 +55,16 @@ var StorageProps = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(StorageProps.prototype, "StorageContainerName", {
+        get: function () {
+            return this._storageContainerName;
+        },
+        set: function (scn) {
+            this._storageContainerName = scn;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(StorageProps.prototype, "StorageBlobNFiles", {
         get: function () {
             return this._storageBlobNFiles;
